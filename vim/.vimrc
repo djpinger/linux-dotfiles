@@ -18,4 +18,6 @@ set listchars=tab:>-,trail:~,extends:>,precedes:<
 set list
 filetype plugin on
 call plug#begin('~/.vim/plugged')
+Plug 'hashivim/vim-packer'
+Plug 'hashivim/vim-terraform'
 call plug#end()
