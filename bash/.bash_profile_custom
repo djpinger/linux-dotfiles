@@ -1,4 +1,10 @@
 eval `keychain --eval --agents ssh --inherit any id_rsa`
+function _update_ps1() {
+    PS1=$(powerline-shell $?)
+}
+if [[ $TERM != linux && ! $PROMPT_COMMAND =~ _update_ps1 ]]; then
+    PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
+fi
 export PATH=~/.local/bin/:$PATH
 export PATH=/usr/local/bin:~/bin:$PATH
 export GOPATH=~/go
