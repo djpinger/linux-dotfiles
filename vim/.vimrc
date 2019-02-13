@@ -20,4 +20,5 @@ filetype plugin on
 call plug#begin('~/.vim/plugged')
 Plug 'hashivim/vim-packer'
 Plug 'hashivim/vim-terraform'
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 call plug#end()
