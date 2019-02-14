@@ -1,6 +1,7 @@
 #!/bin/bash
 
-sudo apt install -y stow python-pip
+sudo apt install -y stow python-pip keychain
+pip install powerline-shell
 stow bash
 stow ssh
 stow tmux
