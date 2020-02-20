@@ -36,12 +36,26 @@ fi
 alias ll='ls -alF'
 alias la='ls -hA'
 alias l='ls -CF'
+alias ls='/usr/local/bin/exa'
 alias vi='vim'
 alias nomore='find ./ -iname .DS_Store -delete'
 ww () { /usr/bin/curl http://wttr.in/"$@" ; }
-alias ytdl='youtube-dl -f bestaudio --extract-audio --audio-format mp3 -l'
+alias ytdl="youtube-dl -f bestaudio --extract-audio --audio-format mp3 -o '%(title)s.%(ext)s'"
 alias dcup='docker-compose up -d'
 alias dcstop='docker-compose stop'
 alias dcdestroy='docker-compose stop && docker-compose rm -f'
 alias dcps='docker-compose ps'
 alias dclogs='docker-compose logs -f'
+alias dcpull='docker-compose pull'
+alias dc='docker-compose'
+alias tma='tmux -CC attach'
+alias tmc='tmux -CC'
+alias weather='curl http://wttr.in/'
+
+wttr()
+{
+    # change Paris to your default location
+    local request="wttr.in/${1-manassas}?format=v2"
+    [ "$(tput cols)" -lt 125 ] && request+='?n'
+    curl -H "Accept-Language: ${LANG%_*}" --compressed "$request"
+}
