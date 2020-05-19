@@ -1,7 +1,7 @@
 #!/bin/bash
 
-sudo apt install -y stow python-pip keychain vim curl
-pip install powerline-shell
+sudo apt install -y stow python3-pip keychain vim curl
+pip3 install powerline-shell
 stow bash
 stow ssh
 stow tmux
