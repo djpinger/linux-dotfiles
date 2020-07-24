@@ -1,11 +1,10 @@
-#
 # MAIN
 #
 #Begin Profiling Code Block
 #PS4='+ $(date "+%s.%N")\011 '
 #exec 3>&2 2>/tmp/bashstart.$$.log
 #set -x
-export PATH=~/.local/bin:~/.rbenv/shims:~/bin:/usr/local/bin:/usr/local/sbin:$PATH
+export PATH=~/.local/bin:~/bin:/usr/local/bin:/usr/local/sbin:/snap/bin:$PATH
 eval `keychain --eval --agents ssh --inherit any id_rsa`
 [ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
@@ -35,13 +34,20 @@ export PATH=$PATH:$GOPATH/bin
 #
 # RUBY
 #
-
+export PATH=~/.rbenv/bin:$PATH
+eval "$(rbenv init -)"
 #
 # NODE
 #
-export NVM_DIR="$HOME/.nvm"
-[ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
-[ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && . "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+#
+# PYTHON
+#
+export PATH="~/.pyenv/bin:$PATH"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+
 #
 # AWS
 #
