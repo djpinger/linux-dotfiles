@@ -1,0 +1,8 @@
+---
+- hosts: localhost
+  tasks:
+    - name: add custom bash_profile to ~/.bashrc
+      lineinfile: dest=~/.basrch
+                  regexp=".bash_custom"
+                  line="if [ -f ~/.bash_custom ]; then . ~/.bash_custom; fi"
+                  state=present
