@@ -147,6 +147,11 @@ function s() {
     bundle exec stax $*
   )
 }
+# aws-vault in current terminal
+function awsrole() {
+    eval $(aws-vault exec $1 -- env | grep AWS | sed -e 's/^/export\ /')
+    export AWS_PROFILE=$1
+}
 # End Profiling Code Block
 #set +x
 #exec 2>&3 3>&-

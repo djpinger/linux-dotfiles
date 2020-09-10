@@ -9,6 +9,7 @@
     "newline",
     "root",
     "~/.config/powerline-shell/aws_env.py",
-    "~/.config/powerline-shell/aws_role.py"
+    "~/.config/powerline-shell/aws_role.py",
+    "~/.config/powerline-shell/aws_vault.py"
   ]
 }
