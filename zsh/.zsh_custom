@@ -1,7 +1,8 @@
 #
 # MAIN
 #
-export PATH=~/.rbenv/shims:~/bin:/usr/local/opt/terraform@0.11/bin:/usr/local/bin:/usr/local/sbin:~/bin:/usr/local/Cellar:/usr/local/opt/coreutils/libexec/gnubin:$PATH
+eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+export PATH=~/.rbenv/shims:~/.local/bin:~/bin:/usr/local/bin:/usr/local/sbin:/snap/bin:$PATH
 eval `keychain --eval --agents ssh --inherit any id_rsa pauls.pem`
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 if [ -x /usr/bin/dircolors  ]; then
@@ -20,13 +21,12 @@ export EDITOR=nvim
 export BLOCKSIZE=1k
 export CLICOLOR=1
 export LSCOLORS=ExFxBxDxCxegedabagacad
-export JAVA_HOME="$(/usr/libexec/java_home -v 1.8)"
 export GOPATH=$HOME/go/
 export PATH=$PATH:$GOPATH/bin
 #
 # RUBY
 #
-export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@1.1)"
+#export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@1.1)"
 #
 # NODE
 #
@@ -42,16 +42,6 @@ export AWS_SESSION_TOKEN_TTL=12h
 export AWS_CHAINED_SESSION_TOKEN_TTL=12h
 export AWS_ASSUME_ROLE_TTL=12h
 export AWS_FEDERATION_TOKEN_TTL=12h
-
-#
-# POWERLINE
-#
-function _update_ps1() {
-    PS1=$(powerline-shell $?)
-}
-if [[ $TERM != linux && ! $PROMPT_COMMAND =~ _update_ps1 ]]; then
-    PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
-fi
 #
 # ALIASES
 #
@@ -127,9 +117,10 @@ function s() {
   )
 }
 function awsrole() {
-    assume-role $1 $2
-    export AWS_PROFILE=$(echo ${1}-${2})
-    export DEFAULT_AWS_PROFILE=$(echo ${1}-${2})
+    unset AWS_VAULT
+    eval $(aws-vault exec $1 -- env | grep ^AWS_ | sed -e 's/^/export\ /')
+    export AWS_PROFILE=${1}
+    export DEFAULT_AWS_PROFILE=${1}
 }
 #
 # ZSH PURE
