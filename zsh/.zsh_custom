@@ -2,7 +2,8 @@
 # MAIN
 #
 eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
-export PATH=~/.rbenv/shims:~/.local/bin:~/bin:/usr/local/bin:/usr/local/sbin:/snap/bin:$PATH
+unset AWS_PROFILE
+export PATH=~/.rbenv/shims:~/bin:/usr/local/opt/terraform@0.11/bin:/usr/local/bin:/usr/local/sbin:~/bin:/usr/local/Cellar:/usr/local/opt/coreutils/libexec/gnubin:$PATH
 eval `keychain --eval --agents ssh --inherit any id_rsa pauls.pem`
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 if [ -x /usr/bin/dircolors  ]; then
@@ -14,10 +15,11 @@ if [ -x /usr/bin/dircolors  ]; then
     alias fgrep='fgrep --color=auto'
     alias egrep='egrep --color=auto'
 fi
+[ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
 #
 # EXPORTS
 #
-export EDITOR=nvim
+export EDITOR=vim
 export BLOCKSIZE=1k
 export CLICOLOR=1
 export LSCOLORS=ExFxBxDxCxegedabagacad
@@ -26,7 +28,7 @@ export PATH=$PATH:$GOPATH/bin
 #
 # RUBY
 #
-#export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@1.1)"
+export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@1.1)"
 #
 # NODE
 #
@@ -42,6 +44,21 @@ export AWS_SESSION_TOKEN_TTL=12h
 export AWS_CHAINED_SESSION_TOKEN_TTL=12h
 export AWS_ASSUME_ROLE_TTL=12h
 export AWS_FEDERATION_TOKEN_TTL=12h
+#
+# PYTHON
+#
+export PATH="/Users/paul.seymour/.pyenv/bin:$PATH"
+eval "$(pyenv init -)"
+#eval "$(pyenv virtualenv-init -)"
+#
+# POWERLINE
+#
+function _update_ps1() {
+    PS1=$(powerline-shell $?)
+}
+if [[ $TERM != linux && ! $PROMPT_COMMAND =~ _update_ps1 ]]; then
+    PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
+fi
 #
 # ALIASES
 #
@@ -69,14 +86,16 @@ alias ll='ls -alF'
 alias la='ls -hA'
 alias l='ls -CF'
 alias vi='vim'
+#alias vi='subl'
 alias nomore='find ./ -iname .DS_Store -delete'
 alias ls='exa'
 alias av='aws-vault'
 alias ave='aws-vault exec'
-alias ar='assume-role'
 alias awsid='aws sts get-caller-identity'
+alias dl='dw'
 alias tmc='tmux -CC'
 alias tma='tmux -CC attach'
+alias nnn='nnn -e'
 
 alias gc='git clone'
 alias gprune='git gc --prune=now'
@@ -84,6 +103,7 @@ alias gcd='git fetch && git checkout develop && git pull'
 alias gcm='git fetch && git checkout master && git pull'
 alias gp='git pull'
 alias gitgraph='git log --graph --abbrev-commit --pretty=oneline origin..master'
+alias gco='git checkout'
 
 alias dcup='docker-compose up -d'
 alias dcstop='docker-compose stop'
@@ -94,6 +114,9 @@ alias dcbuild='docker-compose build'
 alias dcvi='vi docker-compose.yml'
 alias dcpull='docker-compose pull'
 alias dc='docker-compose'
+
+alias top='bpytop'
+alias cda='cd ~/g/arcadia'
 #
 # FUNCTIONS
 #
@@ -122,8 +145,16 @@ function awsrole() {
     export AWS_PROFILE=${1}
     export DEFAULT_AWS_PROFILE=${1}
 }
+#function awsrole() {
+#    tmux split-window -h \; \
+#    send-keys "aws-vault exec ${1}" C-m \;
+#}
 #
 # ZSH PURE
 #
 #autoload -U promptinit; promptinit
 #prompt pure
+#
+# LAST STUFF HERE
+#
+set -o emacs

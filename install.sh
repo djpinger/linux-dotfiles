@@ -1,8 +1,9 @@
 #!/bin/bash
 
 sudo apt update
-sudo apt install -y stow python3-pip keychain vim curl fonts-hack-ttf jq rbenv
+sudo apt install -y stow python3-pip keychain vim curl fonts-hack-ttf jq rbenv zsh fonts-powerline tmux
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
 brew bundle --file=brew/Brewfile
 pip3 install powerline-shell
 stow bash
@@ -11,6 +12,7 @@ stow tmux
 stow vim
 stow powerline
 stow git
+stow zsh
 echo "if [ -f ~/.bash_custom ]; then . ~/.bash_custom; fi" >> ~/.bashrc
 dconf load /com/gexperts/Tilix/ < tilix/tilix.dconf
 #curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
