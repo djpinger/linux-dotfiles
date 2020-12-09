@@ -16,6 +16,8 @@ if [ -x /usr/bin/dircolors  ]; then
     alias egrep='egrep --color=auto'
 fi
 [ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
+[[ $commands[kubectl] ]] && source <(kubectl completion zsh)
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 #
 # EXPORTS
 #
@@ -59,6 +61,14 @@ function _update_ps1() {
 if [[ $TERM != linux && ! $PROMPT_COMMAND =~ _update_ps1 ]]; then
     PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
 fi
+#
+# KUBERNETES
+#
+alias k='kubectl'
+alias kx='kubectx'
+alias klogs='k logs'
+alias kpods='k get pods'
+alias kservices='k get services --sort-by=.metadata.name'
 #
 # ALIASES
 #
@@ -115,8 +125,9 @@ alias dcvi='vi docker-compose.yml'
 alias dcpull='docker-compose pull'
 alias dc='docker-compose'
 
-alias top='bpytop'
+alias ptop='bpytop'
 alias cda='cd ~/g/arcadia'
+
 #
 # FUNCTIONS
 #
