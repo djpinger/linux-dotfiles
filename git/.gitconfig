@@ -8,3 +8,5 @@
 [user]
     name = Paul Seymour
     email = paul.seymour@arcadia.com
+[pull]
+	rebase = false
