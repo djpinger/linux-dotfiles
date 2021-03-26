@@ -1,0 +1,12 @@
+[push]
+    default = current
+[color]
+    ui = true
+[core]
+    excludesfile = ~/.gitignore_global
+    hooksPath = ~/.git_hooks
+[user]
+    name = Paul Seymour
+    email = paul.seymour@arcadia.com
+[pull]
+	rebase = false

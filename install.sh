@@ -1,13 +1,24 @@
 #!/bin/bash
 
-sudo apt install -y stow python3-pip keychain vim curl
+sudo apt update
+sudo apt install -y stow python3-pip keychain vim curl fonts-hack-ttf jq rbenv zsh fonts-powerline tmux
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+brew bundle --file=brew/Brewfile
 pip3 install powerline-shell
 stow bash
 stow ssh
 stow tmux
 stow vim
 stow powerline
-echo "if [ -f ~/.bash_profile_custom ]; then . ~/.bash_profile_custom; fi" >> ~/.bashrc
-mkdir ~/.fonts
-curl -s -k -o ~/.fonts/Hack-Regular.ttf https://github.com/powerline/fonts/raw/master/Hack/Hack-Regular.ttf
-#dconf load /com/gexperts/Tilix/ < tilix/tilix.dconf
+stow git
+stow zsh
+echo "if [ -f ~/.bash_custom ]; then . ~/.bash_custom; fi" >> ~/.bashrc
+dconf load /com/gexperts/Tilix/ < tilix/tilix.dconf
+#curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
+#sudo mv kubectl /usr/local/bin/
+#sudo git clone https://github.com/ahmetb/kubectx /opt/kubectx
+#sudo ln -s /opt/kubectx/kubectx /usr/local/bin/kubectx
+#sudo ln -s /opt/kubectx/kubens /usr/local/bin/kubens
+#sudo chmod +x /usr/local/bin/*
+wget -O - https://raw.githubusercontent.com/laurent22/joplin/master/Joplin_install_and_update.sh | bash

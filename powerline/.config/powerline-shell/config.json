@@ -1,12 +1,15 @@
 {
   "segments": [
+    "time",
     "virtual_env",
     "ssh",
-    "cwd",
     "git",
+    "cwd",
     "hg",
-    "jobs",
     "newline",
-    "root"
+    "root",
+    "~/.config/powerline-shell/aws_env.py",
+    "~/.config/powerline-shell/aws_role.py",
+    "~/.config/powerline-shell/aws_vault.py"
   ]
 }

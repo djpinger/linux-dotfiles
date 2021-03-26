@@ -21,4 +21,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'hashivim/vim-packer'
 Plug 'hashivim/vim-terraform'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'scrooloose/nerdtree'
 call plug#end()
+map <F2> :NERDTreeToggle<CR>
+map <F3> :NERDTreeFocus<CR>
