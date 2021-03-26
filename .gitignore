@@ -3,3 +3,5 @@ ssh/.ssh/id_rsa
 ssh/.ssh/id_rsa.pub
 ssh/.ssh/known_hosts
 vim/.vim/plugged
+powerline/.config/powerline-shell/__pycache__/
+ssh/.ssh/ssh_hosts
