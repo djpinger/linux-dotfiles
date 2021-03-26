@@ -7,7 +7,7 @@ then
 fi
 eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
 unset AWS_PROFILE
-export PATH=~/.rbenv/shims:~/bin:/usr/local/opt/terraform@0.11/bin:/usr/local/bin:/usr/local/sbin:~/bin:/usr/local/Cellar:/usr/local/opt/coreutils/libexec/gnubin:$PATH
+export PATH=~/bin:~/.rbenv/shims:~/bin:/usr/local/opt/terraform@0.11/bin:/usr/local/bin:/usr/local/sbin:~/bin:/usr/local/Cellar:/usr/local/opt/coreutils/libexec/gnubin:$PATH
 eval `keychain --eval --agents ssh --inherit any id_rsa pauls-ops.pem pauls-dev.pem`
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 if [ -x /usr/bin/dircolors  ]; then
@@ -29,7 +29,7 @@ export EDITOR=vim
 export BLOCKSIZE=1k
 export CLICOLOR=1
 export LSCOLORS=ExFxBxDxCxegedabagacad
-export GOPATH=$HOME/go/
+export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin
 #
 # RUBY
