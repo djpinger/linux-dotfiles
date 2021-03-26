@@ -9,6 +9,7 @@ export GOPATH=~/go
 export PATH=~/.local/bin/:/usr/local/bin:~/bin:$GOPATH/bin:$PATH
 [ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+[ -f /home/linuxbrew/.linuxbrew/bin/brew ] && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 export PS1='\[\033[01;30m\]\h\[\033[35m\] \u\[\033[01;34m\] \w\[\033[0;32m\] \n>\[\033[00m\] '
 export EDITOR=vim
 alias qfind="find . -name "                 # qfind:    Quickly search for file
@@ -36,7 +37,7 @@ fi
 alias ll='ls -alF'
 alias la='ls -hA'
 alias l='ls -CF'
-alias ls='/usr/local/bin/exa'
+[ -f /home/linuxbrew/.linuxbrew/bin/exa ] && alias ls='exa'
 alias vi='vim'
 alias nomore='find ./ -iname .DS_Store -delete'
 ww () { /usr/bin/curl http://wttr.in/"$@" ; }
