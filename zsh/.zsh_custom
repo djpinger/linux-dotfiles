@@ -7,7 +7,7 @@ then
 fi
 eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
 unset AWS_PROFILE
-export PATH=~/bin:~/.rbenv/shims:~/bin:/usr/local/opt/terraform@0.11/bin:/usr/local/bin:/usr/local/sbin:~/bin:/usr/local/Cellar:/usr/local/opt/coreutils/libexec/gnubin:$PATH
+export PATH=~/.rbenv/shims:~/bin:/usr/local/opt/terraform@0.11/bin:/usr/local/bin:/usr/local/sbin:~/bin:/usr/local/Cellar:/usr/local/opt/coreutils/libexec/gnubin:$PATH
 eval `keychain --eval --agents ssh --inherit any id_rsa pauls-ops.pem pauls-dev.pem`
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 if [ -x /usr/bin/dircolors  ]; then
@@ -116,6 +116,7 @@ alias gc='git clone'
 alias gprune='git gc --prune=now'
 alias gp='git pull'
 alias gitgraph='git log --graph --abbrev-commit --pretty=oneline origin..master'
+alias gweb='gh repo view -b `git branch --show-current` -w'
 
 alias dcup='docker-compose up -d'
 alias dcstop='docker-compose stop'
@@ -159,6 +160,14 @@ function awsrole() {
     eval $(aws-vault exec $1 -- env | grep ^AWS_ | sed -e 's/^/export\ /')
     export AWS_PROFILE=${1}
     export DEFAULT_AWS_PROFILE=${1}
+    if [ $1 = "pa-west" ]; then
+        kubectx prod2
+        export cluster_name=prod2
+    else
+        cluster=$(echo $1 | cut -d- -f1)1
+        kubectx $cluster
+        export cluster_name=$cluster
+    fi
 }
 function cda() {
     cd ~/g/arcadia/"${1:-}"
@@ -172,3 +181,4 @@ function gco() {
 # LAST STUFF HERE
 #
 set -o emacs
+export PATH=~/bin:$PATH
