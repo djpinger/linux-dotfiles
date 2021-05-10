@@ -1,0 +1,185 @@
+#
+# MAIN
+#
+if [[ -t 0 && $- = *i* ]]
+then
+    stty -ixon
+fi
+unset AWS_PROFILE
+export PATH=~/.rbenv/shims:~/bin:/usr/local/opt/terraform@0.11/bin:/usr/local/bin:/usr/local/sbin:~/bin:/usr/local/Cellar:/usr/local/opt/coreutils/libexec/gnubin:$PATH
+eval `keychain --eval --agents ssh --inherit any id_rsa pauls-ops.pem pauls-dev.pem`
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+if [ -x /usr/bin/dircolors  ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    #alias ls='ls --color=auto'
+    #alias dir='dir --color=auto'
+    #alias vdir='vdir --color=auto'
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+fi
+[ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
+[[ $commands[kubectl] ]] && source <(kubectl completion zsh)
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+#
+# EXPORTS
+#
+export EDITOR=vim
+export BLOCKSIZE=1k
+export CLICOLOR=1
+export LSCOLORS=ExFxBxDxCxegedabagacad
+export GOPATH=$HOME/go
+export PATH=$PATH:$GOPATH/bin
+export HOMEBREW_NO_AUTO_UPDATE=1
+#
+# RUBY
+#
+#export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@1.1)"
+#
+# NODE
+#
+export NVM_DIR="$HOME/.nvm"
+[ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
+[ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && . "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+#
+# AWS
+#
+#source $(which assume-role)
+export AWS_VAULT_PROMPT=terminal
+export AWS_SESSION_TOKEN_TTL=12h
+export AWS_CHAINED_SESSION_TOKEN_TTL=12h
+export AWS_ASSUME_ROLE_TTL=12h
+export AWS_FEDERATION_TOKEN_TTL=12h
+#
+# PYTHON
+#
+export PATH="/Users/paul.seymour/.pyenv/bin:$PATH"
+eval "$(pyenv init -)"
+#eval "$(pyenv virtualenv-init -)"
+#
+# POWERLINE
+#
+function _update_ps1() {
+    PS1=$(powerline-shell $?)
+}
+if [[ $TERM != linux && ! $PROMPT_COMMAND =~ _update_ps1 ]]; then
+    PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
+fi
+#
+# KUBERNETES
+#
+alias k='kubectl'
+alias kx='kubectx'
+alias klogs='k logs'
+alias kpods='k get pods'
+alias kservices='k get services --sort-by=.metadata.name'
+#
+# ALIASES
+#
+alias qfind="find . -name "                       # qfind:    Quickly search for file
+alias myip='echo $(curl http://ipecho.net/plain 2> /dev/null)'                  # myip:         Public facing IP Address
+alias netCons='lsof -i'                           # netCons:      Show all open TCP/IP sockets
+alias flushDNS='dscacheutil -flushcache'          # flushDNS:     Flush out the DNS Cache
+alias lsock='sudo /usr/sbin/lsof -i -P'           # lsock:        Display open sockets
+alias lsockU='sudo /usr/sbin/lsof -nP | grep UDP' # lsockU:       Display only open UDP sockets
+alias lsockT='sudo /usr/sbin/lsof -nP | grep TCP' # lsockT:       Display only open TCP sockets
+alias ipInfo0='ipconfig getpacket en0'            # ipInfo0:      Get info on connections for en0
+alias ipInfo1='ipconfig getpacket en1'            # ipInfo1:      Get info on connections for en1
+alias openPorts='sudo lsof -i | grep LISTEN'      # openPorts:    All listening connections
+alias showBlocked='sudo ipfw list'                # showBlocked:  All ipfw rules inc/ blocked IPs
+if [ -x /usr/bin/dircolors  ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    #alias ls='ls --color=auto'
+    #alias dir='dir --color=auto'
+    #alias vdir='vdir --color=auto'
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+fi
+alias ll='ls -alF'
+alias la='ls -hA'
+alias l='ls -CF'
+alias vi='vim'
+#alias vi='subl'
+alias nomore='find ./ -iname .DS_Store -delete'
+alias ls='exa'
+alias av='aws-vault'
+alias ave='aws-vault exec'
+alias awsid='aws sts get-caller-identity'
+alias dl='dw'
+alias tmc='tmux -CC'
+alias tma='tmux -CC attach'
+alias nnn='nnn -e'
+
+alias gc='git clone'
+alias gprune='git gc --prune=now'
+alias gp='git pull'
+alias gitgraph='git log --graph --abbrev-commit --pretty=oneline origin..master'
+alias gweb='gh repo view -b `git branch --show-current` -w'
+
+alias dcup='docker-compose up -d'
+alias dcstop='docker-compose stop'
+alias dcdestroy='docker-compose stop && docker-compose rm -f'
+alias dcps='docker-compose ps'
+alias dclogs='docker-compose logs -f'
+alias dcbuild='docker-compose build'
+alias dcvi='vi docker-compose.yml'
+alias dcpull='docker-compose pull'
+alias dc='docker-compose'
+
+alias ptop='bpytop'
+#alias cda='cd ~/g/arcadia'
+alias pbcopy='xclip -selection clipboard'
+alias pbpaste='xclip -selection clipboard -o'
+alias awsorg="aws organizations list-accounts --query 'Accounts[].[Name,Status]' --output text"
+#
+# FUNCTIONS
+#
+ff () { /usr/bin/find . -name "$@" ; }      # ff:       Find file under the current directory
+ffs () { /usr/bin/find . -name "$@"'*' ; }  # ffs:      Find file whose name starts with a given string
+ffe () { /usr/bin/find . -name '*'"$@" ; }  # ffe:      Find file whose name ends with a given string
+ww () { /usr/bin/curl http://wttr.in/"$@" ; }
+function gcb {
+  if [ -z "$1" ]; then
+    echo "Please enter branch name to create"
+    return 1
+  else
+    git checkout -b "$1"
+    git push -u origin "$1"
+  fi
+}
+function s() {
+  (
+    cd $(git rev-parse --show-toplevel)/ops;
+    bundle exec stax $*
+  )
+}
+function awsrole() {
+    unset AWS_VAULT
+    eval $(aws-vault exec $1 -- env | grep ^AWS_ | sed -e 's/^/export\ /')
+    export AWS_PROFILE=${1}
+    export DEFAULT_AWS_PROFILE=${1}
+    if [ $1 = "pa-west" ]; then
+        kubectx prod2
+        export cluster_name=prod2
+    elif [ $1 = "root" ]; then
+        echo "No eks in root account"
+    else
+        cluster=$(echo $1 | cut -d- -f1)1
+        kubectx $cluster
+        export cluster_name=$cluster
+    fi
+}
+function cda() {
+    cd ~/g/arcadia/"${1:-}"
+}
+function gco() {
+    git fetch
+    git checkout ${1}
+    git pull
+}
+
+# LAST STUFF HERE
+#
+set -o emacs
+export PATH=~/bin:$PATH
