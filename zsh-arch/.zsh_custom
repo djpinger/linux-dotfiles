@@ -6,7 +6,7 @@ then
     stty -ixon
 fi
 unset AWS_PROFILE
-export PATH=~/.rbenv/shims:~/bin:/usr/local/opt/terraform@0.11/bin:/usr/local/bin:/usr/local/sbin:~/bin:/usr/local/Cellar:/usr/local/opt/coreutils/libexec/gnubin:$PATH
+export PATH=~/.rbenv/shims:/usr/local/bin:/usr/local/sbin:$PATH
 eval `keychain --eval --agents ssh --inherit any id_rsa pauls-ops.pem pauls-dev.pem`
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 if [ -x /usr/bin/dircolors  ]; then
@@ -21,6 +21,7 @@ fi
 [ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
 [[ $commands[kubectl] ]] && source <(kubectl completion zsh)
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -f $HOME/.asdf/asdf.sh ] && . $HOME/.asdf/asdf.sh
 #
 # EXPORTS
 #
@@ -30,11 +31,10 @@ export CLICOLOR=1
 export LSCOLORS=ExFxBxDxCxegedabagacad
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin
-export HOMEBREW_NO_AUTO_UPDATE=1
 #
 # RUBY
 #
-#export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@1.1)"
+eval "$(rbenv init -)"
 #
 # NODE
 #
@@ -100,7 +100,7 @@ alias ll='ls -alF'
 alias la='ls -hA'
 alias l='ls -CF'
 alias vi='vim'
-#alias vi='subl'
+alias subl='/opt/sublime_text_3/sublime_text'
 alias nomore='find ./ -iname .DS_Store -delete'
 alias ls='exa'
 alias av='aws-vault'
@@ -156,7 +156,7 @@ function s() {
 }
 function awsrole() {
     unset AWS_VAULT
-    eval $(aws-vault exec $1 -- env | grep ^AWS_ | sed -e 's/^/export\ /')
+    eval $(aws-vault exec $1 -- env | grep '^AWS_' | sed -e 's/^/export\ /')
     export AWS_PROFILE=${1}
     export DEFAULT_AWS_PROFILE=${1}
     if [ $1 = "pa-west" ]; then
