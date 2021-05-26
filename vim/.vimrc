@@ -17,7 +17,7 @@ map <silent> <A-Left> :tabprevious<CR>
 map <silent> <A-Right> :tabnext<CR>
 set listchars=tab:>-,trail:~,extends:>,precedes:<
 set list
-set mouse=a
+"set mouse=a
 filetype plugin on
 call plug#begin('~/.vim/plugged')
 Plug 'hashivim/vim-packer'

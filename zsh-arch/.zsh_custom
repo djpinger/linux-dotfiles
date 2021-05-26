@@ -8,7 +8,8 @@ fi
 unset AWS_PROFILE
 export PATH=~/.rbenv/shims:/usr/local/bin:/usr/local/sbin:$PATH
 eval `keychain --eval --agents ssh --inherit any id_rsa pauls-ops.pem pauls-dev.pem`
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -f /usr/share/fzf/completion.zsh ] && source /usr/share/fzf/completion.zsh
+[ -f /usr/share/fzf/key-bindings.zsh ] && source /usr/share/fzf/key-bindings.zsh
 if [ -x /usr/bin/dircolors  ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
     #alias ls='ls --color=auto'
@@ -20,7 +21,6 @@ if [ -x /usr/bin/dircolors  ]; then
 fi
 [ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
 [[ $commands[kubectl] ]] && source <(kubectl completion zsh)
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [ -f $HOME/.asdf/asdf.sh ] && . $HOME/.asdf/asdf.sh
 #
 # EXPORTS
