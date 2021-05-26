@@ -76,6 +76,8 @@ alias kservices='k get services --sort-by=.metadata.name'
 #
 # ALIASES
 #
+alias services="systemctl list-units --type=service"
+alias slogs="journalctl -u"
 alias qfind="find . -name "                       # qfind:    Quickly search for file
 alias myip='echo $(curl http://ipecho.net/plain 2> /dev/null)'                  # myip:         Public facing IP Address
 alias netCons='lsof -i'                           # netCons:      Show all open TCP/IP sockets
