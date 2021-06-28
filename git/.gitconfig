@@ -5,8 +5,14 @@
 [core]
     excludesfile = ~/.gitignore_global
     hooksPath = ~/.git_hooks
+	pager = git-split-diffs --color | less -RFX
 [user]
     name = Paul Seymour
     email = paul.seymour@arcadia.com
 [pull]
 	rebase = false
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
