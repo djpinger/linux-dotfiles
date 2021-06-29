@@ -35,9 +35,9 @@ export HOMEBREW_NO_AUTO_UPDATE=1
 #
 # RUBY
 #
-export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@1.1)"
-export GEM_HOME="$HOME/gems"
-export PATH="$HOME/gems/bin:$PATH"
+#export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@1.1)"
+#export GEM_HOME="$HOME/gems"
+#export PATH="$HOME/gems/bin:$PATH"
 #
 # NODE
 #
@@ -47,6 +47,10 @@ export NVM_DIR="$HOME/.nvm"
 #
 # AWS
 #
+#
+# ASDF
+#
+[ -f $HOME/.asdf/asdf.sh ] && . $HOME/.asdf/asdf.sh
 #source $(which assume-role)
 export AWS_VAULT_PROMPT=terminal
 export AWS_SESSION_TOKEN_TTL=12h
