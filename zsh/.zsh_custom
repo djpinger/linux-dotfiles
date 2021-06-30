@@ -22,6 +22,8 @@ fi
 [ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
 [[ $commands[kubectl] ]] && source <(kubectl completion zsh)
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -f $HOME/.asdf/asdf.sh ] && . $HOME/.asdf/asdf.sh
+[ -f $HOME/.cargo/env ] && . $HOME/.cargo/env
 #
 # EXPORTS
 #
@@ -47,10 +49,6 @@ export NVM_DIR="$HOME/.nvm"
 #
 # AWS
 #
-#
-# ASDF
-#
-[ -f $HOME/.asdf/asdf.sh ] && . $HOME/.asdf/asdf.sh
 #source $(which assume-role)
 export AWS_VAULT_PROMPT=terminal
 export AWS_SESSION_TOKEN_TTL=12h
