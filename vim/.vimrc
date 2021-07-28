@@ -3,7 +3,7 @@ set t_Co=256
 set background=dark
 colorscheme molokai
 syntax on
-set paste
+"set paste
 set ruler
 set expandtab
 set tabstop=4
