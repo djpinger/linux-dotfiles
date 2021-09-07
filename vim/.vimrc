@@ -17,6 +17,7 @@ map <silent> <A-Left> :tabprevious<CR>
 map <silent> <A-Right> :tabnext<CR>
 set listchars=tab:>-,trail:~,extends:>,precedes:<
 set list
+set guifont=Fira\ Code\ 12
 "set mouse=a
 filetype plugin on
 call plug#begin('~/.vim/plugged')
@@ -32,6 +33,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'plasticboy/vim-markdown'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'tpope/vim-fugitive'
 call plug#end()
 map <F2> :NERDTreeToggle<CR>
 map <F3> :NERDTreeFocus<CR>

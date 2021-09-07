@@ -1,3 +1,4 @@
+#zmodload zsh/zprof
 autoload -Uz compinit
 compinit
 # Use powerline
@@ -21,25 +22,4 @@ fi
 typeset -g POWERLEVEL9K_KUBECONTEXT_SHOW_ON_COMMAND='kubectl|helm|kubens|kubectx|oc|istioctl|kogito'
 source ~/powerlevel10k/powerlevel10k.zsh-theme
 source ~/.zsh_custom
-source /usr/share/nvm/init-nvm.sh
-source /usr/share/nvm/init-nvm.sh
-source /usr/share/nvm/init-nvm.sh
-source /usr/share/nvm/init-nvm.sh
-source /usr/share/nvm/init-nvm.sh
-source /usr/share/nvm/init-nvm.sh
-source /usr/share/nvm/init-nvm.sh
-source /usr/share/nvm/init-nvm.sh
-source /usr/share/nvm/init-nvm.sh
-source /usr/share/nvm/init-nvm.sh
-source /usr/share/nvm/init-nvm.sh
-source /usr/share/nvm/init-nvm.sh
-source /usr/share/nvm/init-nvm.sh
-source /usr/share/nvm/init-nvm.sh
-source /usr/share/nvm/init-nvm.sh
-source /usr/share/nvm/init-nvm.sh
-source /usr/share/nvm/init-nvm.sh
-source /usr/share/nvm/init-nvm.sh
-source /usr/share/nvm/init-nvm.sh
-source /usr/share/nvm/init-nvm.sh
-source /usr/share/nvm/init-nvm.sh
-source /usr/share/nvm/init-nvm.sh
+#zprof

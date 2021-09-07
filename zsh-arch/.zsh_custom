@@ -77,11 +77,11 @@ export PATH=$PATH:$GOPATH/bin
 #
 # RUBY
 #
-eval "$(rbenv init -)"
+#eval "$(rbenv init -)"
 #
 # NODE
 #
-echo 'source /usr/share/nvm/init-nvm.sh' >> ~/.zshrc
+source /usr/share/nvm/init-nvm.sh
 #
 # AWS
 #
@@ -177,6 +177,8 @@ alias ptop='bpytop'
 alias pbcopy='xclip -selection clipboard'
 alias pbpaste='xclip -selection clipboard -o'
 alias awsorg="aws organizations list-accounts --query 'Accounts[].[Name,Status]' --output text"
+
+alias g='gvim --remote-tab-silent'
 #
 # FUNCTIONS
 #
@@ -210,6 +212,8 @@ function awsrole() {
     elif [ $1 = "da-west" ]; then
         kubectx dev2
         export cluster_name=dev2
+    elif [ $1 = "sa-west" ]; then
+        echo "No eks in stg west region"
     elif [ $1 = "root" ]; then
         echo "No eks in root account"
     else
@@ -231,3 +235,4 @@ function gco() {
 #
 #set -o emacs
 export PATH=~/bin:$PATH
+export PATH=$PATH:~/.emacs.d/bin
