@@ -159,7 +159,7 @@ alias gc='git clone'
 alias gprune='git gc --prune=now'
 alias gp='git pull'
 alias gitgraph='git log --graph --abbrev-commit --pretty=oneline origin..master'
-alias gweb='gh repo view -b `git branch --show-current` -w'
+alias gweb='gh repo view -b `git branch --show-current`/`git rev-parse --show-prefix` -w'
 alias gclean='git clean -fd'
 
 alias dcup='docker-compose up -d'
