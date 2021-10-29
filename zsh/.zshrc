@@ -12,8 +12,6 @@ fi
 #  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 #fi
 
-source ~/powerlevel10k/powerlevel10k.zsh-theme
-
 #if [ -z "$TMUX" ] # When zsh is started attach to current tmux session or create a new one
 #then
 #    tmux attach -t TMUX || tmux new -s TMUX
@@ -42,7 +40,5 @@ zstyle :bracketed-paste-magic paste-finish pastefinish
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-typeset -g POWERLEVEL9K_KUBECONTEXT_SHOW_ON_COMMAND='kubectl|helm|kubens|kubectx|oc|istioctl|kogito'
 
 source ~/.zsh_custom
