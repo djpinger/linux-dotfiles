@@ -47,7 +47,7 @@ then
 fi
 unset AWS_PROFILE
 export PATH=~/.rbenv/shims:/usr/local/bin:/usr/local/sbin:$PATH
-eval `keychain --eval --agents ssh --inherit any id_rsa pauls-ops.pem pauls-dev.pem`
+eval `keychain --eval --agents ssh --inherit any id_rsa pauls-ops.pem pauls-dev.pem id_ed25519`
 [ -f /usr/share/fzf/completion.zsh ] && source /usr/share/fzf/completion.zsh
 [ -f /usr/share/fzf/key-bindings.zsh ] && source /usr/share/fzf/key-bindings.zsh
 if [ -x /usr/bin/dircolors  ]; then
@@ -81,7 +81,7 @@ export PATH=$PATH:$GOPATH/bin
 #
 # NODE
 #
-source /usr/share/nvm/init-nvm.sh
+#source /usr/share/nvm/init-nvm.sh
 #
 # AWS
 #
