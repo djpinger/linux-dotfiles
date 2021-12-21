@@ -6,6 +6,10 @@ sudo apt install -y stow python3-pip keychain vim curl fonts-hack-ttf jq rbenv z
 eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
 brew bundle --file=brew/Brewfile
 #pip3 install powerline-shell
+if [ ! -d ~/.config ]
+    then
+    mkdir .config
+fi
 stow bash
 stow ssh
 stow tmux
