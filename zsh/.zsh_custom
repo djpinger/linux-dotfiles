@@ -46,7 +46,7 @@ then
     stty -ixon
 fi
 unset AWS_PROFILE
-eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+#eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
 export PATH=~/.rbenv/shims:/usr/local/bin:/usr/local/sbin:$PATH
 eval `keychain --eval --agents ssh --inherit any id_ed25519`
 [ -f /usr/share/fzf/completion.zsh ] && source /usr/share/fzf/completion.zsh
@@ -179,6 +179,9 @@ alias ptop='bpytop'
 alias pbcopy='xclip -selection clipboard'
 alias pbpaste='xclip -selection clipboard -o'
 alias awsorg="aws organizations list-accounts --query 'Accounts[].[Name,Status]' --output text"
+
+alias parui='paru -Syu --noconfirm'
+alias yayi='yay -Syu --noconfirm'
 
 alias g='gvim --remote-tab-silent'
 alias zoominstall='sudo pacman -U zoom_x86_64.pkg.tar.xz'
