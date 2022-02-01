@@ -17,5 +17,6 @@ stow vim
 stow powerline
 stow git
 stow zsh
+stow p10k
 #echo "if [ -f ~/.bash_custom ]; then . ~/.bash_custom; fi" >> ~/.bashrc
 dconf load /com/gexperts/Tilix/ < tilix/tilix.dconf
