@@ -228,7 +228,7 @@ function awsrole() {
         export cluster_name=$cluster
     fi
 }
-function cdg() {
+function cdp() {
     cd ~/g/picnic/"${1:-}"
 }
 function cdu() {
