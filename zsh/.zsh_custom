@@ -52,7 +52,7 @@ then
     stty -ixon
 fi
 unset AWS_PROFILE
-#eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+[ -f /home/linuxbrew/.linuxbrew/bin/brew ] && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
 export PATH=/var/lib/snapd/snap/bin:/usr/local/bin:/usr/local/sbin:$PATH
 eval `keychain --eval --agents ssh --inherit any id_ed25519`
 [ -f /usr/share/fzf/completion.zsh ] && source /usr/share/fzf/completion.zsh
@@ -69,6 +69,8 @@ fi
 [ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
 [[ $commands[kubectl] ]] && source <(kubectl completion zsh)
 [ -f /opt/asdf-vm/asdf.sh ] && . /opt/asdf-vm/asdf.sh
+[ -f /home/linuxbrew/.linuxbrew/opt/asdf/libexec/asdf.sh ] && . /home/linuxbrew/.linuxbrew/opt/asdf/libexec/asdf.sh
+export PATH=$PATH:$HOME/.asdf
 #if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
 #    source /etc/profile.d/vte.sh
 #fi
