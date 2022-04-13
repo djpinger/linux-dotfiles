@@ -41,7 +41,8 @@ zstyle :bracketed-paste-magic paste-finish pastefinish
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f /home/linuxbrew/.linuxbrew/bin/brew ]] || eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
 [[ ! -f /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme ]] || source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
-[[ ! -f /home/linuxbrew/.linuxbrew/opt/powerlevel10k/powerlevel10k.zsh-theme ]] || source $(brew --prefix)/opt/powerlevel10k/powerlevel10k.zsh-theme
+[[ ! -f /home/linuxbrew/.linuxbrew/opt/powerlevel10k/powerlevel10k.zsh-theme ]] || source /home/linuxbrew/.linuxbrew/opt/powerlevel10k/powerlevel10k.zsh-theme
+[[ ! -f /usr/local/opt/powerlevel10k/powerlevel10k.zsh-theme ]] || source /usr/local/opt/powerlevel10k/powerlevel10k.zsh-theme
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 source ~/.zsh_custom
