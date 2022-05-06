@@ -70,6 +70,7 @@ fi
 [ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
 [[ $commands[kubectl] ]] && source <(kubectl completion zsh)
 [ -f /opt/asdf-vm/asdf.sh ] && . /opt/asdf-vm/asdf.sh
+[ -f ~/.asdf/plugins/java/set-java-home.zsh ] && . ~/.asdf/plugins/java/set-java-home.zsh
 [ -f /home/linuxbrew/.linuxbrew/opt/asdf/libexec/asdf.sh ] && . /home/linuxbrew/.linuxbrew/opt/asdf/libexec/asdf.sh
 export PATH=$PATH:$HOME/.asdf
 #if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
@@ -214,6 +215,11 @@ function s() {
   (
     cd $(git rev-parse --show-toplevel)/ops;
     bundle exec stax $*
+  )
+}
+function t() {
+  (
+    $(git rev-parse --show-toplevel)/terraform/run $*
   )
 }
 function awsrole() {
