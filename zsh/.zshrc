@@ -46,3 +46,5 @@ zstyle :bracketed-paste-magic paste-finish pastefinish
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 source ~/.zsh_custom
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
