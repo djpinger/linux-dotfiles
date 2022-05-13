@@ -219,7 +219,7 @@ function s() {
 }
 function t() {
   (
-    $(git rev-parse --show-toplevel)/terraform/run $*
+    $(git rev-parse --show-toplevel)/ops/run $*
   )
 }
 function awsrole() {
