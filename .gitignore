@@ -6,3 +6,4 @@ vim/.vim/plugged
 powerline/.config/powerline-shell/__pycache__/
 ssh/.ssh/ssh_hosts
 vim/.vim/.netrwhist
+brew/Brewfile.lock.json
