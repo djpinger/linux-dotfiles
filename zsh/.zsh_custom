@@ -195,6 +195,8 @@ alias yayi='yay -Syu --noconfirm'
 
 alias g='gvim --remote-tab-silent'
 alias zoominstall='sudo pacman -U zoom_x86_64.pkg.tar.xz'
+alias weather='curl wttr.in/mnz'
+alias weather2='curl v2d.wttr.in/mnz'
 #
 # FUNCTIONS
 #

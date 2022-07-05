@@ -8,7 +8,7 @@
 	pager = git-split-diffs --color | less -RFX
 [user]
     name = Paul Seymour
-    email = paul.seymour@arcadia.com
+    email = pauls@picnicscore.net
 [pull]
 	rebase = false
 [filter "lfs"]
