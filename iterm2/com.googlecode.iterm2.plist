@@ -45,12 +45,34 @@
 			<key>Text</key>
 			<string></string>
 		</dict>
+		<key>0xf700-0x380000-0x7e</key>
+		<dict>
+			<key>Action</key>
+			<integer>20</integer>
+			<key>Label</key>
+			<string></string>
+			<key>Text</key>
+			<string></string>
+			<key>Version</key>
+			<integer>1</integer>
+		</dict>
 		<key>0xf701-0x300000</key>
 		<dict>
 			<key>Action</key>
 			<integer>6</integer>
 			<key>Text</key>
 			<string></string>
+		</dict>
+		<key>0xf701-0x380000-0x7d</key>
+		<dict>
+			<key>Action</key>
+			<integer>21</integer>
+			<key>Label</key>
+			<string></string>
+			<key>Text</key>
+			<string></string>
+			<key>Version</key>
+			<integer>1</integer>
 		</dict>
 		<key>0xf702-0x300000</key>
 		<dict>
@@ -66,6 +88,17 @@
 			<key>Text</key>
 			<string></string>
 		</dict>
+		<key>0xf702-0x380000-0x7b</key>
+		<dict>
+			<key>Action</key>
+			<integer>18</integer>
+			<key>Label</key>
+			<string></string>
+			<key>Text</key>
+			<string></string>
+			<key>Version</key>
+			<integer>1</integer>
+		</dict>
 		<key>0xf703-0x300000</key>
 		<dict>
 			<key>Action</key>
@@ -79,6 +112,17 @@
 			<integer>34</integer>
 			<key>Text</key>
 			<string></string>
+		</dict>
+		<key>0xf703-0x380000-0x7c</key>
+		<dict>
+			<key>Action</key>
+			<integer>19</integer>
+			<key>Label</key>
+			<string></string>
+			<key>Text</key>
+			<string></string>
+			<key>Version</key>
+			<integer>1</integer>
 		</dict>
 		<key>0xf729-0x100000</key>
 		<dict>
