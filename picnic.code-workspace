@@ -1,0 +1,26 @@
+{
+	"folders": [
+		{
+			"path": "../g/picnic/tf-modules"
+		},
+		{
+			"path": "../g/picnic/command-center"
+		},
+		{
+			"path": "../g/picnic/checkup-service"
+		},
+		{
+			"path": "../g/picnic/frontend-devops-operations"
+		},
+		{
+			"path": "../g/picnic/notification-lambdas"
+		},
+		{
+			"path": "../g/picnic/data-team-devops"
+		},
+		{
+			"path": "../g/picnic/devops-aws-management"
+		}
+	],
+	"settings": {}
+}
