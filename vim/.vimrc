@@ -1,7 +1,6 @@
 set encoding=UTF-8
 set t_Co=256
 set background=dark
-colorscheme molokai
 syntax on
 "set paste
 set ruler
@@ -21,6 +20,7 @@ set guifont=Fira\ Code\ 12
 "set mouse=a
 filetype plugin on
 call plug#begin('~/.vim/plugged')
+Plug 'sonph/onehalf', { 'rtp': 'vim' }
 Plug 'hashivim/vim-packer'
 Plug 'hashivim/vim-terraform'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
@@ -37,6 +37,7 @@ Plug 'tpope/vim-fugitive'
 call plug#end()
 map <F2> :NERDTreeToggle<CR>
 map <F3> :NERDTreeFocus<CR>
-silent! colorscheme dracula
-let g:airline_theme='dracula'
+silent! colorscheme onehalfdark
+let g:airline_theme='onehalfdark'
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+highlight Normal guibg=NONE ctermbg=NONE
