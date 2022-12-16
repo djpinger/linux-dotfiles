@@ -5,6 +5,7 @@ if [ ! -d ~/.config ]
 then
 	mkdir ~/.config
 fi
+stow asdf
 stow ssh
 stow tmux
 stow vim

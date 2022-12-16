@@ -8,6 +8,7 @@ fi
 
 [ -f ~/.ssh ] && mkdir ~/.ssh
 brew bundle --file=brew/Brewfile
+stow asdf
 stow zsh
 stow git
 stow ssh

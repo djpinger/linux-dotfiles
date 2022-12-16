@@ -10,6 +10,7 @@ if [ ! -d ~/.config ]
     then
     mkdir .config
 fi
+stow asdf
 stow bash
 stow ssh
 stow tmux

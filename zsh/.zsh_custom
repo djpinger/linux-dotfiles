@@ -176,6 +176,7 @@ alias gitgraph='git log --graph --abbrev-commit --pretty=oneline origin..master'
 alias gweb='gh repo view -b `git branch --show-current`/`git rev-parse --show-prefix` -w'
 alias gclean='git clean -fd'
 alias gpr='gh pr create --web'
+alias gd='ydiff -s -w0 --wrap'
 
 alias dcup='docker-compose up -d'
 alias dcstop='docker-compose stop'
@@ -227,6 +228,13 @@ function t() {
     $(git rev-parse --show-toplevel)/ops/run $*
   )
 }
+
+function basket() {
+  (
+    $(git rev-parse --show-toplevel)/ops/$*
+  )
+}
+
 function awsrole() {
     unset AWS_VAULT
     eval $(aws-vault exec $1 -- env | grep '^AWS_' | sed -e 's/^/export\ /')
