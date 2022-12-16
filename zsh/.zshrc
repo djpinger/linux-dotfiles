@@ -48,3 +48,7 @@ zstyle :bracketed-paste-magic paste-finish pastefinish
 source ~/.zsh_custom
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
+export PATH="/Users/paul/.rd/bin:$PATH"
+### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)

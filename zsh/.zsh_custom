@@ -74,6 +74,8 @@ fi
 [ -f ~/.asdf/plugins/java/set-java-home.zsh ] && . ~/.asdf/plugins/java/set-java-home.zsh
 [ -f /home/linuxbrew/.linuxbrew/opt/asdf/libexec/asdf.sh ] && . /home/linuxbrew/.linuxbrew/opt/asdf/libexec/asdf.sh
 export PATH=$PATH:$HOME/.asdf
+# gcloud stuff
+[ -f /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc ] && source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
 #if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
 #    source /etc/profile.d/vte.sh
 #fi
@@ -256,6 +258,11 @@ function gco() {
     git fetch
     git checkout ${1}
     git pull
+}
+
+function fd() {
+  preview="git diff $@ --color=always -- {-1}"
+  git diff $@ --name-only | fzf -m --ansi --preview $preview
 }
 
 # LAST STUFF HERE
