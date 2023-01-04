@@ -22,5 +22,7 @@
 			"path": "../g/picnic/devops-aws-management"
 		}
 	],
-	"settings": {}
+	"settings": {
+		"java.compile.nullAnalysis.mode": "disabled"
+	}
 }

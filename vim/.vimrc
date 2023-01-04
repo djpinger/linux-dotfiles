@@ -34,6 +34,7 @@ Plug 'plasticboy/vim-markdown'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'tpope/vim-fugitive'
+Plug 'Nopik/vim-nerdtree-direnter'
 call plug#end()
 map <F2> :NERDTreeToggle<CR>
 map <F3> :NERDTreeFocus<CR>
