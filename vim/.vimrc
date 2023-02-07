@@ -17,6 +17,7 @@ map <silent> <A-Right> :tabnext<CR>
 set listchars=tab:>-,trail:~,extends:>,precedes:<
 set list
 set guifont=Fira\ Code\ 12
+set nofoldenable
 "set mouse=a
 filetype plugin on
 call plug#begin('~/.vim/plugged')
