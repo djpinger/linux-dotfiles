@@ -12,7 +12,7 @@
 [profiles]
   [[default]]
     cursor_color = "#aaaaaa"
-    font = MesloLGS NF 11
+    font = MesloLGS NF 12
     foreground_color = "#ffffff"
     scrollback_infinite = True
     use_system_font = False

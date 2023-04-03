@@ -174,7 +174,7 @@ alias nnn='nnn -e'
 alias gc='git clone'
 alias gprune='git gc --prune=now'
 alias gp='git pull'
-alias gitgraph='git log --graph --abbrev-commit --pretty=oneline origin..master'
+alias gitgraph='git log --graph --abbrev-commit --pretty=oneline origin..main'
 alias gweb='gh repo view -b `git branch --show-current`/`git rev-parse --show-prefix` -w'
 alias gclean='git clean -fd'
 alias gpr='gh pr create --web'
@@ -225,9 +225,15 @@ function s() {
     bundle exec stax $*
   )
 }
-function t() {
+function d() {
   (
-    $(git rev-parse --show-toplevel)/ops/run $*
+    $(git rev-parse --show-toplevel)/ops/deploy $*
+  )
+}
+
+function b() {
+  (
+    $(git rev-parse --show-toplevel)/ops/build $*
   )
 }
 
