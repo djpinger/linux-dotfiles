@@ -36,3 +36,9 @@ stow bin
 #echo "if [ -f ~/.bash_custom ]; then . ~/.bash_custom; fi" >> ~/.bashrc
 dconf load /com/gexperts/Tilix/ < tilix/tilix.dconf
 wget -O - https://raw.githubusercontent.com/laurent22/joplin/master/Joplin_install_and_update.sh | bash
+if [ ! -d ~/.local/share/fonts ]
+    then
+    mkdir ~/.local/share/fonts
+fi
+wget https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Regular.ttf -P ~/.local/share/fonts
+fc-cache -fv
