@@ -203,6 +203,7 @@ alias g='gvim --remote-tab-silent'
 alias zoominstall='sudo pacman -U zoom_x86_64.pkg.tar.xz'
 alias weather='curl wttr.in/mnz'
 alias weather2='curl v2d.wttr.in/mnz'
+alias ytdl='yt-dlp --extract-audio --audio-format mp3 -o "%(title)s.%(ext)s"'
 #
 # FUNCTIONS
 #
@@ -284,5 +285,4 @@ function fd() {
 # LAST STUFF HERE
 #
 #set -o emacs
-export PATH=~/bin:$PATH
-export PATH=$PATH:~/.emacs.d/bin
+export PATH=~/.local/bin/:~/bin:$PATH
