@@ -238,6 +238,12 @@ function b() {
   )
 }
 
+function h() {
+  (
+    $(git rev-parse --show-toplevel)/ops/helm $*
+  )
+}
+
 function basket() {
   (
     $(git rev-parse --show-toplevel)/ops/$*
