@@ -204,6 +204,10 @@ alias zoominstall='sudo pacman -U zoom_x86_64.pkg.tar.xz'
 alias weather='curl wttr.in/mnz'
 alias weather2='curl v2d.wttr.in/mnz'
 alias ytdl='yt-dlp --extract-audio --audio-format mp3 -o "%(title)s.%(ext)s"'
+
+alias glogin='gcloud auth application-default login'
+alias gplist='gcloud projects list'
+alias gproject='gcloud config set project'
 #
 # FUNCTIONS
 #
