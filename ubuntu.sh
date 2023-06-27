@@ -14,7 +14,6 @@ curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | gpg --dearmor | sud
 sudo apt update
 sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin sublime-text google-cloud-cli google-cloud-cli-gke-gcloud-auth-plugin
 sudo usermod -aG docker $USER
-newgrp docker
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
 brew bundle --file=brew/Brewfile

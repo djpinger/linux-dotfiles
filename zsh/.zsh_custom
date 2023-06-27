@@ -207,8 +207,9 @@ alias weather2='curl v2d.wttr.in/mnz'
 alias ytdl='yt-dlp --extract-audio --audio-format mp3 -o "%(title)s.%(ext)s"'
 
 alias glogin='gcloud auth application-default login'
-alias gplist='gcloud projects list'
+alias gplist='gcloud projects list |  grep -v "^sys"'
 alias gproject='gcloud config set project'
+
 #
 # FUNCTIONS
 #
@@ -297,3 +298,5 @@ function fd() {
 #
 #set -o emacs
 export PATH=~/.local/bin/:~/bin:$PATH
+export GITHUB_TOKEN=$(gh auth token)
+export GITHUB_USER=djpinger
