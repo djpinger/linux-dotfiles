@@ -73,6 +73,7 @@ fi
 [ -f /usr/local/opt/asdf/libexec/asdf.sh ] && . /usr/local/opt/asdf/libexec/asdf.sh
 [ -f ~/.asdf/plugins/java/set-java-home.zsh ] && . ~/.asdf/plugins/java/set-java-home.zsh
 [ -f /home/linuxbrew/.linuxbrew/opt/asdf/libexec/asdf.sh ] && . /home/linuxbrew/.linuxbrew/opt/asdf/libexec/asdf.sh
+[ -f ~/fubectl.source ] && . ~/fubectl.source
 export PATH=$PATH:$HOME/.asdf
 export PATH="/home/linuxbrew/.linuxbrew/opt/openssl@3/bin:$PATH"
 export PKG_CONFIG_PATH="/home/linuxbrew/.linuxbrew/opt/openssl@3/lib/pkgconfig"
