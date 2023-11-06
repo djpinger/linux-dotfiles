@@ -7,7 +7,9 @@ if test ! "$(command -v brew)"; then
 fi
 
 [ -f ~/.ssh ] && mkdir ~/.ssh
+eval "$(/opt/homebrew/bin/brew shellenv)"
 brew bundle --file=brew/Brewfile
+gcloud components install gke-gcloud-auth-plugin
 stow asdf
 stow zsh
 stow git

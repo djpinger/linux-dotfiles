@@ -52,7 +52,6 @@ then
     stty -ixon
 fi
 unset AWS_PROFILE
-[ -f /home/linuxbrew/.linuxbrew/bin/brew ] && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
 [ -d /usr/local/Cellar ] && export PATH=$PATH:/usr/local/Cellar
 export PATH=/var/lib/snapd/snap/bin:/usr/local/bin:/usr/local/sbin:$PATH
 eval `keychain --eval --agents ssh --inherit any id_ed25519`
@@ -82,6 +81,10 @@ export PKG_CONFIG_PATH="/home/linuxbrew/.linuxbrew/opt/openssl@3/lib/pkgconfig"
 #if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
 #    source /etc/profile.d/vte.sh
 #fi
+#
+# RANCHER
+#
+export PATH=$PATH:$HOME/.rd/bin
 #
 # EXPORTS
 #
