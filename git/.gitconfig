@@ -22,3 +22,5 @@
     side-by-side = true
     line-numbers = true
     navigate = true
+[url "git@github.com:"]
+	insteadOf = https://github.com
