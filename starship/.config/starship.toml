@@ -1,3 +1,5 @@
+format = '$all$kubernetes$line_break$character'
+
 [aws]
 format = '\[[$symbol($profile)(\($region\))(\[$duration\])]($style)\]'
 
@@ -57,7 +59,8 @@ format = '\[[$symbol($version)]($style)\]'
 format = '\[[$symbol$branch]($style)\]'
 
 [gcloud]
-format = '\[[$symbol$account(@$domain)(\($region\))]($style)\]'
+#format = '\[[$symbol$account(@$domain)(\($project\))(\($region\))]($style)\]'
+format = '\[[$symbol$project(\($region\))]($style)\]'
 
 [git_branch]
 format = '\[[$symbol$branch]($style)\]'
@@ -97,6 +100,7 @@ format = '\[[$symbol($version)]($style)\]'
 
 [kubernetes]
 format = '\[[$symbol$context( \($namespace\))]($style)\]'
+disabled = false
 
 [lua]
 format = '\[[$symbol($version)]($style)\]'
