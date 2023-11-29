@@ -1,0 +1,78 @@
+#
+# KUBERNETES
+#
+alias k='kubectl'
+alias kx='kubectx'
+alias klogs='k logs'
+alias kpods='k get pods'
+alias kservices='k get services --sort-by=.metadata.name'
+alias k9='k9s -n default'
+alias lens='/usr/share/lens/open-lens'
+#
+# ALIASES
+#
+alias services="systemctl list-units --type=service"
+alias slogs="journalctl -u"
+alias qfind="find . -name "                                    # qfind:    Quickly search for file
+alias myip='echo $(curl http://ipecho.net/plain 2> /dev/null)' # myip:         Public facing IP Address
+alias netCons='lsof -i'                                        # netCons:      Show all open TCP/IP sockets
+alias flushDNS='dscacheutil -flushcache'                       # flushDNS:     Flush out the DNS Cache
+alias lsock='sudo /usr/sbin/lsof -i -P'                        # lsock:        Display open sockets
+alias lsockU='sudo /usr/sbin/lsof -nP | grep UDP'              # lsockU:       Display only open UDP sockets
+alias lsockT='sudo /usr/sbin/lsof -nP | grep TCP'              # lsockT:       Display only open TCP sockets
+alias ipInfo0='ipconfig getpacket en0'                         # ipInfo0:      Get info on connections for en0
+alias ipInfo1='ipconfig getpacket en1'                         # ipInfo1:      Get info on connections for en1
+alias openPorts='sudo lsof -i | grep LISTEN'                   # openPorts:    All listening connections
+alias showBlocked='sudo ipfw list'                             # showBlocked:  All ipfw rules inc/ blocked IPs
+
+alias ll='ls -alF'
+alias la='ls -hA'
+alias l='ls -CF'
+alias vi='vim'
+alias nomore='find ./ -iname .DS_Store -delete'
+alias ls='exa'
+alias av='aws-vault'
+alias ave='aws-vault exec'
+alias awsid='aws sts get-caller-identity'
+alias dl='dw'
+alias tmc='tmux -CC'
+alias tma='tmux -CC attach'
+alias nnn='nnn -e'
+
+alias gc='git clone'
+alias gprune='git gc --prune=now'
+alias gp='git pull'
+alias gitgraph='git log --graph --abbrev-commit --pretty=oneline origin..main'
+alias gweb='gh repo view -b `git branch --show-current`/`git rev-parse --show-prefix` -w'
+alias gclean='git clean -fd'
+alias gpr='gh pr create --web'
+alias gd='ydiff -s -w0 --wrap'
+
+alias dcup='docker compose up -d'
+alias dcstop='docker compose stop'
+alias dcdestroy='docker compose stop && docker compose rm -f'
+alias dcps='docker compose ps'
+alias dclogs='docker compose logs -f'
+alias dcbuild='docker compose build'
+alias dcvi='vi docker compose.yml'
+alias dcpull='docker compose pull'
+alias dc='docker compose'
+
+alias ptop='bpytop'
+#alias cda='cd ~/g/arcadia'
+alias pbcopy='xclip -selection clipboard'
+alias pbpaste='xclip -selection clipboard -o'
+alias awsorg="aws organizations list-accounts --query 'Accounts[].[Name,Status]' --output text"
+
+alias parui='paru -Syu --noconfirm'
+alias yayi='yay -Syu --noconfirm'
+
+alias g='gvim --remote-tab-silent'
+alias zoominstall='sudo pacman -U zoom_x86_64.pkg.tar.xz'
+alias weather='curl wttr.in/mnz'
+alias weather2='curl v2d.wttr.in/mnz'
+alias ytdl='yt-dlp --extract-audio --audio-format mp3 -o "%(title)s.%(ext)s"'
+
+alias glogin='gcloud auth application-default login'
+alias gplist='gcloud projects list |  grep -v "^sys"'
+alias gproject='gcloud config set project'

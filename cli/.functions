@@ -1,0 +1,49 @@
+#
+# FUNCTIONS
+#
+if [ -x /usr/bin/dircolors ]; then
+  test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+  #alias ls='ls --color=auto'
+  #alias dir='dir --color=auto'
+  #alias vdir='vdir --color=auto'
+  alias grep='grep --color=auto'
+  alias fgrep='fgrep --color=auto'
+  alias egrep='egrep --color=auto'
+fi
+
+ff() { /usr/bin/find . -name "$@"; }     # ff:       Find file under the current directory
+ffs() { /usr/bin/find . -name "$@"'*'; } # ffs:      Find file whose name starts with a given string
+ffe() { /usr/bin/find . -name '*'"$@"; } # ffe:      Find file whose name ends with a given string
+
+ww() { /usr/bin/curl http://wttr.in/"$@"; }
+
+function gcb {
+  if [ -z "$1" ]; then
+    echo "Please enter branch name to create"
+    return 1
+  else
+    git checkout -b "$1"
+    git push -u origin "$1"
+  fi
+}
+
+function awsrole() {
+  unset AWS_VAULT
+  eval $(aws-vault exec $1 -- env | grep '^AWS_' | sed -e 's/^/export\ /')
+  export AWS_PROFILE=${1}
+  export DEFAULT_AWS_PROFILE=${1}
+}
+
+function cdp() {
+  cd ~/g/picnic/"${1:-}"
+}
+
+function cdu() {
+  cd $(git rev-parse --show-toplevel)
+}
+
+function gco() {
+  git fetch
+  git checkout ${1}
+  git pull
+}
