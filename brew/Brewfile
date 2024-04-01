@@ -1,7 +1,6 @@
 tap "aws/tap"
 tap "homebrew/bundle"
 tap "homebrew/cask-fonts"
-tap "homebrew/core"
 tap "romkatv/powerlevel10k"
 brew "asdf"
 brew "aws-vault"

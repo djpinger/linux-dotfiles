@@ -41,7 +41,7 @@ export CLICOLOR=1
 export LSCOLORS=ExFxBxDxCxegedabagacad
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin
-export GOROOT=~/.asdf/installs/golang/1.20.2/go
+export GOROOT=~/.asdf/installs/golang/1.21.5/go
 #
 # RUBY
 #
