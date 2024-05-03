@@ -70,3 +70,12 @@ export PATH=~/.local/bin/:~/bin:$PATH
 export GITHUB_TOKEN=$(gh auth token)
 export GITHUB_USER=djpinger
 export PICNIC_WORKSPACE=$HOME/g/picnic
+=======
+#
+# MAC GNU STUFF
+#
+PATH="/opt/homebrew/opt/make/libexec/gnubin:$PATH"
+#
+# PICNIC STUFF
+#
+PICNIC_WORKSPACE=/Users/paul/g/picnic
