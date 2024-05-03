@@ -42,6 +42,7 @@ export LSCOLORS=ExFxBxDxCxegedabagacad
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin
 export GOROOT=~/.asdf/installs/golang/1.21.5/go
+export COLORTERM=truecolor
 #
 # RUBY
 #
@@ -69,7 +70,6 @@ export AWS_FEDERATION_TOKEN_TTL=12h
 export PATH=~/.local/bin/:~/bin:$PATH
 export GITHUB_TOKEN=$(gh auth token)
 export GITHUB_USER=djpinger
-export PICNIC_WORKSPACE=$HOME/g/picnic
 #
 # MAC GNU STUFF
 #
