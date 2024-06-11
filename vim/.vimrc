@@ -1,6 +1,6 @@
 set encoding=UTF-8
 set t_Co=256
-set background=dark
+set background=light
 syntax on
 "set paste
 set ruler
@@ -39,7 +39,7 @@ call plug#end()
 map <F2> :NERDTreeToggle<CR>
 map <F3> :NERDTreeFocus<CR>
 "silent! colorscheme onehalfdark
-silent! colorscheme dracula
+"silent! colorscheme dracula
 let g:airline_theme='dracula'
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 highlight Normal guibg=NONE ctermbg=NONE
