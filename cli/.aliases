@@ -76,6 +76,7 @@ alias ytdl='yt-dlp --extract-audio --audio-format mp3 -o "%(title)s.%(ext)s"'
 alias glogin='gcloud auth application-default login'
 alias gcplist='gcloud projects list |  grep -v "^sys"'
 alias gcpproject='gcloud config set project'
+alias gcpid='gcloud config get-value project'
 
 alias b='$(git rev-parse --show-toplevel)/ops/build'
 alias d='$(git rev-parse --show-toplevel)/ops/deploy'
