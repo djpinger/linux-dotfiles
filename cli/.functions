@@ -38,6 +38,10 @@ function cdp() {
   cd ~/g/picnic/"${1:-}"
 }
 
+function cdt() {
+  cd ~/temp/"${1:-}"
+}
+
 function cdu() {
   cd $(git rev-parse --show-toplevel)
 }
