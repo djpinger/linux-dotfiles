@@ -66,6 +66,7 @@ alias awsorg="aws organizations list-accounts --query 'Accounts[].[Name,Status]'
 
 alias parui='paru -Syu --noconfirm'
 alias yayi='yay -Syu --noconfirm'
+alias yayu='yay -Rsc'
 
 alias g='gvim --remote-tab-silent'
 alias zoominstall='sudo pacman -U zoom_x86_64.pkg.tar.xz'
