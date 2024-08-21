@@ -38,7 +38,7 @@ Plug 'Nopik/vim-nerdtree-direnter'
 call plug#end()
 map <F2> :NERDTreeToggle<CR>
 map <F3> :NERDTreeFocus<CR>
-"silent! colorscheme onehalfdark
+silent! colorscheme onehalfdark
 "silent! colorscheme dracula
 let g:airline_theme='dracula'
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif

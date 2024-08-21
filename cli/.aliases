@@ -7,7 +7,7 @@ alias klogs='k logs'
 alias kpods='k get pods'
 alias kservices='k get services --sort-by=.metadata.name'
 alias k9='k9s -n default'
-alias lens='/usr/share/lens/open-lens'
+alias krestart='k rollout restart deployment'
 #
 # ALIASES
 #
