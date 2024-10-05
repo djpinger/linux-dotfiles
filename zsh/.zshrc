@@ -55,6 +55,7 @@ export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=5'
 eval "$(starship init zsh)"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[[ ! -f /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]] || source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 source ~/.exports
 source ~/.functions
