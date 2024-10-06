@@ -81,14 +81,8 @@ key[PageDown]="${terminfo[knp]}"
 [[ ! -f /opt/homebrew/bin/brew ]] || eval "$(/opt/homebrew/bin/brew shellenv)"
 
 eval "$(fzf --zsh)"
-eval "$(zoxide init --cmd cd zsh)"
-#[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-#[[ ! -f /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]] || source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+eval "$(starship init zsh)"
 
 source ~/.exports
 source ~/.functions
 source ~/.aliases
-
-if [ "$TERM_PROGRAM" != "Apple_Terminal" ]; then
-  eval "$(oh-my-posh init zsh)"
-fi
