@@ -3,6 +3,8 @@ HISTFILE=~/.zsh_history
 HISTSIZE=10000
 SAVEHIST=10000
 setopt appendhistory
+setopt sharehistory
+setopt hist_ignore_space
 unsetopt nomatch
 typeset -g -A key
 DISABLE_UNTRACKED_FILES_DIRTY="true"
