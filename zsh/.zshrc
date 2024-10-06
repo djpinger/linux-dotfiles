@@ -43,7 +43,7 @@ zstyle ':completion:*:*:docker-*:*' option-stacking yes
 zstyle ':omz:plugins:eza' 'dirs-first' yes
 zstyle ':omz:plugins:eza' 'git-status' yes
 zstyle ':omz:plugins:eza' 'icons' yes
-zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
+#zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
 autoload -U compinit && compinit # reload completions for zsh-completions
 
