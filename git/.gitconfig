@@ -7,8 +7,8 @@
     hooksPath = ~/.git_hooks
 	pager = delta
 [user]
-    name = Paul Seymour
-    email = pauls@picnicscore.net
+	name = Paul Seymour
+    email = pauls@getpicnic.com
 [pull]
 	rebase = false
 [filter "lfs"]
@@ -24,3 +24,5 @@
     navigate = true
 [url "git@github.com:"]
 	insteadOf = https://github.com
+[credential]
+	username = define-paul
