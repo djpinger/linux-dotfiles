@@ -9,14 +9,9 @@ source "${ZINIT_HOME}/zinit.zsh"
 zinit light zsh-users/zsh-syntax-highlighting
 zinit light zsh-users/zsh-completions
 zinit light zsh-users/zsh-autosuggestions
-zinit light Aloxaf/fzf-tab
 zinit snippet OMZP::git
-zinit snippet OMZP::sudo
 zinit snippet OMZP::archlinux
-zinit snippet OMZP::aws
 zinit snippet OMZP::gcloud
-zinit snippet OMZP::kubectl
-zinit snippet OMZP::kubectx
 zinit snippet OMZP::command-not-found
 
 # history
@@ -36,13 +31,8 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 
 zstyle ':completion:*' match-lister 'm:{a-z}={A-Za-z}'
 zstyle ':completion:*' list-colors "{(s.:.)LS_COLORS}"
-zstyle ':completion:*' menu no
+zstyle ':completion:*' menu on
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
-zstyle ':completion:*:*:docker:*' option-stacking yes
-zstyle ':completion:*:*:docker-*:*' option-stacking yes
-zstyle ':omz:plugins:eza' 'dirs-first' yes
-zstyle ':omz:plugins:eza' 'git-status' yes
-zstyle ':omz:plugins:eza' 'icons' yes
 
 autoload -U compinit && compinit # reload completions for zsh-completions
 
