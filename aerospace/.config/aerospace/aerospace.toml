@@ -1,6 +1,13 @@
 # Place a copylof this config to ~/.aerospace.toml
 # After that, you can edit ~/.aerospace.toml to your liking
 
+# To have separate layouts for different apps:
+# alt-shift-;
+# pick the window
+# alt-shift-right (direction of other window to "merge" with
+# repeat until the windows you want in a diff layout are together
+# Then swap layouts via alt-shift-, or alt-shift-/
+
 # You can use it to add commands that run after login to macOS user session.
 # 'start-at-login' needs to be 'true' for 'after-login-command' to work
 # Available commands: https://nikitabobko.github.io/AeroSpace/commands
