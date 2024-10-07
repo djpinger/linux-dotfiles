@@ -4,7 +4,7 @@ fi
 unset AWS_PROFILE
 [ -d /usr/local/Cellar ] && export PATH=$PATH:/usr/local/Cellar
 export PATH=/var/lib/snapd/snap/bin:/usr/local/bin:/usr/local/sbin:$PATH
-eval $(keychain --eval --agents ssh --inherit any id_ed25519)
+eval $(keychain --eval --agents ssh --inherit any id_ed25519 id_ed25519_work)
 [ -f /usr/share/fzf/completion.zsh ] && source /usr/share/fzf/completion.zsh
 [ -f /usr/share/fzf/key-bindings.zsh ] && source /usr/share/fzf/key-bindings.zsh
 if [ -x /usr/bin/dircolors ]; then
@@ -69,7 +69,6 @@ export AWS_FEDERATION_TOKEN_TTL=12h
 
 export PATH=~/.local/bin/:~/bin:$PATH
 export GITHUB_TOKEN=$(gh auth token)
-export GITHUB_USER=djpinger
 #
 # MAC GNU STUFF
 #

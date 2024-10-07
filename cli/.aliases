@@ -47,6 +47,7 @@ alias gweb='gh repo view -b `git branch --show-current`/`git rev-parse --show-pr
 alias gclean='git clean -fd'
 alias gpr='gh pr create --web'
 alias gd='ydiff -s -w0 --wrap'
+alias gpsm='git submodule update --recursive'
 
 alias dcup='docker compose up -d'
 alias dcstop='docker compose stop'
