@@ -45,8 +45,7 @@ on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
 # Gaps between windows (inner-*) and between monitor edges (outer-*).
 # Possible values:
 # - Constant:     gaps.outer.top = 8
-# - Per monitor:  gaps.ou://iterm2.com/shell_integration/install_shell_integration_and_utilities.sh | bash
-ter.top = [{ monitor.main = 16 }, { monitor."some-pattern" = 32 }, 24]
+# - Per monitor:  gaps.outer.top = [{ monitor.main = 16 }, { monitor."some-pattern" = 32 }, 24]
 #                 In this example, 24 is a default value when there is no match.
 #                 Monitor pattern is the same as for 'workspace-to-monitor-force-assignment'.
 #                 See: https://nikitabobko.github.io/AeroSpace/guide#assign-workspaces-to-monitors
