@@ -1,11 +1,42 @@
+ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
+if [ ! -d "$ZINIT_HOME" ]; then
+  mkdir -p "$(dirname $ZINIT_HOME)"
+  git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+fi
+
+source "${ZINIT_HOME}/zinit.zsh"
+
+zinit light zsh-users/zsh-syntax-highlighting
+zinit light zsh-users/zsh-completions
+zinit light zsh-users/zsh-autosuggestions
+zinit snippet OMZP::git
+zinit snippet OMZP::archlinux
+zinit snippet OMZP::gcloud
+zinit snippet OMZP::command-not-found
+
 # history
 HISTFILE=~/.zsh_history
 HISTSIZE=10000
 SAVEHIST=10000
 setopt appendhistory
+setopt sharehistory
+setopt hist_ignore_space
+setopt hist_ignore_all_dups
+setopt hist_save_no_dups
+setopt hist_ignore_dups
+setopt hist_find_no_dups
 unsetopt nomatch
 typeset -g -A key
 DISABLE_UNTRACKED_FILES_DIRTY="true"
+
+zstyle ':completion:*' match-lister 'm:{a-z}={A-Za-z}'
+zstyle ':completion:*' list-colors "{(s.:.)LS_COLORS}"
+zstyle ':completion:*' menu on
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
+
+autoload -U compinit && compinit # reload completions for zsh-completions
+
+zinit cdreplay -q
 
 key[Home]="${terminfo[khome]}"
 key[End]="${terminfo[kend]}"
@@ -34,27 +65,12 @@ key[PageDown]="${terminfo[knp]}"
 [[ -n "${key[PageDown]}" ]] && bindkey -- "${key[PageDown]}" end-of-buffer-or-history
 [[ -n "${key[Shift - Tab]}" ]] && bindkey -- "${key[Shift - Tab]}" reverse-menu-complete
 
-export EDITOR="vim"
-alias vi="vim"
-
-autoload -U compinit && compinit # reload completions for zsh-completions
-
-# Colorize autosuggest
-export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=5'
-
 # Load brew
 [[ ! -f /home/linuxbrew/.linuxbrew/bin/brew ]] || eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
 [[ ! -f /opt/homebrew/bin/brew ]] || eval "$(/opt/homebrew/bin/brew shellenv)"
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-#[[ ! -f /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme ]] || source /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme
-#[[ ! -f /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme ]] || source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
-#[[ ! -f /home/linuxbrew/.linuxbrew/opt/powerlevel10k/powerlevel10k.zsh-theme ]] || source /home/linuxbrew/.linuxbrew/opt/powerlevel10k/powerlevel10k.zsh-theme
-#[[ ! -f /usr/local/opt/powerlevel10k/powerlevel10k.zsh-theme ]] || source /usr/local/opt/powerlevel10k/powerlevel10k.zsh-theme
-#[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+eval "$(fzf --zsh)"
 eval "$(starship init zsh)"
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 source ~/.exports
 source ~/.functions
