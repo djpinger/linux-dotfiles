@@ -16,9 +16,11 @@ stow git
 stow ssh
 stow tmux
 stow vim
-stow p10k
+stow neovim
+stow starhip
+stow aerospace
 $(brew --prefix)/opt/fzf/install
 # Specify the preferences directory
-defaults write com.googlecode.iterm2.plist PrefsCustomFolder -string "~/linux-dotfiles/iterm2"
+#defaults write com.googlecode.iterm2.plist PrefsCustomFolder -string "~/linux-dotfiles/iterm2"
 # Tell iTerm2 to use the custom preferences in the directory
-defaults write com.googlecode.iterm2.plist LoadPrefsFromCustomFolder -bool true
+#defaults write com.googlecode.iterm2.plist LoadPrefsFromCustomFolder -bool true
