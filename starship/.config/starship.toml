@@ -74,8 +74,10 @@ style_root = "bg:color_orange fg:color_fg0"
 format = '[ $user ]($style)'
 
 [hostname]
+style = "bg:color_orange fg:color_fg0"
 ssh_only = true
 disabled = false
+format = "[@ $hostname]($style)"
 
 [directory]
 style = "fg:color_fg0 bg:color_yellow"
