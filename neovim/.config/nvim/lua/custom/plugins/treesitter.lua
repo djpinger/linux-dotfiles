@@ -42,6 +42,8 @@ return {
         "query",
         "vimdoc",
         "c",
+        "hcl",
+        "yaml",
       },
       incremental_selection = {
         enable = true,
