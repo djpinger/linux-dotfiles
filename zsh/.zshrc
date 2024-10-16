@@ -32,10 +32,11 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 
 zstyle ':completion:*' match-lister 'm:{a-z}={A-Za-z}'
 zstyle ':completion:*' list-colors "{(s.:.)LS_COLORS}"
-zstyle ':completion:*' menu on
+zstyle ':completion:*' menu select
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
 
 autoload -U compinit && compinit # reload completions for zsh-completions
+compinit
 
 zinit cdreplay -q
 
