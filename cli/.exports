@@ -35,7 +35,7 @@ export PKG_CONFIG_PATH="/home/linuxbrew/.linuxbrew/opt/openssl@3/lib/pkgconfig"
 #
 # EXPORTS
 #
-export EDITOR=nvim
+export EDITOR=vim
 export BLOCKSIZE=1k
 export CLICOLOR=1
 export LSCOLORS=ExFxBxDxCxegedabagacad
