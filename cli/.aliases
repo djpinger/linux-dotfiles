@@ -85,6 +85,7 @@ alias d='$(git rev-parse --show-toplevel)/ops/deploy'
 
 alias tablet='scrcpy --video-codec=h265 --max-fps=60 --no-audio'
 
-alias z='zellij -l strider'
+alias z='zellij -s main'
+alias zf='zellij -l strider'
 alias zd='zellij delete-all-sessions'
-alias zk9s='zellij --layout $HOME/.config/zellij/k9s.kdl'
+alias zk9s='zellij -s k9s --layout $HOME/.config/zellij/k9s.kdl'
