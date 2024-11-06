@@ -1,0 +1,12 @@
+general.import = [
+  "~/.config/alacritty/catppuccin-mocha.toml"
+]
+[env]
+TERM = "xterm-256color"
+[window]
+opacity = 0.8
+blur = true
+option_as_alt = "Both"
+[font]
+normal.family = "MesloLGM Nerd Font Mono"
+size = 15
