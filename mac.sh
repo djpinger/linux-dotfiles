@@ -9,6 +9,7 @@ fi
 [ -f ~/.ssh ] && mkdir ~/.ssh
 eval "$(/opt/homebrew/bin/brew shellenv)"
 brew bundle --file=brew/Brewfile
+brew bundle --file=brew/Caskfile
 gcloud components install gke-gcloud-auth-plugin
 stow asdf
 stow zsh
@@ -19,10 +20,10 @@ stow vim
 stow neovim
 stow starhip
 stow cli
-stow aerospace
-stow wezterm
+stow alacritty
+stow zellij
 $(brew --prefix)/opt/fzf/install
 # Specify the preferences directory
-#defaults write com.googlecode.iterm2.plist PrefsCustomFolder -string "~/linux-dotfiles/iterm2"
+defaults write com.googlecode.iterm2.plist PrefsCustomFolder -string "~/linux-dotfiles/iterm2"
 # Tell iTerm2 to use the custom preferences in the directory
-#defaults write com.googlecode.iterm2.plist LoadPrefsFromCustomFolder -bool true
+defaults write com.googlecode.iterm2.plist LoadPrefsFromCustomFolder -bool true

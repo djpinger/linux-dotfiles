@@ -23,16 +23,16 @@ if [ ! -d ~/.config ]
     mkdir .config
 fi
 stow asdf
-stow bash
+stow zsh
+stow git
 stow ssh
 stow tmux
 stow vim
-stow powerline
-stow git
-stow zsh
-stow p10k
-stow terminator
-stow bin
+stow neovim
+stow starhip
+stow cli
+stow alacritty
+stow zellij
 #echo "if [ -f ~/.bash_custom ]; then . ~/.bash_custom; fi" >> ~/.bashrc
 dconf load /com/gexperts/Tilix/ < tilix/tilix.dconf
 wget -O - https://raw.githubusercontent.com/laurent22/joplin/master/Joplin_install_and_update.sh | bash
