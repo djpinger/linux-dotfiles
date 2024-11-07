@@ -9,7 +9,7 @@ fi
 [ -f ~/.ssh ] && mkdir ~/.ssh
 eval "$(/opt/homebrew/bin/brew shellenv)"
 brew bundle --file=brew/Brewfile
-brew bundle --file=brew/Caskfile
+brew bundle --file=brew/Mac
 gcloud components install gke-gcloud-auth-plugin
 stow asdf
 stow zsh
@@ -18,7 +18,7 @@ stow ssh
 stow tmux
 stow vim
 stow neovim
-stow starhip
+stow starship
 stow cli
 stow alacritty
 stow zellij

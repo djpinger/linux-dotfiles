@@ -17,6 +17,7 @@ map <silent> <A-Right> :tabnext<CR>
 set listchars=tab:>-,trail:~,extends:>,precedes:<
 set list
 set nofoldenable
+set termguicolors
 "set mouse=a
 filetype plugin on
 call plug#begin('~/.vim/plugged')
@@ -33,13 +34,14 @@ Plug 'airblade/vim-gitgutter'
 Plug 'plasticboy/vim-markdown'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'catppuccin/vim', { 'as': 'catppuccin' }
 Plug 'tpope/vim-fugitive'
 Plug 'Nopik/vim-nerdtree-direnter'
 call plug#end()
 map <F2> :NERDTreeToggle<CR>
 map <F3> :NERDTreeFocus<CR>
-silent! colorscheme onehalfdark
+silent! colorscheme catppuccin_mocha
 "silent! colorscheme dracula
-let g:airline_theme='dracula'
+let g:airline_theme='catppuccin_mocha'
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 highlight Normal guibg=NONE ctermbg=NONE

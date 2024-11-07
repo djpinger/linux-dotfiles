@@ -1,3 +1,8 @@
+brew "git"
+brew "jq"
+brew "neovim"
+brew "stow"
+brew "tmux"
 cask "alacritty"
 cask "google-cloud-sdk"
 cask "font-hack-nerd-font"

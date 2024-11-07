@@ -1,7 +1,7 @@
 #!/bin/bash
 
 sudo apt update
-sudo apt install -y stow python3-pip keychain vim curl jq zsh tmux libpq-dev apt-transport-https terminator net-tools tilix
+sudo apt install -y stow python3-pip keychain vim curl jq zsh tmux libpq-dev apt-transport-https net-tools kubectx neovim alacritty
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
 echo \
   "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
@@ -29,7 +29,7 @@ stow ssh
 stow tmux
 stow vim
 stow neovim
-stow starhip
+stow starship
 stow cli
 stow alacritty
 stow zellij
