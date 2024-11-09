@@ -40,5 +40,6 @@ if [ ! -d ~/.local/share/fonts ]
     then
     mkdir ~/.local/share/fonts
 fi
-wget https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Regular.ttf -P ~/.local/share/fonts
+wget https://www.naurwhal.com/fonts/MesloLGMNerdFontMono-Regular.ttf -P ~/.local/share/fonts
+wget https://www.naurwhal.com/fonts/MesloLGSNerdFontMono-Regular.ttf -P ~/.local/share/fonts
 fc-cache -fv
