@@ -36,7 +36,7 @@ alias ave='aws-vault exec'
 alias awsid='aws sts get-caller-identity'
 alias dl='dw'
 alias tmc='tmux -CC'
-alias tma='tmux -CC attach'
+alias tma='tmux attach'
 alias nnn='nnn -e'
 
 alias gc='git clone'
