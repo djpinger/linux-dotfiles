@@ -8,6 +8,8 @@ alias kpods='k get pods'
 alias kservices='k get services --sort-by=.metadata.name'
 alias k9='k9s -n default'
 alias krestart='k rollout restart deployment'
+alias kevents='kubectl events'
+alias kwarn='kevents --types=Warning'
 #
 # ALIASES
 #
@@ -36,7 +38,7 @@ alias ave='aws-vault exec'
 alias awsid='aws sts get-caller-identity'
 alias dl='dw'
 alias tmc='tmux -CC'
-alias tma='tmux attach'
+alias tma='tmux -CC attach'
 alias nnn='nnn -e'
 
 alias gc='git clone'
