@@ -7,8 +7,8 @@
     hooksPath = ~/.git_hooks
 	pager = delta
 [user]
-	name = Paul Seymour
-    email = pauls@getpicnic.com
+	name = djpinger
+    email = 13647089+djpinger@users.noreply.github.com
 [pull]
 	rebase = false
 [filter "lfs"]
@@ -25,4 +25,4 @@
 [url "git@github.com:"]
 	insteadOf = https://github.com
 [credential]
-	username = define-paul
+	username = djpinger
