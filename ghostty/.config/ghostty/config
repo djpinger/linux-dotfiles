@@ -1,0 +1,5 @@
+font-family = "MesloLGS Nerd Font Mono"
+font-size = 16
+font-feature = -liga
+theme = catppuccin-mocha
+quit-after-last-window-closed = true
