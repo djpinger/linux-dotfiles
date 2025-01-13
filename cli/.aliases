@@ -10,6 +10,7 @@ alias k9='k9s -n default'
 alias krestart='k rollout restart deployment'
 alias kevents='kubectl events'
 alias kwarn='kevents --types=Warning'
+alias kcdev='kubectx main-dev-cluster && kubectl port-forward --namespace kubecost deployment/kubecost-cost-analyzer 9090'
 #
 # ALIASES
 #
