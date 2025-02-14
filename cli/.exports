@@ -31,7 +31,8 @@ export PATH=$PATH:$HOME/.asdf
 export PATH="/home/linuxbrew/.linuxbrew/opt/openssl@3/bin:$PATH"
 export PKG_CONFIG_PATH="/home/linuxbrew/.linuxbrew/opt/openssl@3/lib/pkgconfig"
 # gcloud stuff
-[ -f /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc ] && source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
+[ -f /opt/homebrew/share/zsh/site-functions/_google_cloud_sdk ] && source "/opt/homebrew/share/zsh/site-functions/_google_cloud_sdk"
+export PATH=$PATH:/opt/homebrew/share/google-cloud-sdk/bin
 #if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
 #    source /etc/profile.d/vte.sh
 #fi
@@ -46,6 +47,7 @@ export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin
 export GOROOT=~/.asdf/installs/golang/1.21.5/go
 export COLORTERM=truecolor
+export TERM=xterm-256color
 #
 # RUBY
 #
@@ -76,6 +78,7 @@ export GITHUB_TOKEN=$(gh auth token)
 # MAC GNU STUFF
 #
 PATH="/opt/homebrew/opt/make/libexec/gnubin:$PATH"
+PATH="$PATH:$HOME/.rd/bin"
 #
 # PICNIC STUFF
 #
