@@ -20,8 +20,7 @@ stow vim
 stow neovim
 stow starship
 stow cli
-stow alacritty
-stow zellij
+stow ghostty
 $(brew --prefix)/opt/fzf/install
 # Specify the preferences directory
 defaults write com.googlecode.iterm2.plist PrefsCustomFolder -string "~/linux-dotfiles/iterm2"
