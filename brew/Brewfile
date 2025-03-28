@@ -1,5 +1,4 @@
 tap "aws/tap"
-tap "homebrew/bundle"
 brew "asdf"
 brew "aws-vault"
 brew "awscli"
