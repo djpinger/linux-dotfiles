@@ -1,7 +1,7 @@
 #!/bin/bash
 
 sudo apt update
-sudo apt install -y stow python3-pip keychain vim curl jq zsh tmux libpq-dev apt-transport-https net-tools kubectx neovim alacritty
+sudo apt install -y stow python3-pip vim curl jq zsh tmux libpq-dev apt-transport-https net-tools kubectx neovim
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
 echo \
   "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
@@ -31,8 +31,7 @@ stow vim
 stow neovim
 stow starship
 stow cli
-stow alacritty
-stow zellij
+stow ghostty
 #echo "if [ -f ~/.bash_custom ]; then . ~/.bash_custom; fi" >> ~/.bashrc
 dconf load /com/gexperts/Tilix/ < tilix/tilix.dconf
 wget -O - https://raw.githubusercontent.com/laurent22/joplin/master/Joplin_install_and_update.sh | bash
@@ -43,3 +42,4 @@ fi
 wget https://www.naurwhal.com/fonts/MesloLGMNerdFontMono-Regular.ttf -P ~/.local/share/fonts
 wget https://www.naurwhal.com/fonts/MesloLGSNerdFontMono-Regular.ttf -P ~/.local/share/fonts
 fc-cache -fv
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/mkasberg/ghostty-ubuntu/HEAD/install.sh)"
