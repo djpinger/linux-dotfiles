@@ -66,6 +66,7 @@ key[PageDown]="${terminfo[knp]}"
 [[ -n "${key[PageUp]}" ]] && bindkey -- "${key[PageUp]}" beginning-of-buffer-or-history
 [[ -n "${key[PageDown]}" ]] && bindkey -- "${key[PageDown]}" end-of-buffer-or-history
 [[ -n "${key[Shift - Tab]}" ]] && bindkey -- "${key[Shift - Tab]}" reverse-menu-complete
+bindkey -e
 
 # Load brew
 [[ ! -f /home/linuxbrew/.linuxbrew/bin/brew ]] || eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
