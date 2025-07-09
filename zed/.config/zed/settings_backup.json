@@ -8,7 +8,7 @@
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
   "icon_theme": "VSCode Icons (Dark)",
-  "agent": {
+  "assistant": {
     "default_model": {
       "provider": "anthropic",
       "model": "claude-3-7-sonnet-latest"

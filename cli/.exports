@@ -84,3 +84,9 @@ PATH="$PATH:$HOME/.rd/bin"
 # PICNIC STUFF
 #
 PICNIC_WORKSPACE=/Users/paul/g/picnic
+#
+# BUN STUFF
+#
+[ -s "/Users/paul/.bun/_bun" ] && source "/Users/paul/.bun/_bun"
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
