@@ -7,13 +7,12 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
-  "icon_theme": "VSCode Icons (Dark)",
+  "icon_theme": "Catppuccin Mocha",
   "agent": {
     "default_model": {
       "provider": "anthropic",
       "model": "claude-3-7-sonnet-latest"
-    },
-    "version": "2"
+    }
   },
   "telemetry": {
     "metrics": false,
@@ -34,5 +33,15 @@
     "mode": "system",
     "light": "One Light",
     "dark": "Catppuccin Mocha"
+  },
+  "file_types": {
+    "Helm": [
+      "**/templates/**/*.tpl",
+      "**/templates/**/*.yaml",
+      "**/templates/**/*.yml",
+      "**/helmfile.d/**/*.yaml",
+      "**/helmfile.d/**/*.yml",
+      "**/values*.yaml"
+    ]
   }
 }

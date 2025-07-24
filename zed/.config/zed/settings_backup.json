@@ -8,7 +8,7 @@
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
   "icon_theme": "VSCode Icons (Dark)",
-  "assistant": {
+  "agent": {
     "default_model": {
       "provider": "anthropic",
       "model": "claude-3-7-sonnet-latest"
@@ -34,5 +34,15 @@
     "mode": "system",
     "light": "One Light",
     "dark": "Catppuccin Mocha"
+  },
+  "file_types": {
+    "Helm": [
+      "**/templates/**/*.tpl",
+      "**/templates/**/*.yaml",
+      "**/templates/**/*.yml",
+      "**/helmfile.d/**/*.yaml",
+      "**/helmfile.d/**/*.yml",
+      "**/values*.yaml"
+    ]
   }
 }
