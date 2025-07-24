@@ -6,12 +6,12 @@ then
 	mkdir ~/.config
 fi
 stow asdf
+stow zsh
+stow git
 stow ssh
 stow tmux
 stow vim
+stow neovim
 stow starship
-stow git
-stow zsh
 stow cli
-stow alacritty
-stow zellij
+stow ghostty
