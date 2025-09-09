@@ -1,0 +1,7 @@
+https://docs.astrovim.com
+
+space-e             Open/Close explorer
+space-o             Switch to/from explorer
+space-[b            Left tab
+space-]b            Right tab
+set filetype=helm   As the command says
