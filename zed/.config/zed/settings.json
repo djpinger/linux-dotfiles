@@ -8,12 +8,11 @@
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
   "icon_theme": "Catppuccin Mocha",
-  "assistant": {
+  "agent": {
     "default_model": {
-      "provider": "anthropic",
-      "model": "claude-3-7-sonnet-latest"
+      "provider": "openrouter",
+      "model": "qwen/qwen3-coder:free"
     },
-    "version": "2"
   },
   "telemetry": {
     "metrics": false,
