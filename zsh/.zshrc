@@ -78,3 +78,8 @@ eval "$(starship init zsh)"
 source ~/.exports
 source ~/.functions
 source ~/.aliases
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/paul/.lmstudio/bin"
+# End of LM Studio CLI section
+
