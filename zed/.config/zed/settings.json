@@ -12,15 +12,16 @@
     "always_allow_tool_actions": true,
     "default_model": {
       "provider": "anthropic",
-      "model": "claude-sonnet-4-latest"
-    }
+      "model": "claude-sonnet-4-5-latest"
+    },
+    "expand_edit_card": false
   },
   "telemetry": {
     "metrics": false,
     "diagnostics": false
   },
   "vim_mode": false,
-  "ui_font_size": 16,
+  "ui_font_size": 14,
   "buffer_font_size": null,
   "buffer_font_family": "MesloLGM Nerd Font Mono",
   "terminal": {
@@ -29,7 +30,6 @@
   },
   "soft_wrap": "editor_width",
   "tab_size": 2,
-  "tab_width": 2,
   "theme": {
     "mode": "system",
     "light": "One Light",
