@@ -4,10 +4,7 @@ fi
 unset AWS_PROFILE
 [ -d /usr/local/Cellar ] && export PATH=$PATH:/usr/local/Cellar
 export PATH=/var/lib/snapd/snap/bin:/usr/local/bin:/usr/local/sbin:$PATH
-#eval $(keychain --eval --agents ssh --inherit any id_ed25519 id_ed25519_work)
-eval $(ssh-agent -s)
-[ -f ~/.ssh/id_ed25519_work ] && ssh-add ~/.ssh/id_ed25519_work
-[ -f ~/.ssh/id_ed25519 ] && ssh-add ~/.ssh/id_ed25519
+export SSH_AUTH_SOCK="~/.1password/agent.sock"
 [ -f /usr/share/fzf/completion.zsh ] && source /usr/share/fzf/completion.zsh
 [ -f /usr/share/fzf/key-bindings.zsh ] && source /usr/share/fzf/key-bindings.zsh
 if [ -x /usr/bin/dircolors ]; then

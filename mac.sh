@@ -27,3 +27,5 @@ $(brew --prefix)/opt/fzf/install
 defaults write com.googlecode.iterm2.plist PrefsCustomFolder -string "~/linux-dotfiles/iterm2"
 # Tell iTerm2 to use the custom preferences in the directory
 defaults write com.googlecode.iterm2.plist LoadPrefsFromCustomFolder -bool true
+[ -f ~/.1password ] && mkdir ~/.1password
+echo "After 1password is set up with the ssh agent, run: ln -s ~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock ~/.1password/agent.sock"
