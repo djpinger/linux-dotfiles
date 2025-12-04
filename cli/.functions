@@ -64,11 +64,12 @@ function gco() {
     echo "Please specify a branch name"
     return 1
   fi
-  
+
   git fetch || return 1
-  
+
   if git show-ref --verify --quiet refs/heads/"$1"; then
-    git checkout "$1" && git pull
+    git checkout "$1" || return 1
+    git pull
   else
     git checkout -b "$1" origin/"$1" 2>/dev/null || git checkout "$1"
   fi
