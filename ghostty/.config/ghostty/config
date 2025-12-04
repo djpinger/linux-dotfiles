@@ -1,8 +1,7 @@
 font-family = "MesloLGM Nerd Font Mono"
-font-size = 10
+font-size = 15
 #font-feature = -liga
 font-thicken = true
 font-style = Regular
 theme = catppuccin-mocha
 quit-after-last-window-closed = true
-background-opacity = 0.8
