@@ -1,5 +1,5 @@
 font-family = "MesloLGM Nerd Font Mono"
-font-size = 16
+font-size = 11
 #font-feature = -liga
 font-thicken = true
 font-style = Regular
@@ -9,3 +9,4 @@ quit-after-last-window-closed = true
 # Enable mouse reporting for tmux
 mouse-hide-while-typing = false
 click-repeat-interval = 0
+keybind = shift+enter=text:\x1b\r
