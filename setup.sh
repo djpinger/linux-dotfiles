@@ -36,8 +36,7 @@ install_common() {
     stow zsh
     stow git
     stow ssh
-    [ ! -d ~/.tmux/plugins ] && mkdir -p ~/.tmux/plugins
-    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+    [ ! -d ~/.tmux/plugins/tpm ] && git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
     stow tmux
     stow vim
     stow neovim
