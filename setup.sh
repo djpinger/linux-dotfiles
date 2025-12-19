@@ -13,18 +13,18 @@ fi
 # Function to download zellij plugins
 download_zellij_plugins() {
     echo "Downloading zellij plugins..."
-    mkdir -p ~/.config/zellij/plugins
+    mkdir -p ~/.local/share/zellij/plugins
 
     # Download zj-status-bar
-    curl -L -o ~/.config/zellij/plugins/zj-status-bar.wasm \
+    curl -L -o ~/.local/share/zellij/plugins/zj-status-bar.wasm \
         https://github.com/cristiand391/zj-status-bar/releases/download/0.3.0/zj-status-bar.wasm
 
     # Download room (zellij-room-manager)
-    curl -L -o ~/.config/zellij/plugins/room.wasm \
+    curl -L -o ~/.local/share/zellij/plugins/room.wasm \
         https://github.com/rvcas/room/releases/latest/download/room.wasm
 
     # Download zellij-newtab-plus
-    curl -L -o ~/.config/zellij/plugins/zellij-newtab-plus.wasm \
+    curl -L -o ~/.local/share/zellij/plugins/zellij-newtab-plus.wasm \
         https://github.com/imsnif/monocle/releases/latest/download/monocle.wasm
 
     echo "Zellij plugins downloaded successfully"

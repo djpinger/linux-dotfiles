@@ -143,7 +143,7 @@ keybinds clear-defaults=true {
         bind "Alt up" { MoveFocus "up"; }
         bind "Alt right" { MoveFocusOrTab "right"; }
         bind "Ctrl space" {
-            LaunchOrFocusPlugin "file:/Users/paul/.config/zellij/plugins/zellij-newtab-plus.wasm" {
+            LaunchOrFocusPlugin "new-tab-plus" {
                 floating true
                 use_zoxide "true"
             }
@@ -166,7 +166,7 @@ keybinds clear-defaults=true {
         bind "Alt Shift p" { ToggleGroupMarking; }
         bind "Ctrl q" { Quit; }
         bind "Ctrl y" {
-            LaunchOrFocusPlugin "file:/Users/paul/.config/zellij/plugins/room.wasm" {
+            LaunchOrFocusPlugin "room" {
                 floating true
                 ignore_case "true"
             }
@@ -397,12 +397,16 @@ plugins {
     welcome-screen location="zellij:session-manager" {
         welcome_screen true
     }
+    new-tab-plus location="file:zellij-newtab-plus.wasm"
+    room location="file:room.wasm"
+    status-bar-manager location="file:zj-status-bar.wasm"
 }
 
 // Plugins to load in the background when a new session starts
 // eg. "file:/path/to/my-plugin.wasm"
 // eg. "https://example.com/my-plugin.wasm"
 load_plugins {
+    plugin "status-bar-manager"
 }
 web_client {
     font "monospace"
