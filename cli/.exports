@@ -90,3 +90,7 @@ PICNIC_WORKSPACE=/Users/paul/g/picnic
 [ -s "/Users/paul/.bun/_bun" ] && source "/Users/paul/.bun/_bun"
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+#
+# ZOXIDE STUFF
+#
+eval "$(zoxide init zsh)"

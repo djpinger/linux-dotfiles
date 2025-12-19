@@ -24,6 +24,7 @@ install_common() {
     stow starship
     stow cli
     stow ghostty
+    stow zellij
 }
 
 # Function to set up macOS
@@ -98,7 +99,7 @@ create_config_dir() {
 
 # Function to set up Arch
 setup_arch() {
-    paru -Syu --noconfirm 1password discord stow exa asdf-vm starship github-cli ttf-meslo-nerd git-delta ghostty
+    paru -Syu --noconfirm 1password discord stow exa asdf-vm starship github-cli ttf-meslo-nerd git-delta ghostty zoxide zellij
     create_config_dir
     install_common
 }
