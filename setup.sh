@@ -10,6 +10,26 @@ if [ -z "$1" ]; then
     exit 1
 fi
 
+# Function to download zellij plugins
+download_zellij_plugins() {
+    echo "Downloading zellij plugins..."
+    mkdir -p ~/.config/zellij/plugins
+
+    # Download zj-status-bar
+    curl -L -o ~/.config/zellij/plugins/zj-status-bar.wasm \
+        https://github.com/cristiand391/zj-status-bar/releases/download/0.3.0/zj-status-bar.wasm
+
+    # Download room (zellij-room-manager)
+    curl -L -o ~/.config/zellij/plugins/room.wasm \
+        https://github.com/rvcas/room/releases/latest/download/room.wasm
+
+    # Download zellij-newtab-plus
+    curl -L -o ~/.config/zellij/plugins/zellij-newtab-plus.wasm \
+        https://github.com/imsnif/monocle/releases/latest/download/monocle.wasm
+
+    echo "Zellij plugins downloaded successfully"
+}
+
 # Function to install common packages
 install_common() {
     stow asdf
@@ -25,6 +45,7 @@ install_common() {
     stow cli
     stow ghostty
     stow zellij
+    download_zellij_plugins
 }
 
 # Function to set up macOS
