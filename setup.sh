@@ -13,21 +13,31 @@ fi
 # Function to download zellij plugins
 download_zellij_plugins() {
     echo "Downloading zellij plugins..."
-    mkdir -p ~/.local/share/zellij/plugins
+
+    # Determine the correct plugin directory based on OS
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        # macOS
+        PLUGIN_DIR="$HOME/Library/Application Support/org.Zellij-Contributors.Zellij/plugins"
+    else
+        # Linux and others
+        PLUGIN_DIR="$HOME/.local/share/zellij/plugins"
+    fi
+
+    mkdir -p "$PLUGIN_DIR"
 
     # Download zj-status-bar
-    curl -L -o ~/.local/share/zellij/plugins/zj-status-bar.wasm \
+    curl -L -o "$PLUGIN_DIR/zj-status-bar.wasm" \
         https://github.com/cristiand391/zj-status-bar/releases/download/0.3.0/zj-status-bar.wasm
 
     # Download room (zellij-room-manager)
-    curl -L -o ~/.local/share/zellij/plugins/room.wasm \
+    curl -L -o "$PLUGIN_DIR/room.wasm" \
         https://github.com/rvcas/room/releases/latest/download/room.wasm
 
     # Download zellij-newtab-plus
-    curl -L -o ~/.local/share/zellij/plugins/zellij-newtab-plus.wasm \
+    curl -L -o "$PLUGIN_DIR/zellij-newtab-plus.wasm" \
         https://github.com/imsnif/monocle/releases/latest/download/monocle.wasm
 
-    echo "Zellij plugins downloaded successfully"
+    echo "Zellij plugins downloaded successfully to $PLUGIN_DIR"
 }
 
 # Function to install common packages
@@ -56,7 +66,6 @@ setup_mac() {
     brew bundle --file=brew/Mac
     gcloud components install gke-gcloud-auth-plugin
     install_common
-    stow zed
     $(brew --prefix)/opt/fzf/install
     # Specify the preferences directory
     defaults write com.googlecode.iterm2.plist PrefsCustomFolder -string "~/linux-dotfiles/iterm2"
