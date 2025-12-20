@@ -1,5 +1,8 @@
+# Include machine-specific config (not tracked in git)
+config-file = ~/.config/ghostty/local.config
+
 font-family = "MesloLGM Nerd Font Mono"
-font-size = 11
+# font-size is set in local.config (machine-specific)
 #font-feature = -liga
 font-thicken = true
 font-style = Regular

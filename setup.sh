@@ -10,6 +10,31 @@ if [ -z "$1" ]; then
     exit 1
 fi
 
+# Function to set up ghostty local config
+setup_ghostty_config() {
+    if [ ! -f ~/.config/ghostty/local.config ]; then
+        echo ""
+        echo "Ghostty local configuration not found."
+        read -p "Enter font size for this machine (e.g., 12, 15, 18): " font_size
+
+        # Validate input is a number
+        if ! [[ "$font_size" =~ ^[0-9]+$ ]]; then
+            echo "Invalid font size. Using default of 15."
+            font_size=15
+        fi
+
+        cat > ~/.config/ghostty/local.config << EOF
+# Machine-specific ghostty configuration
+# This file is not tracked in git
+
+font-size = $font_size
+EOF
+        echo "Created ~/.config/ghostty/local.config with font-size = $font_size"
+    else
+        echo "Ghostty local config already exists, skipping."
+    fi
+}
+
 # Function to download zellij plugins
 download_zellij_plugins() {
     echo "Downloading zellij plugins..."
@@ -53,6 +78,7 @@ install_common() {
     stow starship
     stow cli
     stow ghostty
+    setup_ghostty_config
     stow zellij
     download_zellij_plugins
 }
@@ -66,7 +92,7 @@ setup_mac() {
     brew bundle --file=brew/Mac
     gcloud components install gke-gcloud-auth-plugin
     install_common
-    $(brew --prefix)/opt/fzf/install
+    [ ! -f ~/.fzf.zsh ] && $(brew --prefix)/opt/fzf/install
     # Specify the preferences directory
     defaults write com.googlecode.iterm2.plist PrefsCustomFolder -string "~/linux-dotfiles/iterm2"
     # Tell iTerm2 to use the custom preferences in the directory
