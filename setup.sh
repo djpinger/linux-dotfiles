@@ -15,7 +15,8 @@ setup_ghostty_config() {
     if [ ! -f ~/.config/ghostty/local.config ]; then
         echo ""
         echo "Ghostty local configuration not found."
-        read -p "Enter font size for this machine (e.g., 12, 15, 18): " font_size
+        echo "Recommended 11 for 1080p, 15 for 1440p/Retina."
+        read -p "Enter font size for this machine: " font_size
 
         # Validate input is a number
         if ! [[ "$font_size" =~ ^[0-9]+$ ]]; then
