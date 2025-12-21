@@ -1,0 +1,60 @@
+---
+- name: Check if Homebrew is installed
+  ansible.builtin.stat:
+    path: /opt/homebrew/bin/brew
+  register: homebrew_check
+
+- name: Install Homebrew
+  ansible.builtin.shell: |
+    NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  when: not homebrew_check.stat.exists
+
+- name: Update Homebrew
+  community.general.homebrew:
+    update_homebrew: true
+
+- name: Install common brew packages
+  community.general.homebrew:
+    name: "{{ brew_packages }}"
+    state: present
+
+- name: Install mac-specific brew packages
+  community.general.homebrew:
+    name: "{{ mac_brew_packages }}"
+    state: present
+
+- name: Install mac brew casks
+  community.general.homebrew_cask:
+    name: "{{ mac_brew_casks }}"
+    state: present
+
+- name: Install gcloud auth plugin
+  ansible.builtin.command:
+    cmd: gcloud components install gke-gcloud-auth-plugin
+  register: gcloud_result
+  changed_when: "'All components are up to date' not in gcloud_result.stderr"
+  failed_when: false
+
+- name: Check if fzf is configured
+  ansible.builtin.stat:
+    path: "{{ ansible_env.HOME }}/.fzf.zsh"
+  register: fzf_config
+
+- name: Install fzf shell integration
+  ansible.builtin.command:
+    cmd: "{{ homebrew_prefix }}/opt/fzf/install --all"
+  when: not fzf_config.stat.exists
+
+- name: Configure iTerm2 preferences directory
+  community.general.osx_defaults:
+    domain: com.googlecode.iterm2
+    key: PrefsCustomFolder
+    type: string
+    value: "~/linux-dotfiles/iterm2"
+
+- name: Configure iTerm2 to load custom preferences
+  community.general.osx_defaults:
+    domain: com.googlecode.iterm2
+    key: LoadPrefsFromCustomFolder
+    type: bool
+    value: true

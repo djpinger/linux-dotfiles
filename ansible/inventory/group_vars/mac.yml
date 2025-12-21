@@ -1,0 +1,22 @@
+---
+homebrew_prefix: /opt/homebrew
+
+# Core tools that Mac installs via brew (Ubuntu gets these from apt)
+# These are separate from brew_packages in all.yml which both platforms use
+mac_brew_packages:
+  - git
+  - jq
+  - neovim
+  - stow
+  - tmux
+
+# Mac-only casks (GUI apps, fonts via Homebrew Cask)
+mac_brew_casks:
+  - google-cloud-sdk
+  - font-hack-nerd-font
+  - font-meslo-lg-nerd-font
+  - rectangle
+  - stats
+  - raycast
+
+zellij_plugin_dir: "{{ ansible_env.HOME }}/Library/Application Support/org.Zellij-Contributors.Zellij/plugins"

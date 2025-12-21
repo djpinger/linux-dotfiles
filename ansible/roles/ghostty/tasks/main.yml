@@ -1,0 +1,29 @@
+---
+- name: Ensure ghostty config directory exists
+  ansible.builtin.file:
+    path: "{{ ansible_env.HOME }}/.config/ghostty"
+    state: directory
+    mode: '0755'
+
+- name: Check if ghostty local config exists
+  ansible.builtin.stat:
+    path: "{{ ansible_env.HOME }}/.config/ghostty/local.config"
+  register: ghostty_local_config
+
+- name: Prompt for ghostty font size
+  ansible.builtin.pause:
+    prompt: "Enter font size for ghostty (recommended: 11 for 1080p, 15 for 1440p/Retina)"
+  register: font_size_input
+  when: not ghostty_local_config.stat.exists
+
+- name: Set font size variable
+  ansible.builtin.set_fact:
+    ghostty_font_size: "{{ font_size_input.user_input | default('15') }}"
+  when: not ghostty_local_config.stat.exists
+
+- name: Create ghostty local config
+  ansible.builtin.template:
+    src: local.config.j2
+    dest: "{{ ansible_env.HOME }}/.config/ghostty/local.config"
+    mode: '0644'
+  when: not ghostty_local_config.stat.exists

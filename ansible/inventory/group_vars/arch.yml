@@ -1,0 +1,16 @@
+---
+arch_paru_packages:
+  - 1password
+  - discord
+  - stow
+  - exa
+  - asdf-vm
+  - starship
+  - github-cli
+  - ttf-meslo-nerd
+  - git-delta
+  - ghostty
+  - zoxide
+  - zellij
+
+zellij_plugin_dir: "{{ ansible_env.HOME }}/.local/share/zellij/plugins"

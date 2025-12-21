@@ -1,0 +1,13 @@
+---
+- name: Ensure zellij plugin directory exists
+  ansible.builtin.file:
+    path: "{{ zellij_plugin_dir }}"
+    state: directory
+    mode: '0755'
+
+- name: Download zellij plugins
+  ansible.builtin.get_url:
+    url: "{{ item.url }}"
+    dest: "{{ zellij_plugin_dir }}/{{ item.name }}.wasm"
+    mode: '0644'
+  loop: "{{ zellij_plugins }}"

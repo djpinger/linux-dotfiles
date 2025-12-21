@@ -1,0 +1,49 @@
+---
+dotfiles_dir: "{{ ansible_env.HOME }}/linux-dotfiles"
+
+# Dotfile packages to stow (all platforms)
+stow_packages:
+  - asdf
+  - zsh
+  - git
+  - ssh
+  - tmux
+  - vim
+  - neovim
+  - starship
+  - cli
+  - ghostty
+  - zellij
+
+# Zellij plugins to download (all platforms)
+zellij_plugins:
+  - name: zj-status-bar
+    url: https://github.com/cristiand391/zj-status-bar/releases/download/0.3.0/zj-status-bar.wasm
+  - name: room
+    url: https://github.com/rvcas/room/releases/latest/download/room.wasm
+  - name: monocle
+    url: https://github.com/imsnif/monocle/releases/latest/download/monocle.wasm
+
+# Homebrew packages installed on BOTH mac and ubuntu
+# (Arch uses paru for these - update arch.yml separately)
+# To add a new shared brew package, just add it here
+brew_packages:
+  - asdf
+  - bat
+  - btop
+  - eza
+  - fzf
+  - gh
+  - git-delta
+  - helm
+  - jid
+  - k9s
+  - kind
+  - kubectx
+  - starship
+  - terraform
+  - terragrunt
+  - tig
+  - kubecolor
+  - zoxide
+  - zellij

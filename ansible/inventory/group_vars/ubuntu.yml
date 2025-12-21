@@ -1,0 +1,31 @@
+---
+homebrew_prefix: /home/linuxbrew/.linuxbrew
+
+# Core tools installed via apt (Mac gets these from brew instead)
+# Ubuntu also uses brew_packages from all.yml via linuxbrew
+ubuntu_apt_packages:
+  - stow
+  - python3-pip
+  - vim
+  - curl
+  - jq
+  - zsh
+  - tmux
+  - libpq-dev
+  - apt-transport-https
+  - net-tools
+  - kubectx
+  - neovim
+
+docker_packages:
+  - docker-ce
+  - docker-ce-cli
+  - containerd.io
+  - docker-buildx-plugin
+  - docker-compose-plugin
+
+nerd_fonts:
+  - MesloLGMNerdFontMono-Regular.ttf
+  - MesloLGSNerdFontMono-Regular.ttf
+
+zellij_plugin_dir: "{{ ansible_env.HOME }}/.local/share/zellij/plugins"

@@ -1,0 +1,113 @@
+---
+- name: Update apt cache
+  ansible.builtin.apt:
+    update_cache: true
+  become: true
+
+- name: Install apt packages
+  ansible.builtin.apt:
+    name: "{{ ubuntu_apt_packages }}"
+    state: present
+  become: true
+
+- name: Add Docker GPG key
+  ansible.builtin.apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    keyring: /etc/apt/keyrings/docker.gpg
+    state: present
+  become: true
+
+- name: Get Ubuntu codename
+  ansible.builtin.command: lsb_release -cs
+  register: ubuntu_codename
+  changed_when: false
+
+- name: Get architecture
+  ansible.builtin.command: dpkg --print-architecture
+  register: dpkg_arch
+  changed_when: false
+
+- name: Add Docker repository
+  ansible.builtin.apt_repository:
+    repo: "deb [arch={{ dpkg_arch.stdout }} signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu {{ ubuntu_codename.stdout }} stable"
+    state: present
+    filename: docker
+  become: true
+
+- name: Add Sublime Text GPG key
+  ansible.builtin.apt_key:
+    url: https://download.sublimetext.com/sublimehq-pub.gpg
+    keyring: /etc/apt/trusted.gpg.d/sublimehq-archive.gpg
+    state: present
+  become: true
+
+- name: Add Sublime Text repository
+  ansible.builtin.apt_repository:
+    repo: "deb https://download.sublimetext.com/ apt/stable/"
+    state: present
+    filename: sublime-text
+  become: true
+
+- name: Update apt cache after adding repos
+  ansible.builtin.apt:
+    update_cache: true
+  become: true
+
+- name: Install Docker packages
+  ansible.builtin.apt:
+    name: "{{ docker_packages }}"
+    state: present
+  become: true
+
+- name: Install Sublime Text
+  ansible.builtin.apt:
+    name: sublime-text
+    state: present
+  become: true
+
+- name: Add user to docker group
+  ansible.builtin.user:
+    name: "{{ ansible_user_id }}"
+    groups: docker
+    append: true
+  become: true
+
+- name: Check if Homebrew is installed
+  ansible.builtin.stat:
+    path: /home/linuxbrew/.linuxbrew/bin/brew
+  register: homebrew_check
+
+- name: Install Homebrew
+  ansible.builtin.shell: |
+    NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  when: not homebrew_check.stat.exists
+
+- name: Install brew packages
+  community.general.homebrew:
+    name: "{{ brew_packages }}"
+    state: present
+  environment:
+    PATH: "{{ homebrew_prefix }}/bin:{{ ansible_env.PATH }}"
+
+- name: Ensure fonts directory exists
+  ansible.builtin.file:
+    path: "{{ ansible_env.HOME }}/.local/share/fonts"
+    state: directory
+    mode: '0755'
+
+- name: Download nerd fonts
+  ansible.builtin.get_url:
+    url: "https://www.naurwhal.com/fonts/{{ item }}"
+    dest: "{{ ansible_env.HOME }}/.local/share/fonts/{{ item }}"
+    mode: '0644'
+  loop: "{{ nerd_fonts }}"
+
+- name: Refresh font cache
+  ansible.builtin.command: fc-cache -fv
+  changed_when: true
+
+- name: Install Ghostty
+  ansible.builtin.shell: |
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/mkasberg/ghostty-ubuntu/HEAD/install.sh)"
+  args:
+    creates: /usr/bin/ghostty

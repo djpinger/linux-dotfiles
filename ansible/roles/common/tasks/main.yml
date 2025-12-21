@@ -1,0 +1,21 @@
+---
+- name: Ensure .config directory exists
+  ansible.builtin.file:
+    path: "{{ ansible_env.HOME }}/.config"
+    state: directory
+    mode: '0755'
+
+- name: Ensure .ssh directory exists
+  ansible.builtin.file:
+    path: "{{ ansible_env.HOME }}/.ssh"
+    state: directory
+    mode: '0700'
+
+- name: Stow dotfile packages
+  ansible.builtin.command:
+    cmd: stow {{ item }}
+    chdir: "{{ dotfiles_dir }}"
+  loop: "{{ stow_packages }}"
+  register: stow_result
+  changed_when: stow_result.rc == 0
+  failed_when: stow_result.rc != 0 and 'already points' not in stow_result.stderr

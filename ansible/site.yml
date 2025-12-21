@@ -1,0 +1,32 @@
+---
+# Main playbook for setting up development environment
+# Usage: ansible-playbook site.yml -e "target=mac|ubuntu|arch"
+
+- name: Setup development environment
+  hosts: localhost
+  gather_facts: true
+
+  pre_tasks:
+    - name: Validate target variable
+      ansible.builtin.fail:
+        msg: "Please specify target: ansible-playbook site.yml -e 'target=mac|ubuntu|arch'"
+      when: target is not defined or target not in ['mac', 'ubuntu', 'arch']
+
+    - name: Load target-specific variables
+      ansible.builtin.include_vars:
+        file: "inventory/group_vars/{{ target }}.yml"
+
+  roles:
+    # OS-specific setup first
+    - role: mac
+      when: target == 'mac'
+    - role: ubuntu
+      when: target == 'ubuntu'
+    - role: arch
+      when: target == 'arch'
+
+    # Common setup for all platforms
+    - role: common
+    - role: tmux
+    - role: ghostty
+    - role: zellij
