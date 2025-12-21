@@ -96,3 +96,11 @@ alias zd='zellij delete-all-sessions'
 alias zk9s='zellij -s k9s --layout $HOME/.config/zellij/k9s.kdl'
 
 alias pythond='docker run -it --name python -v .:/usr/src/app -w /usr/src/app python:3 /bin/bash'
+
+#
+# PODMAN - Use docker commands with podman (only if podman is installed)
+#
+if command -v podman &> /dev/null; then
+    alias docker='podman'
+    alias docker-compose='podman-compose'
+fi
