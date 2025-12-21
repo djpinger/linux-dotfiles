@@ -8,3 +8,5 @@ ssh/.ssh/ssh_hosts
 vim/.vim/.netrwhist
 brew/Brewfile.lock.json
 lazy-lock.json
+zellij/.config/zellij/plugins/*.wasm
+ghostty/.config/ghostty/local.config

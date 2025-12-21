@@ -10,18 +10,78 @@ if [ -z "$1" ]; then
     exit 1
 fi
 
+# Function to set up ghostty local config
+setup_ghostty_config() {
+    if [ ! -f ~/.config/ghostty/local.config ]; then
+        echo ""
+        echo "Ghostty local configuration not found."
+        echo "Recommended 11 for 1080p, 15 for 1440p/Retina."
+        read -p "Enter font size for this machine: " font_size
+
+        # Validate input is a number
+        if ! [[ "$font_size" =~ ^[0-9]+$ ]]; then
+            echo "Invalid font size. Using default of 15."
+            font_size=15
+        fi
+
+        cat > ~/.config/ghostty/local.config << EOF
+# Machine-specific ghostty configuration
+# This file is not tracked in git
+
+font-size = $font_size
+EOF
+        echo "Created ~/.config/ghostty/local.config with font-size = $font_size"
+    else
+        echo "Ghostty local config already exists, skipping."
+    fi
+}
+
+# Function to download zellij plugins
+download_zellij_plugins() {
+    echo "Downloading zellij plugins..."
+
+    # Determine the correct plugin directory based on OS
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        # macOS
+        PLUGIN_DIR="$HOME/Library/Application Support/org.Zellij-Contributors.Zellij/plugins"
+    else
+        # Linux and others
+        PLUGIN_DIR="$HOME/.local/share/zellij/plugins"
+    fi
+
+    mkdir -p "$PLUGIN_DIR"
+
+    # Download zj-status-bar
+    curl -L -o "$PLUGIN_DIR/zj-status-bar.wasm" \
+        https://github.com/cristiand391/zj-status-bar/releases/download/0.3.0/zj-status-bar.wasm
+
+    # Download room (zellij-room-manager)
+    curl -L -o "$PLUGIN_DIR/room.wasm" \
+        https://github.com/rvcas/room/releases/latest/download/room.wasm
+
+    # Download zellij-newtab-plus
+    curl -L -o "$PLUGIN_DIR/zellij-newtab-plus.wasm" \
+        https://github.com/imsnif/monocle/releases/latest/download/monocle.wasm
+
+    echo "Zellij plugins downloaded successfully to $PLUGIN_DIR"
+}
+
 # Function to install common packages
 install_common() {
     stow asdf
     stow zsh
     stow git
     stow ssh
+    [ ! -d ~/.tmux/plugins/tpm ] && git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
     stow tmux
     stow vim
     stow neovim
     stow starship
     stow cli
     stow ghostty
+    setup_ghostty_config
+    stow zellij
+    download_zellij_plugins
 }
 
 # Function to set up macOS
@@ -33,8 +93,7 @@ setup_mac() {
     brew bundle --file=brew/Mac
     gcloud components install gke-gcloud-auth-plugin
     install_common
-    stow zed
-    $(brew --prefix)/opt/fzf/install
+    [ ! -f ~/.fzf.zsh ] && $(brew --prefix)/opt/fzf/install
     # Specify the preferences directory
     defaults write com.googlecode.iterm2.plist PrefsCustomFolder -string "~/linux-dotfiles/iterm2"
     # Tell iTerm2 to use the custom preferences in the directory
@@ -96,7 +155,7 @@ create_config_dir() {
 
 # Function to set up Arch
 setup_arch() {
-    paru -Syu --noconfirm 1password discord stow exa asdf-vm starship github-cli ttf-meslo-nerd git-delta ghostty
+    paru -Syu --needed --noconfirm 1password discord stow exa asdf-vm starship github-cli ttf-meslo-nerd git-delta ghostty zoxide zellij
     create_config_dir
     install_common
 }

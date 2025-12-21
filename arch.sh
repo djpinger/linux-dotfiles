@@ -1,6 +1,6 @@
 #!/bin/bash
 
-paru -Syu --noconfirm 1password discord stow exa asdf-vm starship github-cli ttf-meslo-nerd git-delta ghostty
+paru -Syu --needed --noconfirm 1password discord stow exa asdf-vm starship github-cli ttf-meslo-nerd git-delta ghostty
 if [ ! -d ~/.config ]
 then
 	mkdir ~/.config
