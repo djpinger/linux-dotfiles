@@ -4,9 +4,9 @@ Personal dotfiles and configuration management for macOS, Ubuntu, and Arch Linux
 
 ## Overview
 
-This repository provides a comprehensive, cross-platform development environment configuration using [GNU Stow](https://www.gnu.org/software/stow/) for symlink management. It includes dotfiles, shell configurations, editor setups, terminal multiplexers, and development tools optimized for cloud-native and Kubernetes workflows.
+This repository provides a comprehensive, cross-platform development environment configuration using [Ansible](https://www.ansible.com/) for idempotent configuration management and [GNU Stow](https://www.gnu.org/software/stow/) for symlink management. It includes dotfiles, shell configurations, editor setups, terminal multiplexers, and development tools optimized for cloud-native and Kubernetes workflows.
 
-The setup script automates the entire installation process, handling package management, plugin installation, and OS-specific configurations.
+The Ansible-based setup script automates the entire installation process with full idempotency, handling package management, plugin installation, and OS-specific configurations.
 
 ## Included Configurations
 
@@ -102,8 +102,13 @@ The setup script automates the entire installation process, handling package man
 
 ## Prerequisites
 
-- Git
-- [GNU Stow](https://www.gnu.org/software/stow/)
+- **All platforms**: Git, curl (for uv installation)
+- **Arch Linux**: `paru` must be installed before running setup
+
+The setup script will automatically install:
+- `uv` (Python package manager)
+- Ansible (via uv)
+- All other dependencies via Ansible playbooks
 
 ## Installation
 
@@ -122,16 +127,36 @@ Run the setup script for your operating system:
 ./setup.sh [mac|ubuntu|arch]
 ```
 
-This will:
-- Install required packages and dependencies
-- Use GNU Stow to symlink configurations to your home directory
-- Set up Homebrew and install packages from Brewfiles
-- Download and configure plugins (tmux, zellij, etc.)
-- Configure OS-specific settings
+The script will:
+1. Install `uv` (Python package manager) if not present
+2. Install Ansible via uv
+3. Install required Ansible collections
+4. Run the idempotent playbook for your target OS
+
+This performs:
+- Package installation (OS-specific and cross-platform)
+- GNU Stow symlink creation for all dotfiles
+- Plugin installation (tmux, zellij)
+- OS-specific configurations
+- All operations are idempotent (safe to run multiple times)
+
+### Advanced Usage
+
+**Run specific roles only:**
+```bash
+cd ansible
+ansible-playbook site.yml -e "target=mac" --tags "common,tmux"
+```
+
+**Preview changes without applying (dry run):**
+```bash
+cd ansible
+ansible-playbook site.yml -e "target=mac" --check
+```
 
 ### Manual Setup
 
-To install individual configurations, use GNU Stow:
+To install individual configurations manually, use GNU Stow:
 
 ```bash
 stow zsh      # Install zsh configuration
@@ -140,61 +165,99 @@ stow tmux     # Install tmux configuration
 # etc.
 ```
 
-## Platform-Specific Notes
+## Adding Packages
 
-### macOS
-The macOS setup (`./setup.sh mac`) performs:
-- Installs Homebrew (if not present)
-- Installs packages from `brew/Brewfile` (cross-platform tools)
-- Installs packages from `brew/Mac` (macOS-specific tools)
-- Installs Google Cloud SDK with GKE auth plugin
-- Configures fzf shell integration
-- Configures iTerm2 to use preferences from `iterm2/` directory
-- Sets up 1Password SSH agent integration
-  - Creates `~/.1password/` directory
-  - Provides instructions to symlink the 1Password agent socket
-- Uses GNU Stow to symlink all dotfiles
+The Ansible configuration makes it easy to add new packages. Simply edit the appropriate YAML file and re-run `./setup.sh`.
 
-### Ubuntu
-The Ubuntu setup (`./setup.sh ubuntu`) performs:
-- Updates apt repositories
-- Installs base packages: stow, python3-pip, vim, curl, jq, zsh, tmux, neovim, kubectx
-- Installs Docker from official Docker repository
-  - Adds user to docker group
-  - Installs Docker Compose plugin
-- Installs Sublime Text from official repository
-- Installs Homebrew (Linuxbrew) for additional package management
-- Installs packages from `brew/Brewfile`
-- Downloads and installs MesloLG Nerd Font for terminal use
-- Installs Ghostty terminal from source
-- Uses GNU Stow to symlink all dotfiles
+### Homebrew Packages (Mac + Ubuntu)
 
-### Arch Linux
-The Arch setup (`./setup.sh arch`) performs:
-- Uses `paru` AUR helper for package installation
-- Installs essential packages: 1password, discord, stow, exa, asdf-vm, starship, github-cli, ttf-meslo-nerd, git-delta, ghostty, zoxide, zellij
-- Creates `~/.config` directory if needed
-- Uses GNU Stow to symlink all dotfiles
+Edit `ansible/inventory/group_vars/all.yml`:
+
+```yaml
+brew_packages:
+  - existing-package
+  - new-package        # Add here
+```
+
+### Mac-only Casks (GUI apps, fonts)
+
+Edit `ansible/inventory/group_vars/mac.yml`:
+
+```yaml
+mac_brew_casks:
+  - existing-cask
+  - new-cask           # Add here
+```
+
+### Ubuntu apt Packages
+
+Edit `ansible/inventory/group_vars/ubuntu.yml`:
+
+```yaml
+ubuntu_apt_packages:
+  - existing-package
+  - new-package        # Add here
+```
+
+### Arch paru Packages
+
+Edit `ansible/inventory/group_vars/arch.yml`:
+
+```yaml
+arch_paru_packages:
+  - existing-package
+  - new-package        # Add here
+```
+
+### Dotfiles to Stow
+
+Edit `ansible/inventory/group_vars/all.yml`:
+
+```yaml
+stow_packages:
+  - existing-dir
+  - new-dir            # Add here (must exist in repo root)
+```
+
+### Zellij Plugins
+
+Edit `ansible/inventory/group_vars/all.yml`:
+
+```yaml
+zellij_plugins:
+  - name: new-plugin
+    url: https://github.com/user/repo/releases/download/v1.0/plugin.wasm
+```
+
+### Package Location Reference
+
+| What | File | Variable |
+|------|------|----------|
+| Brew packages (mac+ubuntu) | `all.yml` | `brew_packages` |
+| Dotfiles to stow | `all.yml` | `stow_packages` |
+| Zellij plugins | `all.yml` | `zellij_plugins` |
+| Mac brew casks | `mac.yml` | `mac_brew_casks` |
+| Mac core tools (brew) | `mac.yml` | `mac_brew_packages` |
+| Ubuntu core tools (apt) | `ubuntu.yml` | `ubuntu_apt_packages` |
+| Ubuntu docker packages | `ubuntu.yml` | `docker_packages` |
+| Arch packages (paru) | `arch.yml` | `arch_paru_packages` |
 
 ## What Gets Automatically Configured
 
-The `setup.sh` script automates many setup tasks:
+The Ansible playbooks handle:
 
-### Common Setup (All Platforms)
-1. **Package Installation** - Installs Homebrew and all packages from Brewfiles
-2. **Dotfile Symlinking** - Uses GNU Stow to symlink configurations for:
-   - asdf, zsh, git, ssh, tmux, vim, neovim, starship, cli, ghostty, zellij
-3. **Plugin Management**:
-   - Clones tmux Plugin Manager (TPM) to `~/.tmux/plugins/tpm`
-   - Downloads Zellij plugins (zj-status-bar, room, monocle) to platform-specific plugin directory
-4. **Ghostty Configuration** - Interactively creates machine-specific local config for font size
+### All Platforms
+- **Package Installation** - Homebrew and all cross-platform packages
+- **Dotfile Symlinking** - GNU Stow for: asdf, zsh, git, ssh, tmux, vim, neovim, starship, cli, ghostty, zellij
+- **Plugin Management** - TPM (tmux), Zellij plugins
+- **Ghostty Configuration** - Machine-specific local config for font size
 
-### Platform Automation
-- **macOS**: Sets iTerm2 to use repository preferences, configures fzf, installs GKE auth plugin
-- **Ubuntu**: Installs and configures Docker, downloads Nerd Fonts, installs Ghostty from source
-- **Arch**: Uses paru for AUR packages
+### Platform-Specific
+- **macOS**: Homebrew, casks, iTerm2 preferences, fzf integration
+- **Ubuntu**: apt packages, Docker, Homebrew (Linuxbrew), Nerd Fonts, Ghostty
+- **Arch**: paru packages from AUR
 
-### What You Need to Do Manually
+### Manual Steps
 - Configure Git user name and email
 - Set up SSH keys
 - Install tmux plugins (launch tmux and press `prefix + I`)
@@ -272,32 +335,49 @@ This configuration includes numerous productivity-enhancing aliases and function
 
 ## Directory Structure
 
-Each subdirectory contains dotfiles that will be symlinked to your home directory when using GNU Stow:
-
 ```
 linux-dotfiles/
-├── asdf/              # asdf version manager config and .tool-versions
-├── bash/              # Bash shell configuration
-├── bin/bin/           # Custom utility scripts (backup, repo management)
-├── brew/              # Homebrew Brewfiles for package management
-├── cli/               # Shared CLI configuration (.aliases, .exports, .functions)
-├── ghostty/           # Ghostty terminal emulator config
-├── git/               # Git configuration, global gitignore, hooks
-├── iterm2/            # iTerm2 preferences (macOS)
-├── kind/              # Kubernetes in Docker configuration
-├── neovim/.config/    # Neovim configuration with AstroNvim
-├── p10k/              # Powerlevel10k theme configuration
-├── ssh/               # SSH client configuration
-├── starship/          # Starship prompt configuration
-├── tmux/              # tmux configuration
-├── vim/               # Vim configuration and plugins
-├── zed/               # Zed editor configuration
-├── zellij/            # Zellij terminal multiplexer config and layouts
-├── zsh/               # Zsh shell configuration
-└── setup.sh           # Automated setup script for mac/ubuntu/arch
+├── ansible/                      # Ansible configuration management
+│   ├── site.yml                  # Main playbook
+│   ├── inventory/
+│   │   ├── hosts.yml
+│   │   └── group_vars/
+│   │       ├── all.yml           # Shared config (all platforms)
+│   │       ├── mac.yml           # Mac-specific
+│   │       ├── ubuntu.yml        # Ubuntu-specific
+│   │       └── arch.yml          # Arch-specific
+│   └── roles/
+│       ├── common/               # Stow dotfiles
+│       ├── tmux/                 # TPM installation
+│       ├── ghostty/              # Ghostty config
+│       ├── zellij/               # Zellij plugins
+│       ├── mac/                  # Homebrew, casks, iterm2
+│       ├── ubuntu/               # apt, docker, fonts
+│       └── arch/                 # paru packages
+├── asdf/                         # asdf version manager config and .tool-versions
+├── bash/                         # Bash shell configuration
+├── bin/bin/                      # Custom utility scripts (backup, repo management)
+├── brew/                         # Legacy Homebrew Brewfiles (for reference)
+├── cli/                          # Shared CLI configuration (.aliases, .exports, .functions)
+├── ghostty/                      # Ghostty terminal emulator config
+├── git/                          # Git configuration, global gitignore, hooks
+├── iterm2/                       # iTerm2 preferences (macOS)
+├── kind/                         # Kubernetes in Docker configuration
+├── neovim/.config/               # Neovim configuration with AstroNvim
+├── p10k/                         # Powerlevel10k theme configuration
+├── ssh/                          # SSH client configuration
+├── starship/                     # Starship prompt configuration
+├── tmux/                         # tmux configuration
+├── vim/                          # Vim configuration and plugins
+├── zed/                          # Zed editor configuration
+├── zellij/                       # Zellij terminal multiplexer config and layouts
+├── zsh/                          # Zsh shell configuration
+└── setup.sh                      # Automated Ansible setup script for mac/ubuntu/arch
 ```
 
-When you run `stow <directory>`, it creates symlinks from this repository to your home directory. For example, `stow zsh` creates `~/.zshrc` pointing to `~/linux-dotfiles/zsh/.zshrc`.
+**Dotfiles:** Each dotfile subdirectory contains configurations that will be symlinked to your home directory using GNU Stow. For example, `stow zsh` creates `~/.zshrc` pointing to `~/linux-dotfiles/zsh/.zshrc`.
+
+**Ansible:** Package definitions and configurations are managed in `ansible/inventory/group_vars/`. The playbooks use roles to organize platform-specific and common setup tasks.
 
 ## License
 
