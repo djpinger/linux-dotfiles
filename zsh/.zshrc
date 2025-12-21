@@ -83,3 +83,5 @@ source ~/.aliases
 export PATH="$PATH:/Users/paul/.lmstudio/bin"
 # End of LM Studio CLI section
 
+
+. "$HOME/.local/bin/env"
