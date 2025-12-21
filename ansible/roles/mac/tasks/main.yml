@@ -37,7 +37,7 @@
 
 - name: Check if fzf is configured
   ansible.builtin.stat:
-    path: "{{ ansible_env.HOME }}/.fzf.zsh"
+    path: "{{ ansible_facts.env.HOME }}/.fzf.zsh"
   register: fzf_config
 
 - name: Install fzf shell integration

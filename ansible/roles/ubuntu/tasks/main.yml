@@ -62,7 +62,7 @@
 
 - name: Add user to docker group
   ansible.builtin.user:
-    name: "{{ ansible_user_id }}"
+    name: "{{ ansible_facts.user_id }}"
     groups: docker
     append: true
   become: true
@@ -82,18 +82,18 @@
     name: "{{ brew_packages }}"
     state: present
   environment:
-    PATH: "{{ homebrew_prefix }}/bin:{{ ansible_env.PATH }}"
+    PATH: "{{ homebrew_prefix }}/bin:{{ ansible_facts.env.PATH }}"
 
 - name: Ensure fonts directory exists
   ansible.builtin.file:
-    path: "{{ ansible_env.HOME }}/.local/share/fonts"
+    path: "{{ ansible_facts.env.HOME }}/.local/share/fonts"
     state: directory
     mode: '0755'
 
 - name: Download nerd fonts
   ansible.builtin.get_url:
     url: "https://www.naurwhal.com/fonts/{{ item }}"
-    dest: "{{ ansible_env.HOME }}/.local/share/fonts/{{ item }}"
+    dest: "{{ ansible_facts.env.HOME }}/.local/share/fonts/{{ item }}"
     mode: '0644'
   loop: "{{ nerd_fonts }}"
   notify: Refresh font cache

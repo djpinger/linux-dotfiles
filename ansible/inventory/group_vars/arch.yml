@@ -4,7 +4,6 @@ arch_paru_packages:
   - discord
   - stow
   - exa
-  - asdf-vm
   - starship
   - github-cli
   - ttf-meslo-nerd
@@ -13,4 +12,4 @@ arch_paru_packages:
   - zoxide
   - zellij
 
-zellij_plugin_dir: "{{ ansible_env.HOME }}/.local/share/zellij/plugins"
+zellij_plugin_dir: "{{ ansible_facts.env.HOME }}/.local/share/zellij/plugins"

@@ -19,4 +19,4 @@ mac_brew_casks:
   - stats
   - raycast
 
-zellij_plugin_dir: "{{ ansible_env.HOME }}/Library/Application Support/org.Zellij-Contributors.Zellij/plugins"
+zellij_plugin_dir: "{{ ansible_facts.env.HOME }}/Library/Application Support/org.Zellij-Contributors.Zellij/plugins"

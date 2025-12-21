@@ -34,8 +34,16 @@ fi
 
 # Install required ansible collections (skips if already installed)
 ansible-galaxy collection install community.general
+ansible-galaxy collection install kewlfft.aur
 
 # Run the playbook
+# Note: We use --ask-become-pass for privilege escalation
+# For Arch, ensure sudo credentials are cached before AUR operations
+if [ "$TARGET" = "arch" ]; then
+    # Prompt for sudo password to cache credentials
+    sudo -v
+fi
+
 ansible-playbook site.yml -e "target=$TARGET" --ask-become-pass
 
 echo "Setup complete for $TARGET"

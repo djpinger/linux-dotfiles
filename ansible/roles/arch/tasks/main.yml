@@ -1,6 +1,17 @@
 ---
+- name: Allow wheel group to run pacman without password
+  ansible.builtin.copy:
+    content: |
+      %wheel ALL=(ALL) NOPASSWD: /usr/bin/pacman
+    dest: /etc/sudoers.d/10-installer-pacman
+    mode: '0440'
+    validate: 'visudo -cf %s'
+  become: yes
+
 - name: Update system and install packages with paru
-  ansible.builtin.command:
-    cmd: paru -Syu --needed --noconfirm {{ arch_paru_packages | join(' ') }}
-  register: paru_result
-  changed_when: "'installing' in paru_result.stdout or 'upgrading' in paru_result.stdout"
+  kewlfft.aur.aur:
+    use: paru
+    name: "{{ arch_paru_packages }}"
+    state: present
+    update_cache: yes
+  become: no

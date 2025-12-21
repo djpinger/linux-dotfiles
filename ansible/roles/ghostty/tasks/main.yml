@@ -1,13 +1,13 @@
 ---
 - name: Ensure ghostty config directory exists
   ansible.builtin.file:
-    path: "{{ ansible_env.HOME }}/.config/ghostty"
+    path: "{{ ansible_facts.env.HOME }}/.config/ghostty"
     state: directory
     mode: '0755'
 
 - name: Check if ghostty local config exists
   ansible.builtin.stat:
-    path: "{{ ansible_env.HOME }}/.config/ghostty/local.config"
+    path: "{{ ansible_facts.env.HOME }}/.config/ghostty/local.config"
   register: ghostty_local_config
 
 - name: Prompt for ghostty font size
@@ -24,6 +24,6 @@
 - name: Create ghostty local config
   ansible.builtin.template:
     src: local.config.j2
-    dest: "{{ ansible_env.HOME }}/.config/ghostty/local.config"
+    dest: "{{ ansible_facts.env.HOME }}/.config/ghostty/local.config"
     mode: '0644'
   when: not ghostty_local_config.stat.exists

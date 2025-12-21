@@ -28,4 +28,4 @@ nerd_fonts:
   - MesloLGMNerdFontMono-Regular.ttf
   - MesloLGSNerdFontMono-Regular.ttf
 
-zellij_plugin_dir: "{{ ansible_env.HOME }}/.local/share/zellij/plugins"
+zellij_plugin_dir: "{{ ansible_facts.env.HOME }}/.local/share/zellij/plugins"
