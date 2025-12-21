@@ -19,23 +19,21 @@ fi
 
 cd "$(dirname "$0")"
 
-# Check if ansible is installed
-if ! command -v ansible-playbook &> /dev/null; then
-    echo "Ansible is not installed. Installing..."
-    if [[ "$OSTYPE" == "darwin"* ]]; then
-        brew install ansible
-    elif command -v apt &> /dev/null; then
-        sudo apt update && sudo apt install -y ansible
-    elif command -v paru &> /dev/null; then
-        paru -S --noconfirm ansible
-    else
-        echo "Please install ansible manually"
-        exit 1
-    fi
+# Check if uv is installed
+if ! command -v uv &> /dev/null; then
+    echo "uv is not installed. Installing..."
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+    export PATH="$HOME/.local/bin:$PATH"
 fi
 
-# Install required ansible collections
-ansible-galaxy collection install community.general --force
+# Install ansible if not present
+if ! command -v ansible-playbook &> /dev/null; then
+    echo "Installing ansible..."
+    uv tool install ansible-core --with ansible
+fi
+
+# Install required ansible collections (skips if already installed)
+ansible-galaxy collection install community.general
 
 # Run the playbook
 ansible-playbook site.yml -e "target=$TARGET" --ask-become-pass

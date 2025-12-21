@@ -10,15 +10,16 @@ cd ansible
 ```
 
 The script will:
-1. Install Ansible if not present
-2. Install required Ansible collections
-3. Run the playbook for your target OS
+1. Install uv (Python package manager) if not present
+2. Install Ansible via uv
+3. Install required Ansible collections
+4. Run the playbook for your target OS
 
 ## Prerequisites
 
-- **Mac**: None (Homebrew installed automatically)
-- **Ubuntu**: None (apt and Homebrew installed automatically)
-- **Arch**: `paru` must be installed
+- **Mac**: curl (for uv installation)
+- **Ubuntu**: curl (for uv installation)
+- **Arch**: curl (for uv installation), `paru` must be installed
 
 ## Directory Structure
 

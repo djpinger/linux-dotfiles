@@ -13,9 +13,9 @@
 
 - name: Stow dotfile packages
   ansible.builtin.command:
-    cmd: stow {{ item }}
+    cmd: stow -v {{ item }}
     chdir: "{{ dotfiles_dir }}"
   loop: "{{ stow_packages }}"
   register: stow_result
-  changed_when: stow_result.rc == 0
+  changed_when: "'LINK:' in stow_result.stderr"
   failed_when: stow_result.rc != 0 and 'already points' not in stow_result.stderr

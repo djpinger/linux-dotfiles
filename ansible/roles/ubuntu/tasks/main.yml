@@ -1,9 +1,4 @@
 ---
-- name: Update apt cache
-  ansible.builtin.apt:
-    update_cache: true
-  become: true
-
 - name: Install apt packages
   ansible.builtin.apt:
     name: "{{ ubuntu_apt_packages }}"
@@ -33,6 +28,7 @@
     state: present
     filename: docker
   become: true
+  notify: Update apt cache
 
 - name: Add Sublime Text GPG key
   ansible.builtin.apt_key:
@@ -47,11 +43,10 @@
     state: present
     filename: sublime-text
   become: true
+  notify: Update apt cache
 
-- name: Update apt cache after adding repos
-  ansible.builtin.apt:
-    update_cache: true
-  become: true
+- name: Flush handlers to update apt cache
+  ansible.builtin.meta: flush_handlers
 
 - name: Install Docker packages
   ansible.builtin.apt:
@@ -101,10 +96,7 @@
     dest: "{{ ansible_env.HOME }}/.local/share/fonts/{{ item }}"
     mode: '0644'
   loop: "{{ nerd_fonts }}"
-
-- name: Refresh font cache
-  ansible.builtin.command: fc-cache -fv
-  changed_when: true
+  notify: Refresh font cache
 
 - name: Install Ghostty
   ansible.builtin.shell: |

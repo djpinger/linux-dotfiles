@@ -1,4 +1,5 @@
 ---
+ansible_python_interpreter: auto_silent
 dotfiles_dir: "{{ ansible_env.HOME }}/linux-dotfiles"
 
 # Dotfile packages to stow (all platforms)
