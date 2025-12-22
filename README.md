@@ -11,9 +11,7 @@ The Ansible-based setup script automates the entire installation process with fu
 ## Included Configurations
 
 ### Shell & CLI
-- **Bash** - `.bashrc` configuration with aliases and functions
 - **Zsh** - `.zshrc` with custom functions, completions, and integrations
-- **Powerlevel10k** - `.p10k.zsh` theme configuration for enhanced prompt
 - **Starship** - Cross-shell prompt with custom styling
 - **CLI Utilities** - Organized in `cli/`:
   - `.aliases` - Comprehensive aliases for Kubernetes, Git, Docker, AWS, and system utilities
@@ -28,7 +26,6 @@ The Ansible-based setup script automates the entire installation process with fu
 ### Editors
 - **Neovim** - Full configuration in `.config/nvim/` with AstroNvim
 - **Vim** - `.vimrc` with vim-plug plugin manager
-- **Zed** - Modern editor configuration
 
 ### Terminal & Multiplexers
 - **tmux** - `.tmux.conf` with TPM (tmux Plugin Manager)
@@ -54,11 +51,6 @@ The Ansible-based setup script automates the entire installation process with fu
   - `.gitignore_global` - Global ignore patterns
   - Custom Git hooks
 
-#### Version Managers & Runtimes
-- **asdf** - Multi-language version manager
-  - `.tool-versions` for project-specific versions
-  - Configured for Java, Go, Node.js, Python, and more
-  - GOPATH and GOROOT exports configured
 
 #### Cloud & Container Tools
 - **Kubernetes Tools**:
@@ -66,7 +58,6 @@ The Ansible-based setup script automates the entire installation process with fu
   - kubectx - Fast context switching
   - k9s - Terminal UI for Kubernetes
   - helm - Package manager
-  - kind - Kubernetes in Docker configuration
 - **Docker** - Docker Compose aliases and helpers
 - **AWS**:
   - aws-vault integration
@@ -90,8 +81,7 @@ The Ansible-based setup script automates the entire installation process with fu
 
 ### Package Management
 - **Homebrew** - Multi-platform package management
-  - Main `Brewfile` - Cross-platform tools (asdf, bat, btop, eza, fzf, gh, git-delta, helm, k9s, kind, kubectx, starship, terraform, terragrunt, tig, kubecolor, zoxide, zellij)
-  - `brew/Mac` - macOS-specific packages
+  - Main `Brewfile` - Cross-platform tools (bat, btop, eza, fzf, gh, git-delta, helm, k9s, kubectx, starship, terraform, terragrunt, tig, kubecolor, zoxide, zellij)
   - Auto-installed on Ubuntu via Linuxbrew
 
 ### Utilities & Scripts
@@ -248,7 +238,7 @@ The Ansible playbooks handle:
 
 ### All Platforms
 - **Package Installation** - Homebrew and all cross-platform packages
-- **Dotfile Symlinking** - GNU Stow for: asdf, zsh, git, ssh, tmux, vim, neovim, starship, cli, ghostty, zellij
+- **Dotfile Symlinking** - GNU Stow for: zsh, git, ssh, tmux, vim, neovim, starship, cli, ghostty, zellij
 - **Plugin Management** - TPM (tmux), Zellij plugins
 - **Ghostty Configuration** - Machine-specific local config for font size
 
@@ -354,22 +344,16 @@ linux-dotfiles/
 │       ├── mac/                  # Homebrew, casks, iterm2
 │       ├── ubuntu/               # apt, docker, fonts
 │       └── arch/                 # paru packages
-├── asdf/                         # asdf version manager config and .tool-versions
-├── bash/                         # Bash shell configuration
 ├── bin/bin/                      # Custom utility scripts (backup, repo management)
-├── brew/                         # Legacy Homebrew Brewfiles (for reference)
 ├── cli/                          # Shared CLI configuration (.aliases, .exports, .functions)
 ├── ghostty/                      # Ghostty terminal emulator config
 ├── git/                          # Git configuration, global gitignore, hooks
 ├── iterm2/                       # iTerm2 preferences (macOS)
-├── kind/                         # Kubernetes in Docker configuration
 ├── neovim/.config/               # Neovim configuration with AstroNvim
-├── p10k/                         # Powerlevel10k theme configuration
 ├── ssh/                          # SSH client configuration
 ├── starship/                     # Starship prompt configuration
 ├── tmux/                         # tmux configuration
 ├── vim/                          # Vim configuration and plugins
-├── zed/                          # Zed editor configuration
 ├── zellij/                       # Zellij terminal multiplexer config and layouts
 ├── zsh/                          # Zsh shell configuration
 └── setup.sh                      # Automated Ansible setup script for mac/ubuntu/arch
