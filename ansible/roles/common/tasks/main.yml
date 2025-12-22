@@ -19,3 +19,15 @@
   register: stow_result
   changed_when: "'LINK:' in stow_result.stderr"
   failed_when: stow_result.rc != 0 and 'already points' not in stow_result.stderr
+
+- name: Ensure .npm-global directory exists
+  ansible.builtin.file:
+    path: "{{ ansible_facts.env.HOME }}/.npm-global"
+    state: directory
+    mode: '0755'
+
+- name: Configure npm global prefix
+  ansible.builtin.command:
+    cmd: npm config set prefix '{{ ansible_facts.env.HOME }}/.npm-global'
+  changed_when: false
+
