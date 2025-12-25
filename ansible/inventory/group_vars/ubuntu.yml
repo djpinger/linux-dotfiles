@@ -15,7 +15,6 @@ ubuntu_apt_packages:
   - apt-transport-https
   - net-tools
   - kubectx
-  - neovim
 
 docker_packages:
   - docker-ce

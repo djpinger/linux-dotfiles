@@ -44,5 +44,6 @@ brew_packages:
   - terragrunt
   - tig
   - kubecolor
+  - neovim
   - zoxide
   - zellij
