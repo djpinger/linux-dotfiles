@@ -46,10 +46,10 @@ The Ansible-based setup script automates the entire installation process with fu
 ### Development Tools
 
 #### Version Control
-- **Git** - Complete configuration including:
-  - `.gitconfig` - User settings, aliases, delta integration
+- **Git** - Git configuration including:
   - `.gitignore_global` - Global ignore patterns
   - Custom Git hooks
+  - *Note: `.gitconfig` is not included in the repository and should be configured locally.*
 
 
 #### Cloud & Container Tools
