@@ -17,6 +17,8 @@ stow_packages:
 
 # Zellij plugins to download (all platforms)
 zellij_plugins:
+  - name: zellij-newtab-plus
+    url: https://github.com/AlexZasorin/zellij-newtab-plus/releases/download/v0.3.0/zellij-newtab-plus.wasm
   - name: zj-status-bar
     url: https://github.com/cristiand391/zj-status-bar/releases/download/0.3.0/zj-status-bar.wasm
   - name: room
