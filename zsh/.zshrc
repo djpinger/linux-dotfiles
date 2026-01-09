@@ -38,6 +38,11 @@ zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
 autoload -U compinit && compinit # reload completions for zsh-completions
 compinit
 
+autoload -Uz edit-command-line
+zle -N edit-command-line
+bindkey '^x^e' edit-command-line
+bindkey ' ' magic-space
+
 zinit cdreplay -q
 
 key[Home]="${terminfo[khome]}"
@@ -83,5 +88,3 @@ source ~/.aliases
 export PATH="$PATH:/Users/paul/.lmstudio/bin"
 # End of LM Studio CLI section
 
-
-. "$HOME/.local/bin/env"

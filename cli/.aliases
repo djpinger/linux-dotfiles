@@ -104,3 +104,19 @@ if command -v podman &> /dev/null; then
     alias docker='podman'
     alias docker-compose='podman-compose'
 fi
+
+#
+# SUFFIX ALIASES
+#
+alias -s json="jless"
+alias -s yaml="bat -l yaml"
+alias -s md="bat"
+
+#
+# GLOBAL ALIASES
+#
+alias -g NE='2>/dev/null'
+alias -g DN='>/dev/nill'
+alias -g NUL='>/dev/null 2>&1'
+alias -g JQ='| jq'
+alias -g C='| pbcopy'
