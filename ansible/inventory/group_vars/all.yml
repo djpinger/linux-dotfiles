@@ -26,6 +26,10 @@ zellij_plugins:
   - name: monocle
     url: https://github.com/imsnif/monocle/releases/latest/download/monocle.wasm
 
+nerd_fonts:
+  - MesloLGMNerdFontMono-Regular.ttf
+  - MesloLGSNerdFontMono-Regular.ttf
+
 # Homebrew packages installed on BOTH mac and ubuntu
 # (Arch uses paru for these - update arch.yml separately)
 # To add a new shared brew package, just add it here
