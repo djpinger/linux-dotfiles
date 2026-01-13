@@ -23,8 +23,4 @@ docker_packages:
   - docker-buildx-plugin
   - docker-compose-plugin
 
-nerd_fonts:
-  - MesloLGMNerdFontMono-Regular.ttf
-  - MesloLGSNerdFontMono-Regular.ttf
-
 zellij_plugin_dir: "{{ ansible_facts.env.HOME }}/.local/share/zellij/plugins"

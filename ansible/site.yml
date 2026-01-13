@@ -9,8 +9,8 @@
   pre_tasks:
     - name: Validate target variable
       ansible.builtin.fail:
-        msg: "Please specify target: ansible-playbook site.yml -e 'target=mac|ubuntu|arch'"
-      when: target is not defined or target not in ['mac', 'ubuntu', 'arch']
+        msg: "Please specify target: ansible-playbook site.yml -e 'target=mac|ubuntu|arch|fedora'"
+      when: target is not defined or target not in ['mac', 'ubuntu', 'arch', 'fedora']
 
     - name: Load target-specific variables
       ansible.builtin.include_vars:
@@ -24,6 +24,8 @@
       when: target == 'ubuntu'
     - role: arch
       when: target == 'arch'
+    - role: fedora
+      when: target == 'fedora'
 
     # Common setup for all platforms
     - role: common

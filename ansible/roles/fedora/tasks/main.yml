@@ -1,0 +1,44 @@
+---
+- name: Install dnf packages
+  ansible.builtin.dnf:
+    name: "{{ fedora_dnf_packages }}"
+    state: present
+  become: true
+
+- name: Check if Starship is installed
+  ansible.builtin.command: which starship
+  register: starship_check
+  failed_when: false
+  changed_when: false
+
+- name: Install Starship
+  ansible.builtin.shell: |
+    curl -sS https://starship.rs/install.sh | sh -s -- -y
+  when: starship_check.rc != 0
+  become: true
+
+- name: Ensure fonts directory exists
+  ansible.builtin.file:
+    path: "{{ ansible_facts.env.HOME }}/.local/share/fonts"
+    state: directory
+    mode: '0755'
+
+- name: Download nerd fonts
+  ansible.builtin.get_url:
+    url: "https://www.naurwhal.com/fonts/{{ item }}"
+    dest: "{{ ansible_facts.env.HOME }}/.local/share/fonts/{{ item }}"
+    mode: '0644'
+  loop: "{{ nerd_fonts }}"
+
+- name: Add HashiCorp repo
+  ansible.builtin.get_url:
+    url: https://rpm.releases.hashicorp.com/fedora/hashicorp.repo
+    dest: /etc/yum.repos.d/hashicorp.repo
+    mode: '0644'
+  become: true
+
+- name: Install Terraform
+  ansible.builtin.dnf:
+    name: terraform
+    state: present
+  become: true
