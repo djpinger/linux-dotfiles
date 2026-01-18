@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Wrapper script to run ansible playbook
-# Usage: ./setup.sh [mac|ubuntu|arch]
+# Usage: ./setup.sh [mac|ubuntu|arch|fedora]
 
 set -e
 
@@ -13,14 +13,14 @@ BLUE='\033[0;34m'
 RESET='\033[0m'
 
 if [ -z "$1" ]; then
-    echo -e "${RED}Usage: ./setup.sh [mac|ubuntu|arch]${RESET}"
+    echo -e "${RED}Usage: ./setup.sh [mac|ubuntu|arch|fedora]${RESET}"
     exit 1
 fi
 
 TARGET="$1"
 
-if [[ ! "$TARGET" =~ ^(mac|ubuntu|arch)$ ]]; then
-    echo -e "${RED}Invalid argument. Usage: ./setup.sh [mac|ubuntu|arch]${RESET}"
+if [[ ! "$TARGET" =~ ^(mac|ubuntu|arch|fedora)$ ]]; then
+    echo -e "${RED}Invalid argument. Usage: ./setup.sh [mac|ubuntu|arch|fedora]${RESET}"
     exit 1
 fi
 

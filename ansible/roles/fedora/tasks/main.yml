@@ -1,20 +1,15 @@
 ---
+- name: Add HashiCorp repo
+  ansible.builtin.get_url:
+    url: https://rpm.releases.hashicorp.com/fedora/hashicorp.repo
+    dest: /etc/yum.repos.d/hashicorp.repo
+    mode: '0644'
+  become: true
+
 - name: Install dnf packages
   ansible.builtin.dnf:
     name: "{{ fedora_dnf_packages }}"
     state: present
-  become: true
-
-- name: Check if Starship is installed
-  ansible.builtin.command: which starship
-  register: starship_check
-  failed_when: false
-  changed_when: false
-
-- name: Install Starship
-  ansible.builtin.shell: |
-    curl -sS https://starship.rs/install.sh | sh -s -- -y
-  when: starship_check.rc != 0
   become: true
 
 - name: Ensure fonts directory exists
@@ -30,15 +25,28 @@
     mode: '0644'
   loop: "{{ nerd_fonts }}"
 
-- name: Add HashiCorp repo
-  ansible.builtin.get_url:
-    url: https://rpm.releases.hashicorp.com/fedora/hashicorp.repo
-    dest: /etc/yum.repos.d/hashicorp.repo
-    mode: '0644'
-  become: true
+- name: Check if Homebrew is installed
+  ansible.builtin.stat:
+    path: "{{ homebrew_prefix }}/bin/brew"
+  register: homebrew_check
 
-- name: Install Terraform
-  ansible.builtin.dnf:
-    name: terraform
-    state: present
+- name: Create Homebrew directory
+  ansible.builtin.file:
+    path: /home/linuxbrew
+    state: directory
+    mode: '0755'
+    owner: "{{ ansible_facts.user_id }}"
   become: true
+  when: not homebrew_check.stat.exists
+
+- name: Install Homebrew
+  ansible.builtin.shell: |
+    NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  when: not homebrew_check.stat.exists
+
+- name: Install brew packages
+  community.general.homebrew:
+    name: "{{ brew_packages }}"
+    state: present
+  environment:
+    PATH: "{{ homebrew_prefix }}/bin:{{ ansible_facts.env.PATH }}"
