@@ -10,19 +10,32 @@ fedora_dnf_packages:
   - iproute
   - nodejs
   - git
-  - neovim
-  - bat
   - fd-find
-  - fzf
   - ripgrep
-  - gh
+  - dnf-plugins-core
+  - bat
   - btop
+  - fzf
+  - gh
+  - git-delta
   - helm
   - jid
   - k9s
   - kind
+  - starship
+  - terraform
   - tig
+  - neovim
   - zoxide
-  - dnf-plugins-core
+  - ghostty
 
+# Packages not available in DNF on Fedora
+brew_packages:
+  - eza
+  - kubectx
+  - terragrunt
+  - kubecolor
+  - zellij
+
+homebrew_prefix: /home/linuxbrew/.linuxbrew
 zellij_plugin_dir: "{{ ansible_facts.env.HOME }}/.local/share/zellij/plugins"
