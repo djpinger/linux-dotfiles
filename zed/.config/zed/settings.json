@@ -7,14 +7,27 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "terminal": {
+    "dock": "right"
+  },
+  "project_panel": {
+    "entry_spacing": "standard"
+  },
+  "outline_panel": {
+    "indent_size": 20.0
+  },
+  "git_panel": {
+    "tree_view": true,
+    "status_style": "icon"
+  },
+  "soft_wrap": "editor_width",
+  "cursor_shape": "bar",
+  "agent_ui_font_size": 16.0,
+  "agent_buffer_font_size": 16.0,
   "icon_theme": "Colored Zed Icons Theme Dark",
   "buffer_line_height": "standard",
   "buffer_font_family": "MesloLGM Nerd Font Mono",
-  "ui_font_size": 16,
+  "ui_font_size": 16.0,
   "buffer_font_size": 16.0,
-  "theme": {
-    "mode": "system",
-    "light": "One Light",
-    "dark": "Catppuccin Mocha",
-  },
+  "theme": "Catppuccin Mocha",
 }
