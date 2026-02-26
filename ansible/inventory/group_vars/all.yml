@@ -9,7 +9,6 @@ stow_packages:
   - ssh
   - tmux
   - vim
-  - neovim
   - starship
   - cli
   - ghostty

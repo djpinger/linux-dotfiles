@@ -20,6 +20,12 @@
   changed_when: "'LINK:' in stow_result.stderr"
   failed_when: stow_result.rc != 0 and 'already points' not in stow_result.stderr
 
+- name: Clone kickstart.nvim config
+  ansible.builtin.git:
+    repo: https://github.com/djpinger/kickstart.nvim.git
+    dest: "{{ ansible_facts.env.XDG_CONFIG_HOME | default(ansible_facts.env.HOME + '/.config') }}/nvim"
+    update: false
+
 - name: Ensure .npm-global directory exists
   ansible.builtin.file:
     path: "{{ ansible_facts.env.HOME }}/.npm-global"
