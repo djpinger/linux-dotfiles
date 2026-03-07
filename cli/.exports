@@ -45,7 +45,7 @@ export CLICOLOR=1
 export LSCOLORS=ExFxBxDxCxegedabagacad
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin
-export GOROOT=~/.asdf/installs/golang/1.21.5/go
+export GOROOT=$(ls -d ~/.asdf/installs/golang/*/go 2>/dev/null | tail -1)
 export COLORTERM=truecolor
 export TERM=xterm-256color
 export USE_GKE_GCLOUD_AUTH_PLUGIN=True
@@ -83,11 +83,10 @@ PATH="$PATH:$HOME/.rd/bin"
 #
 # PICNIC STUFF
 #
-PICNIC_WORKSPACE=/Users/paul/g/picnic
 #
 # BUN STUFF
 #
-[ -s "/Users/paul/.bun/_bun" ] && source "/Users/paul/.bun/_bun"
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 #
@@ -98,3 +97,7 @@ eval "$(zoxide init zsh)"
 # NPM STUFF
 #
 export PATH=~/.npm-global/bin:$PATH
+#
+# LMSTUDIO STUFF
+#
+[ -d "$HOME/.lmstudio/bin" ] && export PATH="$PATH:$HOME/.lmstudio/bin"

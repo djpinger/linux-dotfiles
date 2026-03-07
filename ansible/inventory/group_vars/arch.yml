@@ -3,7 +3,7 @@ arch_paru_packages:
   - 1password
   - discord
   - stow
-  - exa
+  - eza
   - starship
   - github-cli
   - ttf-meslo-nerd
@@ -11,5 +11,7 @@ arch_paru_packages:
   - ghostty
   - zoxide
   - zellij
+  - nodejs
+  - npm
 
 zellij_plugin_dir: "{{ ansible_facts.env.HOME }}/.local/share/zellij/plugins"

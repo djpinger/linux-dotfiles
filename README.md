@@ -256,6 +256,18 @@ The Ansible playbooks handle:
 
 ## Machine-Specific Configuration
 
+### Work-Specific Configuration
+
+Shell configuration supports an optional `~/.work` file for work-specific settings (environment variables, paths, credentials, etc.) that should not be in a public repository. If `~/.work` exists, it will be automatically sourced by `.zshrc`.
+
+Create this file manually on work machines:
+
+```bash
+# ~/.work - not tracked in git
+export PICNIC_WORKSPACE=$HOME/g/picnic
+# add other work-specific exports, aliases, etc.
+```
+
 ### Ghostty
 
 Ghostty uses a machine-specific configuration file for settings that vary between computers (like font size). This file is not tracked in git.
