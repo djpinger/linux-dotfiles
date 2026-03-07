@@ -268,6 +268,12 @@ export PICNIC_WORKSPACE=$HOME/g/picnic
 # add other work-specific exports, aliases, etc.
 ```
 
+### WezTerm (Windows/WSL)
+
+The WezTerm config is stowed to `~/.config/wezterm/wezterm.lua` on Linux/macOS. On Windows, WezTerm reads from the Windows user profile, not the WSL home.
+
+When running `./setup.sh ubuntu` inside WSL, the Ansible playbook automatically detects WSL and copies the config to `C:\Users\<username>\.config\wezterm\wezterm.lua`. If you update `wezterm.lua`, re-run the setup script to sync the change to Windows.
+
 ### Ghostty
 
 Ghostty uses a machine-specific configuration file for settings that vary between computers (like font size). This file is not tracked in git.

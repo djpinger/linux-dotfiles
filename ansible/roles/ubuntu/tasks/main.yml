@@ -136,6 +136,58 @@
       gtk-decoration-layout=menu:minimize,maximize,close
     mode: '0644'
 
+- name: Check if running in WSL
+  ansible.builtin.shell: grep -qi microsoft /proc/version && echo "wsl" || echo "linux"
+  register: wsl_check
+  changed_when: false
+
+- name: Get Windows username
+  ansible.builtin.command: powershell.exe -Command "$env:USERNAME"
+  register: windows_username
+  changed_when: false
+  when: wsl_check.stdout == "wsl"
+
+- name: Create WezTerm config directory on Windows
+  ansible.builtin.shell:
+    cmd: mkdir -p "/mnt/c/Users/{{ windows_username.stdout | trim }}/.config/wezterm"
+  changed_when: false
+  when: wsl_check.stdout == "wsl"
+
+- name: Copy WezTerm config to Windows filesystem
+  ansible.builtin.shell:
+    cmd: cp "{{ dotfiles_dir }}/wezterm/.config/wezterm/wezterm.lua" "/mnt/c/Users/{{ windows_username.stdout | trim }}/.config/wezterm/wezterm.lua"
+  changed_when: true
+  when: wsl_check.stdout == "wsl"
+
+- name: Check if WezTerm local config exists on Windows
+  ansible.builtin.stat:
+    path: "/mnt/c/Users/{{ windows_username.stdout | trim }}/.config/wezterm/local.lua"
+  register: wezterm_local_config
+  when: wsl_check.stdout == "wsl"
+
+- name: Prompt for WezTerm font size
+  ansible.builtin.pause:
+    prompt: "Enter font size for WezTerm (recommended: 11 for 1080p, 15 for 1440p)"
+  register: wezterm_font_size_input
+  when: wsl_check.stdout == "wsl" and not wezterm_local_config.stat.exists
+
+- name: Set WezTerm font size variable
+  ansible.builtin.set_fact:
+    wezterm_font_size: "{{ wezterm_font_size_input.user_input | default('11') }}"
+  when: wsl_check.stdout == "wsl" and not wezterm_local_config.stat.exists
+
+- name: Write WezTerm local config to Windows filesystem
+  ansible.builtin.shell: |
+    cat > "/mnt/c/Users/{{ windows_username.stdout | trim }}/.config/wezterm/local.lua" << 'EOF'
+    -- Machine-specific WezTerm configuration
+    -- This file is not tracked in git
+
+    return {
+      font_size = {{ wezterm_font_size }},
+    }
+    EOF
+  when: wsl_check.stdout == "wsl" and not wezterm_local_config.stat.exists
+
 - name: Install Ghostty
   ansible.builtin.shell: |
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/mkasberg/ghostty-ubuntu/HEAD/install.sh)"

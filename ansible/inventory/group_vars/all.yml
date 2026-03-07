@@ -13,6 +13,7 @@ stow_packages:
   - cli
   - ghostty
   - zellij
+  - wezterm
 
 # Zellij plugins to download (all platforms)
 zellij_plugins:

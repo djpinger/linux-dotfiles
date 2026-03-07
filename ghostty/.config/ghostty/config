@@ -8,6 +8,7 @@ font-thicken = true
 font-style = Regular
 theme = catppuccin-mocha
 quit-after-last-window-closed = true
+window-decoration = auto
 
 # Enable mouse reporting for tmux
 mouse-hide-while-typing = false
