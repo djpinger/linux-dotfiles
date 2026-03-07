@@ -72,6 +72,16 @@
     path: /home/linuxbrew/.linuxbrew/bin/brew
   register: homebrew_check
 
+- name: Create linuxbrew directory
+  ansible.builtin.file:
+    path: /home/linuxbrew/.linuxbrew
+    state: directory
+    owner: "{{ ansible_facts.user_id }}"
+    group: "{{ ansible_facts.user_id }}"
+    mode: '0755'
+  become: true
+  when: not homebrew_check.stat.exists
+
 - name: Install Homebrew
   ansible.builtin.shell: |
     NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
@@ -97,6 +107,34 @@
     mode: '0644'
   loop: "{{ nerd_fonts }}"
   notify: Refresh font cache
+
+- name: Ensure gtk-3.0 config directory exists
+  ansible.builtin.file:
+    path: "{{ ansible_facts.env.HOME }}/.config/gtk-3.0"
+    state: directory
+    mode: '0755'
+
+- name: Configure GTK3 window buttons
+  ansible.builtin.copy:
+    dest: "{{ ansible_facts.env.HOME }}/.config/gtk-3.0/settings.ini"
+    content: |
+      [Settings]
+      gtk-decoration-layout=menu:minimize,maximize,close
+    mode: '0644'
+
+- name: Ensure gtk-4.0 config directory exists
+  ansible.builtin.file:
+    path: "{{ ansible_facts.env.HOME }}/.config/gtk-4.0"
+    state: directory
+    mode: '0755'
+
+- name: Configure GTK4 window buttons
+  ansible.builtin.copy:
+    dest: "{{ ansible_facts.env.HOME }}/.config/gtk-4.0/settings.ini"
+    content: |
+      [Settings]
+      gtk-decoration-layout=menu:minimize,maximize,close
+    mode: '0644'
 
 - name: Install Ghostty
   ansible.builtin.shell: |

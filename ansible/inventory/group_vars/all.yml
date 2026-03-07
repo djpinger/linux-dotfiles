@@ -37,6 +37,7 @@ brew_packages:
   - btop
   - eza
   - fzf
+  - node
   - gh
   - git-delta
   - helm

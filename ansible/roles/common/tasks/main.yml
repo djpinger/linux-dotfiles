@@ -36,4 +36,6 @@
   ansible.builtin.command:
     cmd: npm config set prefix '{{ ansible_facts.env.HOME }}/.npm-global'
   changed_when: false
+  environment:
+    PATH: "{{ homebrew_prefix | default('') }}/bin:{{ ansible_facts.env.PATH }}"
 
