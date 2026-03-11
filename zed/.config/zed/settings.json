@@ -25,9 +25,9 @@
   "agent_ui_font_size": 16.0,
   "agent_buffer_font_size": 16.0,
   "icon_theme": "Colored Zed Icons Theme Dark",
-  "buffer_line_height": "standard",
+  "buffer_line_height": "comfortable",
   "buffer_font_family": "MesloLGM Nerd Font Mono",
   "ui_font_size": 16.0,
-  "buffer_font_size": 16.0,
+  "buffer_font_size": 15.0,
   "theme": "Catppuccin Mocha",
 }
