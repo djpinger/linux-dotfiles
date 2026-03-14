@@ -23,6 +23,11 @@
     name: "{{ mac_brew_packages }}"
     state: present
 
+- name: Tap manaflow-ai/cmux
+  community.general.homebrew_tap:
+    name: manaflow-ai/cmux
+    state: present
+
 - name: Install mac brew casks
   community.general.homebrew_cask:
     name: "{{ mac_brew_casks }}"

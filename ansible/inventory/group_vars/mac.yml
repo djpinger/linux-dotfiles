@@ -17,5 +17,6 @@ mac_brew_casks:
   - rectangle
   - stats
   - raycast
+  - cmux
 
 zellij_plugin_dir: "{{ ansible_facts.env.HOME }}/Library/Application Support/org.Zellij-Contributors.Zellij/plugins"
