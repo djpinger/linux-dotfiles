@@ -4,6 +4,7 @@ dotfiles_dir: "{{ ansible_facts.env.HOME }}/linux-dotfiles"
 
 # Dotfile packages to stow (all platforms)
 stow_packages:
+  - asdf
   - zsh
   - git
   - ssh
