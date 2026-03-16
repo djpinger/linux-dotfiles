@@ -85,6 +85,3 @@ source ~/.functions
 source ~/.aliases
 [ -f ~/.work ] && source ~/.work
 
-
-# opencode
-export PATH=/Users/paul/.opencode/bin:$PATH
