@@ -13,4 +13,5 @@ window-decoration = auto
 # Enable mouse reporting for tmux
 mouse-hide-while-typing = false
 click-repeat-interval = 0
+copy-on-select = clipboard
 keybind = shift+enter=text:\x1b\r
