@@ -102,6 +102,10 @@ export PATH=~/.npm-global/bin:$PATH
 #
 [ -d "$HOME/.lmstudio/bin" ] && export PATH="$PATH:$HOME/.lmstudio/bin"
 #
+# Obsidian CLI
+#
+export PATH=$PATH:/usr/local/bin/obsidian
+#
 # Opencode
 #
 export PATH=~/.opencode/bin:$PATH
