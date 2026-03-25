@@ -6,7 +6,7 @@ unset AWS_PROFILE
 export PATH=/var/lib/snapd/snap/bin:/usr/local/bin:/usr/local/sbin:$PATH
 #eval $(keychain --eval --agents ssh --inherit any id_ed25519 id_ed25519_work)
 eval $(ssh-agent -s)
-[ -f ~/.ssh/id_ed25519_sk ] && ssh-add ~/.ssh/id_ed25519_sk
+[ -f ~/.ssh/id_ed25519_work ] && ssh-add ~/.ssh/id_ed25519_work
 [ -f ~/.ssh/id_ed25519 ] && ssh-add ~/.ssh/id_ed25519
 [ -f /usr/share/fzf/completion.zsh ] && source /usr/share/fzf/completion.zsh
 [ -f /usr/share/fzf/key-bindings.zsh ] && source /usr/share/fzf/key-bindings.zsh
