@@ -11,6 +11,19 @@
     state: directory
     mode: '0700'
 
+- name: Back up conflicting dotfiles before stowing
+  ansible.builtin.shell: |
+    stow --simulate -v {{ item }} 2>&1 | grep -oP "(?<=over existing target )\S+" | while read -r file; do
+      target="{{ ansible_facts.env.HOME }}/$file"
+      if [ -e "$target" ] && [ ! -L "$target" ]; then
+        mv "$target" "${target}_original"
+      fi
+    done
+  args:
+    chdir: "{{ dotfiles_dir }}"
+  loop: "{{ stow_packages }}"
+  changed_when: false
+
 - name: Stow dotfile packages
   ansible.builtin.command:
     cmd: stow -v {{ item }}

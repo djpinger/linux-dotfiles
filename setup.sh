@@ -59,11 +59,14 @@ done
 # Run the playbook
 # Note: We use --ask-become-pass for privilege escalation
 # For Arch, ensure sudo credentials are cached before AUR operations
-if [ "$TARGET" = "arch" ]; then
-    # Prompt for sudo password to cache credentials
-    sudo -v
+EXTRA_VARS="target=$TARGET"
+
+if [[ "$TARGET" =~ ^(arch|ubuntu|fedora)$ ]]; then
+    echo "Creating temporary passwordless sudo for ansible..."
+    sudo bash -c "echo '$USER ALL=(ALL) NOPASSWD: ALL' > /etc/sudoers.d/ansible-setup"
+    trap 'sudo rm -f /etc/sudoers.d/ansible-setup' EXIT
 fi
 
-ansible-playbook site.yml -e "target=$TARGET" --ask-become-pass
+ansible-playbook site.yml -e "$EXTRA_VARS"
 
 echo -e "${GREEN}Setup complete for $TARGET${RESET}"
