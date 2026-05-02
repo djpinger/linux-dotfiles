@@ -1,12 +1,12 @@
 # Linux Dotfiles
 
-Personal dotfiles and configuration management for macOS, Ubuntu, and Arch Linux.
+Personal dotfiles and configuration management for macOS, Ubuntu, Arch Linux, and Fedora.
 
 ## Overview
 
-This repository provides a comprehensive, cross-platform development environment configuration using [Ansible](https://www.ansible.com/) for idempotent configuration management and [GNU Stow](https://www.gnu.org/software/stow/) for symlink management. It includes dotfiles, shell configurations, editor setups, terminal multiplexers, and development tools optimized for cloud-native and Kubernetes workflows.
+This repository provides a comprehensive, cross-platform development environment configuration using [GNU Stow](https://www.gnu.org/software/stow/) for symlink management. It includes dotfiles, shell configurations, editor setups, terminal multiplexers, and development tools optimized for cloud-native and Kubernetes workflows.
 
-The Ansible-based setup script automates the entire installation process with full idempotency, handling package management, plugin installation, and OS-specific configurations.
+The shell-based setup script automates the entire installation process, handling package management, plugin installation, and OS-specific configurations.
 
 ## Included Configurations
 
@@ -24,7 +24,7 @@ The Ansible-based setup script automates the entire installation process with fu
   - `.exports` - Environment variables, PATH configuration, tool initialization
 
 ### Editors
-- **Neovim** - Full configuration in `.config/nvim/` with AstroNvim
+- **Neovim** - Full configuration in `.config/nvim/` with kickstart.nvim (cloned separately)
 - **Vim** - `.vimrc` with vim-plug plugin manager
 
 ### Terminal & Multiplexers
@@ -33,7 +33,7 @@ The Ansible-based setup script automates the entire installation process with fu
   - Custom key bindings and status bar
 - **Zellij** - Modern terminal multiplexer in Rust
   - Custom layouts and configurations in `.config/zellij/`
-  - Auto-downloads plugins: zj-status-bar, room (session manager), monocle
+  - Auto-downloads plugins: zellij-newtab-plus, zj-status-bar, room, monocle
   - Pre-configured layouts including k9s layout
 - **Ghostty** - GPU-accelerated terminal emulator
   - Main config tracked in repository
@@ -50,7 +50,6 @@ The Ansible-based setup script automates the entire installation process with fu
   - `.gitignore_global` - Global ignore patterns
   - Custom Git hooks
   - *Note: `.gitconfig` is not included in the repository and should be configured locally.*
-
 
 #### Cloud & Container Tools
 - **Kubernetes Tools**:
@@ -81,24 +80,13 @@ The Ansible-based setup script automates the entire installation process with fu
 
 ### Package Management
 - **Homebrew** - Multi-platform package management
-  - Main `Brewfile` - Cross-platform tools (bat, btop, eza, fzf, gh, git-delta, helm, k9s, kubectx, starship, terraform, terragrunt, tig, kubecolor, zoxide, zellij)
-  - Auto-installed on Ubuntu via Linuxbrew
-
-### Utilities & Scripts
-- **Custom Scripts** in `bin/bin/`:
-  - `backup.sh` - Backup automation
-  - `get_repos.sh` - Repository management
-  - `g_update_main.sh` - Batch Git operations
+  - Cross-platform tools installed on Mac and Ubuntu/Fedora via Linuxbrew
+  - Arch Linux uses paru instead
 
 ## Prerequisites
 
-- **All platforms**: Git, curl (for uv installation)
+- **All platforms**: Git, curl
 - **Arch Linux**: `paru` must be installed before running setup
-
-The setup script will automatically install:
-- `uv` (Python package manager)
-- Ansible (via uv)
-- All other dependencies via Ansible playbooks
 
 ## Installation
 
@@ -114,35 +102,18 @@ cd ~/linux-dotfiles
 Run the setup script for your operating system:
 
 ```bash
-./setup.sh [mac|ubuntu|arch]
+./setup.sh [mac|ubuntu|arch|fedora]
 ```
 
-The script will:
-1. Install `uv` (Python package manager) if not present
-2. Install Ansible via uv
-3. Install required Ansible collections
-4. Run the idempotent playbook for your target OS
+The script will prompt for any machine-specific settings (e.g. font size) upfront, then run unattended. It performs:
 
-This performs:
 - Package installation (OS-specific and cross-platform)
 - GNU Stow symlink creation for all dotfiles
-- Plugin installation (tmux, zellij)
-- OS-specific configurations
-- All operations are idempotent (safe to run multiple times)
+- Plugin installation (tmux TPM, zellij plugins)
+- Neovim config clone (kickstart.nvim)
+- OS-specific configurations (Docker, fonts, GTK, iTerm2, etc.)
 
-### Advanced Usage
-
-**Run specific roles only:**
-```bash
-cd ansible
-ansible-playbook site.yml -e "target=mac" --tags "common,tmux"
-```
-
-**Preview changes without applying (dry run):**
-```bash
-cd ansible
-ansible-playbook site.yml -e "target=mac" --check
-```
+All install steps are idempotent — safe to re-run on an existing machine.
 
 ### Manual Setup
 
@@ -157,94 +128,108 @@ stow tmux     # Install tmux configuration
 
 ## Adding Packages
 
-The Ansible configuration makes it easy to add new packages. Simply edit the appropriate YAML file and re-run `./setup.sh`.
+Edit the appropriate array in the relevant script and re-run `./setup.sh`.
 
-### Homebrew Packages (Mac + Ubuntu)
+### Homebrew Packages (Mac + Ubuntu/Fedora)
 
-Edit `ansible/inventory/group_vars/all.yml`:
+Edit `scripts/mac.sh` or `scripts/ubuntu.sh` / `scripts/fedora.sh`:
 
-```yaml
-brew_packages:
-  - existing-package
-  - new-package        # Add here
+```bash
+BREW_PACKAGES=(
+  existing-package
+  new-package        # Add here
+)
 ```
 
 ### Mac-only Casks (GUI apps, fonts)
 
-Edit `ansible/inventory/group_vars/mac.yml`:
+Edit `scripts/mac.sh`:
 
-```yaml
-mac_brew_casks:
-  - existing-cask
-  - new-cask           # Add here
+```bash
+BREW_CASKS=(
+  existing-cask
+  new-cask           # Add here
+)
 ```
 
 ### Ubuntu apt Packages
 
-Edit `ansible/inventory/group_vars/ubuntu.yml`:
+Edit `scripts/ubuntu.sh`:
 
-```yaml
-ubuntu_apt_packages:
-  - existing-package
-  - new-package        # Add here
+```bash
+APT_PACKAGES=(
+  existing-package
+  new-package        # Add here
+)
+```
+
+### Fedora dnf Packages
+
+Edit `scripts/fedora.sh`:
+
+```bash
+DNF_PACKAGES=(
+  existing-package
+  new-package        # Add here
+)
 ```
 
 ### Arch paru Packages
 
-Edit `ansible/inventory/group_vars/arch.yml`:
+Edit `scripts/arch.sh`:
 
-```yaml
-arch_paru_packages:
-  - existing-package
-  - new-package        # Add here
+```bash
+PARU_PACKAGES=(
+  existing-package
+  new-package        # Add here
+)
 ```
 
 ### Dotfiles to Stow
 
-Edit `ansible/inventory/group_vars/all.yml`:
+Edit the `STOW_PACKAGES` array in `scripts/common.sh`:
 
-```yaml
-stow_packages:
-  - existing-dir
-  - new-dir            # Add here (must exist in repo root)
+```bash
+STOW_PACKAGES=(existing-dir new-dir)  # new-dir must exist in repo root
 ```
 
 ### Zellij Plugins
 
-Edit `ansible/inventory/group_vars/all.yml`:
+Edit the plugin arrays in `scripts/common.sh`:
 
-```yaml
-zellij_plugins:
-  - name: new-plugin
-    url: https://github.com/user/repo/releases/download/v1.0/plugin.wasm
+```bash
+ZELLIJ_PLUGIN_NAMES=(... new-plugin)
+ZELLIJ_PLUGIN_URLS=(...  "https://github.com/user/repo/releases/download/v1.0/plugin.wasm")
 ```
 
 ### Package Location Reference
 
 | What | File | Variable |
 |------|------|----------|
-| Brew packages (mac+ubuntu) | `all.yml` | `brew_packages` |
-| Dotfiles to stow | `all.yml` | `stow_packages` |
-| Zellij plugins | `all.yml` | `zellij_plugins` |
-| Mac brew casks | `mac.yml` | `mac_brew_casks` |
-| Mac core tools (brew) | `mac.yml` | `mac_brew_packages` |
-| Ubuntu core tools (apt) | `ubuntu.yml` | `ubuntu_apt_packages` |
-| Ubuntu docker packages | `ubuntu.yml` | `docker_packages` |
-| Arch packages (paru) | `arch.yml` | `arch_paru_packages` |
+| Brew packages (mac) | `scripts/mac.sh` | `BREW_PACKAGES` |
+| Brew casks (mac) | `scripts/mac.sh` | `BREW_CASKS` |
+| Brew packages (ubuntu) | `scripts/ubuntu.sh` | `BREW_PACKAGES` |
+| apt packages (ubuntu) | `scripts/ubuntu.sh` | `APT_PACKAGES` |
+| dnf packages (fedora) | `scripts/fedora.sh` | `DNF_PACKAGES` |
+| Brew packages (fedora) | `scripts/fedora.sh` | `BREW_PACKAGES` |
+| paru packages (arch) | `scripts/arch.sh` | `PARU_PACKAGES` |
+| Dotfiles to stow | `scripts/common.sh` | `STOW_PACKAGES` |
+| Zellij plugins | `scripts/common.sh` | `ZELLIJ_PLUGIN_NAMES` / `ZELLIJ_PLUGIN_URLS` |
 
 ## What Gets Automatically Configured
 
-The Ansible playbooks handle:
-
 ### All Platforms
-- **Package Installation** - Homebrew and all cross-platform packages
-- **Dotfile Symlinking** - GNU Stow for: zsh, git, ssh, tmux, vim, neovim, starship, cli, ghostty, zellij
-- **Plugin Management** - TPM (tmux), Zellij plugins
-- **Ghostty Configuration** - Machine-specific local config for font size
+- **Dotfile Symlinking** - GNU Stow for: asdf, zsh, git, ssh, tmux, vim, starship, cli, ghostty, zellij, wezterm
+- **Neovim** - Clones [kickstart.nvim](https://github.com/djpinger/kickstart.nvim) to `~/.config/nvim`
+- **npm** - Configures global prefix to `~/.npm-global`
+- **tmux** - Clones TPM to `~/.tmux/plugins/tpm`
+- **Ghostty** - Creates machine-specific `~/.config/ghostty/local.config` with font size
+- **Zellij** - Downloads plugins to platform-appropriate plugin directory
 
 ### Platform-Specific
-- **macOS**: Homebrew, casks, iTerm2 preferences, fzf integration
-- **Ubuntu**: apt packages, Docker, Homebrew (Linuxbrew), Nerd Fonts, Ghostty
+- **macOS**: Homebrew, casks, iTerm2 preferences, fzf shell integration, gcloud auth plugin
+- **Ubuntu**: apt packages, Docker, Linuxbrew, Nerd Fonts, GTK window button layout, Ghostty (via Griffo repo), WezTerm config sync (WSL only)
+- **Fedora**: dnf packages, HashiCorp repo, Linuxbrew (for packages not in dnf), Nerd Fonts
 - **Arch**: paru packages from AUR
 
 ### Manual Steps
@@ -253,6 +238,7 @@ The Ansible playbooks handle:
 - Install tmux plugins (launch tmux and press `prefix + I`)
 - Set up cloud provider credentials (AWS, GCP)
 - Configure 1Password SSH agent on macOS
+- Log out and back in for docker group membership (Ubuntu/Fedora)
 
 ## Machine-Specific Configuration
 
@@ -272,7 +258,7 @@ export PICNIC_WORKSPACE=$HOME/g/picnic
 
 The WezTerm config is stowed to `~/.config/wezterm/wezterm.lua` on Linux/macOS. On Windows, WezTerm reads from the Windows user profile, not the WSL home.
 
-When running `./setup.sh ubuntu` inside WSL, the Ansible playbook automatically detects WSL and copies the config to `C:\Users\<username>\.config\wezterm\wezterm.lua`. If you update `wezterm.lua`, re-run the setup script to sync the change to Windows.
+When running `./setup.sh ubuntu` inside WSL, the setup script automatically detects WSL and copies the config to `C:\Users\<username>\.config\wezterm\wezterm.lua`. It will also prompt for font size and create a `local.lua` if one doesn't exist. If you update `wezterm.lua`, re-run the setup script to sync the change to Windows.
 
 ### Ghostty
 
@@ -280,14 +266,11 @@ Ghostty uses a machine-specific configuration file for settings that vary betwee
 
 **Automatic Setup:**
 
-When you run `./setup.sh`, it will automatically check if `~/.config/ghostty/local.config` exists. If not, it will prompt you to enter a font size for that machine and create the file for you.
+When you run `./setup.sh`, it will prompt you for a font size before any installation begins, then create `~/.config/ghostty/local.config` automatically if it doesn't exist.
 
 **Manual Setup:**
 
-If you need to create or modify the local config file manually:
-
 ```bash
-# Create the local config file
 cat > ~/.config/ghostty/local.config << 'EOF'
 # Machine-specific ghostty configuration
 # This file is not tracked in git
@@ -299,8 +282,6 @@ EOF
 You can also add other machine-specific settings to this file as needed. The main ghostty config in this repository will automatically include this file.
 
 ## Key Features & Aliases
-
-This configuration includes numerous productivity-enhancing aliases and functions:
 
 ### Kubernetes Shortcuts
 - `k` - kubectl alias
@@ -345,42 +326,30 @@ This configuration includes numerous productivity-enhancing aliases and function
 
 ```
 linux-dotfiles/
-├── ansible/                      # Ansible configuration management
-│   ├── site.yml                  # Main playbook
-│   ├── inventory/
-│   │   ├── hosts.yml
-│   │   └── group_vars/
-│   │       ├── all.yml           # Shared config (all platforms)
-│   │       ├── mac.yml           # Mac-specific
-│   │       ├── ubuntu.yml        # Ubuntu-specific
-│   │       └── arch.yml          # Arch-specific
-│   └── roles/
-│       ├── common/               # Stow dotfiles
-│       ├── tmux/                 # TPM installation
-│       ├── ghostty/              # Ghostty config
-│       ├── zellij/               # Zellij plugins
-│       ├── mac/                  # Homebrew, casks, iterm2
-│       ├── ubuntu/               # apt, docker, fonts
-│       └── arch/                 # paru packages
+├── scripts/                      # Setup scripts
+│   ├── lib.sh                    # Shared helpers (colors, print functions)
+│   ├── common.sh                 # All platforms: stow, nvim, tmux, ghostty, zellij, npm
+│   ├── mac.sh                    # macOS: Homebrew, casks, iTerm2, fzf
+│   ├── ubuntu.sh                 # Ubuntu: apt, Docker, Linuxbrew, fonts, Ghostty, WSL
+│   ├── fedora.sh                 # Fedora: dnf, HashiCorp repo, Linuxbrew, fonts
+│   └── arch.sh                   # Arch: paru packages
 ├── bin/bin/                      # Custom utility scripts (backup, repo management)
 ├── cli/                          # Shared CLI configuration (.aliases, .exports, .functions)
 ├── ghostty/                      # Ghostty terminal emulator config
 ├── git/                          # Git configuration, global gitignore, hooks
 ├── iterm2/                       # iTerm2 preferences (macOS)
-├── neovim/.config/               # Neovim configuration with AstroNvim
 ├── ssh/                          # SSH client configuration
 ├── starship/                     # Starship prompt configuration
 ├── tmux/                         # tmux configuration
 ├── vim/                          # Vim configuration and plugins
+├── wezterm/                      # WezTerm configuration
 ├── zellij/                       # Zellij terminal multiplexer config and layouts
 ├── zsh/                          # Zsh shell configuration
-└── setup.sh                      # Automated Ansible setup script for mac/ubuntu/arch
+└── setup.sh                      # Main setup script for mac/ubuntu/arch/fedora
 ```
 
 **Dotfiles:** Each dotfile subdirectory contains configurations that will be symlinked to your home directory using GNU Stow. For example, `stow zsh` creates `~/.zshrc` pointing to `~/linux-dotfiles/zsh/.zshrc`.
 
-**Ansible:** Package definitions and configurations are managed in `ansible/inventory/group_vars/`. The playbooks use roles to organize platform-specific and common setup tasks.
-
 ## License
 
-Personal dotfiles - feel free to use and modify as needed.
+Personal dotfiles — feel free to use and modify as needed.
