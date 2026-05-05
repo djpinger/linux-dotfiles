@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-# Common setup: stow dotfiles, nvim, tmux/TPM, ghostty local.config, zellij plugins, npm
+# Common setup: stow dotfiles, tmux/TPM, ghostty local.config, zellij plugins, npm
 
-STOW_PACKAGES=(asdf zsh git ssh tmux vim starship cli ghostty zellij wezterm)
+STOW_PACKAGES=(asdf zsh git ssh tmux vim nvim starship cli ghostty zellij wezterm)
 
 ZELLIJ_PLUGIN_NAMES=(zellij-newtab-plus zj-status-bar room monocle)
 ZELLIJ_PLUGIN_URLS=(
@@ -37,15 +37,6 @@ for pkg in "${STOW_PACKAGES[@]}"; do
   stow "$pkg"
   print_ok "$pkg"
 done
-
-print_step "Cloning kickstart.nvim"
-NVIM_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/nvim"
-if [ -d "$NVIM_DIR" ]; then
-  print_ok "nvim config already present"
-else
-  git clone https://github.com/djpinger/kickstart.nvim.git "$NVIM_DIR"
-  print_ok "Cloned kickstart.nvim"
-fi
 
 print_step "Configuring npm global prefix"
 mkdir -p "$HOME/.npm-global"

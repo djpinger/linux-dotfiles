@@ -10,7 +10,7 @@ DNF_PACKAGES=(
 )
 
 # Packages not in DNF — installed via Linuxbrew
-BREW_PACKAGES=(eza kubectx terragrunt kubecolor zellij)
+BREW_PACKAGES=(eza kubectx terragrunt kubecolor zellij tree-sitter-cli)
 
 NERD_FONTS=(MesloLGMNerdFontMono-Regular.ttf MesloLGSNerdFontMono-Regular.ttf)
 

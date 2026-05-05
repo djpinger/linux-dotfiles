@@ -24,7 +24,7 @@ The shell-based setup script automates the entire installation process, handling
   - `.exports` - Environment variables, PATH configuration, tool initialization
 
 ### Editors
-- **Neovim** - Full configuration in `.config/nvim/` with kickstart.nvim (cloned separately)
+- **Neovim** - Customized [kickstart.nvim](https://github.com/nvim-lua/kickstart.nvim) configuration in `nvim/.config/nvim/`, stowed to `~/.config/nvim`. Plugins managed by lazy.nvim, installed on first launch.
 - **Vim** - `.vimrc` with vim-plug plugin manager
 
 ### Terminal & Multiplexers
@@ -110,7 +110,6 @@ The script will prompt for any machine-specific settings (e.g. font size) upfron
 - Package installation (OS-specific and cross-platform)
 - GNU Stow symlink creation for all dotfiles
 - Plugin installation (tmux TPM, zellij plugins)
-- Neovim config clone (kickstart.nvim)
 - OS-specific configurations (Docker, fonts, GTK, iTerm2, etc.)
 
 All install steps are idempotent — safe to re-run on an existing machine.
@@ -121,7 +120,7 @@ To install individual configurations manually, use GNU Stow:
 
 ```bash
 stow zsh      # Install zsh configuration
-stow neovim   # Install neovim configuration
+stow nvim     # Install neovim configuration
 stow tmux     # Install tmux configuration
 # etc.
 ```
@@ -219,8 +218,7 @@ ZELLIJ_PLUGIN_URLS=(...  "https://github.com/user/repo/releases/download/v1.0/pl
 ## What Gets Automatically Configured
 
 ### All Platforms
-- **Dotfile Symlinking** - GNU Stow for: asdf, zsh, git, ssh, tmux, vim, starship, cli, ghostty, zellij, wezterm
-- **Neovim** - Clones [kickstart.nvim](https://github.com/djpinger/kickstart.nvim) to `~/.config/nvim`
+- **Dotfile Symlinking** - GNU Stow for: asdf, zsh, git, ssh, tmux, vim, nvim, starship, cli, ghostty, zellij, wezterm
 - **npm** - Configures global prefix to `~/.npm-global`
 - **tmux** - Clones TPM to `~/.tmux/plugins/tpm`
 - **Ghostty** - Creates machine-specific `~/.config/ghostty/local.config` with font size
@@ -328,7 +326,7 @@ You can also add other machine-specific settings to this file as needed. The mai
 linux-dotfiles/
 ├── scripts/                      # Setup scripts
 │   ├── lib.sh                    # Shared helpers (colors, print functions)
-│   ├── common.sh                 # All platforms: stow, nvim, tmux, ghostty, zellij, npm
+│   ├── common.sh                 # All platforms: stow, tmux, ghostty, zellij, npm
 │   ├── mac.sh                    # macOS: Homebrew, casks, iTerm2, fzf
 │   ├── ubuntu.sh                 # Ubuntu: apt, Docker, Linuxbrew, fonts, Ghostty, WSL
 │   ├── fedora.sh                 # Fedora: dnf, HashiCorp repo, Linuxbrew, fonts
@@ -338,6 +336,7 @@ linux-dotfiles/
 ├── ghostty/                      # Ghostty terminal emulator config
 ├── git/                          # Git configuration, global gitignore, hooks
 ├── iterm2/                       # iTerm2 preferences (macOS)
+├── nvim/                         # Neovim configuration (kickstart.nvim-based)
 ├── ssh/                          # SSH client configuration
 ├── starship/                     # Starship prompt configuration
 ├── tmux/                         # tmux configuration

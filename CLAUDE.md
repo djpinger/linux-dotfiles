@@ -34,7 +34,7 @@ Every top-level directory (except `scripts/`, `ansible/`) is a stow package. Fil
 2. Exports `DOTFILES_DIR` and collected values as env vars
 3. Sources `scripts/lib.sh` (color/print helpers, `cmd_exists`)
 4. Sources `scripts/<os>.sh` — installs packages, sets `HOMEBREW_PREFIX`, exports it
-5. Sources `scripts/common.sh` — runs stow, clones nvim config, installs TPM, creates Ghostty local config, downloads Zellij plugins
+5. Sources `scripts/common.sh` — runs stow, installs TPM, creates Ghostty local config, downloads Zellij plugins
 
 Because scripts are sourced (not executed as subprocesses), `PATH` and exported variables set in the OS script are available in `common.sh`.
 
@@ -67,7 +67,7 @@ Because scripts are sourced (not executed as subprocesses), `PATH` and exported 
 
 ### Neovim
 
-The neovim config is **not** a stow package in this repo. `common.sh` clones `https://github.com/djpinger/kickstart.nvim` into `~/.config/nvim` on first run (skipped if directory already exists).
+The `nvim/` stow package contains a customized [kickstart.nvim](https://github.com/nvim-lua/kickstart.nvim) config and is symlinked to `~/.config/nvim` like any other package. Plugins (lazy.nvim, treesitter parsers, mason tools) install themselves on first launch into `~/.local/share/nvim`.
 
 ### Version Management
 
