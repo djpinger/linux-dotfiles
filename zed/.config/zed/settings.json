@@ -7,16 +7,32 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "agent_servers": {
+    "claude-acp": {
+      "type": "registry"
+    }
+  },
+  "collaboration_panel": {
+    "dock": "right"
+  },
+  "agent": {
+    "dock": "left",
+    "favorite_models": [],
+    "model_parameters": []
+  },
   "terminal": {
     "dock": "right"
   },
   "project_panel": {
+    "dock": "right",
     "entry_spacing": "standard"
   },
   "outline_panel": {
+    "dock": "right",
     "indent_size": 20.0
   },
   "git_panel": {
+    "dock": "right",
     "tree_view": true,
     "status_style": "icon"
   },
