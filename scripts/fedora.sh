@@ -7,13 +7,12 @@ DNF_PACKAGES=(
   stow python3-pip vim curl jq zsh tmux iproute nodejs git
   fd-find ripgrep dnf-plugins-core bat btop fzf gh git-delta
   helm jid k9s starship terraform tig neovim zoxide ghostty
+  meslo-nerd-fonts
 )
 
 # Packages not in DNF — installed via Linuxbrew
 # kind is here instead of DNF because Nobara's kind package conflicts with docker-ce-cli
 BREW_PACKAGES=(eza kubectx terragrunt kubecolor zellij tree-sitter-cli kind)
-
-NERD_FONTS=(MesloLGMNerdFontMono-Regular.ttf MesloLGSNerdFontMono-Regular.ttf)
 
 print_step "Adding HashiCorp repo"
 if [ ! -f /etc/yum.repos.d/hashicorp.repo ]; then
@@ -27,24 +26,6 @@ fi
 print_step "Installing dnf packages"
 sudo dnf install -y "${DNF_PACKAGES[@]}"
 print_ok "dnf packages installed"
-
-print_step "Downloading Nerd Fonts"
-mkdir -p "$HOME/.local/share/fonts"
-needs_fc_cache=false
-for font in "${NERD_FONTS[@]}"; do
-  dest="$HOME/.local/share/fonts/$font"
-  if [ -f "$dest" ]; then
-    print_ok "$font already present"
-  else
-    curl -fsSL -o "$dest" "https://www.naurwhal.com/fonts/$font"
-    print_ok "Downloaded $font"
-    needs_fc_cache=true
-  fi
-done
-if $needs_fc_cache; then
-  fc-cache -f
-  print_ok "Font cache refreshed"
-fi
 
 print_step "Installing Linuxbrew"
 if [ -f "$HOMEBREW_PREFIX/bin/brew" ]; then
