@@ -6,11 +6,12 @@ export HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew"
 DNF_PACKAGES=(
   stow python3-pip vim curl jq zsh tmux iproute nodejs git
   fd-find ripgrep dnf-plugins-core bat btop fzf gh git-delta
-  helm jid k9s kind starship terraform tig neovim zoxide ghostty
+  helm jid k9s starship terraform tig neovim zoxide ghostty
 )
 
 # Packages not in DNF — installed via Linuxbrew
-BREW_PACKAGES=(eza kubectx terragrunt kubecolor zellij tree-sitter-cli)
+# kind is here instead of DNF because Nobara's kind package conflicts with docker-ce-cli
+BREW_PACKAGES=(eza kubectx terragrunt kubecolor zellij tree-sitter-cli kind)
 
 NERD_FONTS=(MesloLGMNerdFontMono-Regular.ttf MesloLGSNerdFontMono-Regular.ttf)
 

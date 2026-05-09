@@ -49,6 +49,7 @@ export GOROOT=$(ls -d ~/.asdf/installs/golang/*/go 2>/dev/null | tail -1)
 export COLORTERM=truecolor
 export TERM=xterm-256color
 export USE_GKE_GCLOUD_AUTH_PLUGIN=True
+export PODMAN_COMPOSE_WARNING_LOGS=false
 #
 # RUBY
 #
