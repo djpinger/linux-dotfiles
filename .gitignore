@@ -12,4 +12,3 @@ zellij/.config/zellij/plugins/*.wasm
 ghostty/.config/ghostty/local.config
 zed/.config/zed/prompts/
 zed/.config/zed/conversations/
-.claude/
