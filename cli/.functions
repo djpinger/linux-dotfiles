@@ -35,18 +35,18 @@ function awsrole() {
 }
 
 function cdp() {
-  cd ~/g/picnic/"${1:-}"
+  cd "${WORK_CODE_DIR:-~/g/work}"/"${1:-}"
 }
 
 if [[ -n "$ZSH_VERSION" ]]; then
   _cdp_complete() {
-    _path_files -W ~/g/picnic -/
+    _path_files -W "${WORK_CODE_DIR:-~/g/work}" -/
   }
   compdef _cdp_complete cdp
 else
   _cdp_complete() {
     local cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -d -- ~/g/picnic/"$cur" | sed 's|.*/||') )
+    COMPREPLY=( $(compgen -d -- "${WORK_CODE_DIR:-~/g/work}/$cur" | sed 's|.*/||') )
   }
   complete -F _cdp_complete cdp
 fi

@@ -1,0 +1,13 @@
+# Work-specific configuration — copy to ~/.work and fill in values.
+# This file is NOT tracked in git. Store the real version in 1Password.
+
+# Directory where work repos live (used by cdp() and g_update_main.sh)
+export WORK_CODE_DIR=~/g/work
+
+# Rsync backup destination root (used by backup.sh)
+export BACKUP_DIR=/Volumes/Ventoy/backup/rsync
+
+# SSH username for remote backup host (used by docker_backup_remote.sh or similar)
+# export REMOTE_USER=yourname
+
+# Work-specific env vars, credentials, kubectl contexts, etc. go here

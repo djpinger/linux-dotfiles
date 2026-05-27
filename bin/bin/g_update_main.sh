@@ -13,7 +13,7 @@ function pull() {
 }
 
 if [[ -z "$1" ]]; then
-    DIR=~/g/picnic
+    DIR="${WORK_CODE_DIR:-~/g/work}"
 else
     DIR="$1"
 fi
