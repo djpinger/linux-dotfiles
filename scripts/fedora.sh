@@ -33,7 +33,7 @@ if [ -f "$HOMEBREW_PREFIX/bin/brew" ]; then
 else
   sudo mkdir -p "$HOMEBREW_PREFIX"
   sudo chown -R "$USER:$USER" "$HOMEBREW_PREFIX"
-  NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   print_ok "Linuxbrew installed"
 fi
 

@@ -18,7 +18,7 @@ print_step "Installing Homebrew"
 if [ -f "$HOMEBREW_PREFIX/bin/brew" ]; then
   print_ok "Homebrew already installed"
 else
-  NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   print_ok "Homebrew installed"
 fi
 
