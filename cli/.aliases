@@ -11,7 +11,6 @@ alias k9='k9s -n default'
 alias krestart='k rollout restart deployment'
 alias kevents='kubectl events'
 alias kwarn='kevents --types=Warning'
-alias kcdev='kubectx main-dev-cluster && kubectl port-forward --namespace kubecost deployment/kubecost-cost-analyzer 9090'
 #
 # ALIASES
 #
@@ -64,7 +63,6 @@ alias dcpull='docker compose pull'
 alias dc='docker compose'
 
 alias ptop='bpytop'
-#alias cda='cd ~/g/arcadia'
 alias pbcopy='xclip -selection clipboard'
 alias pbpaste='xclip -selection clipboard -o'
 alias awsorg="aws organizations list-accounts --query 'Accounts[].[Name,Status]' --output text"
@@ -74,10 +72,6 @@ alias yayi='yay -Syu --noconfirm'
 alias yayu='yay -Rsc'
 
 alias g='gvim --remote-tab-silent'
-alias zoominstall='sudo pacman -U zoom_x86_64.pkg.tar.xz'
-alias weather='curl wttr.in/mnz'
-alias weather2='curl v2d.wttr.in/mnz'
-alias ytdl='yt-dlp --extract-audio --audio-format mp3 -o "%(title)s.%(ext)s"'
 
 alias glogin='gcloud auth application-default login'
 alias gcplist='gcloud projects list |  grep -v "^sys"'
