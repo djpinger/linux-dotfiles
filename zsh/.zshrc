@@ -35,8 +35,7 @@ zstyle ':completion:*' list-colors "{(s.:.)LS_COLORS}"
 zstyle ':completion:*' menu select
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
 
-autoload -U compinit && compinit # reload completions for zsh-completions
-compinit
+autoload -U compinit && compinit -u
 
 autoload -Uz edit-command-line
 zle -N edit-command-line
@@ -75,6 +74,7 @@ bindkey -e
 
 # Load brew
 [[ ! -f /home/linuxbrew/.linuxbrew/bin/brew ]] || eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+[[ ! -f /usr/local/bin/brew ]] || eval "$(/usr/local/bin/brew shellenv)"
 [[ ! -f /opt/homebrew/bin/brew ]] || eval "$(/opt/homebrew/bin/brew shellenv)"
 
 eval "$(fzf --zsh)"
