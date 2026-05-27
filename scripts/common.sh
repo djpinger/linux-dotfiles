@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Common setup: stow dotfiles, tmux/TPM, ghostty local.config, zellij plugins, npm
 
-STOW_PACKAGES=(asdf zsh git ssh tmux vim nvim starship cli ghostty zellij wezterm)
+STOW_PACKAGES=(asdf zsh git ssh tmux vim nvim starship cli ghostty zellij wezterm claude)
 
 ZELLIJ_PLUGIN_NAMES=(zellij-newtab-plus zj-status-bar room monocle)
 ZELLIJ_PLUGIN_URLS=(
@@ -65,6 +65,21 @@ else
 font-size = ${GHOSTTY_FONT_SIZE:-15}
 EOF
   print_ok "Created Ghostty local config (font-size=${GHOSTTY_FONT_SIZE:-15})"
+fi
+
+print_step "Configuring Claude Code status line"
+STATUSLINE_SH="$HOME/.claude/statusline/statusline.sh"
+CLAUDE_SETTINGS="$HOME/.claude/settings.json"
+chmod +x "$STATUSLINE_SH"
+if [ -f "$CLAUDE_SETTINGS" ]; then
+  jq --arg cmd "$STATUSLINE_SH" \
+    '.statusLine = {"type": "command", "command": $cmd}' \
+    "$CLAUDE_SETTINGS" > "${CLAUDE_SETTINGS}.tmp" && mv "${CLAUDE_SETTINGS}.tmp" "$CLAUDE_SETTINGS"
+  print_ok "Updated statusLine in $CLAUDE_SETTINGS"
+else
+  mkdir -p "$(dirname "$CLAUDE_SETTINGS")"
+  printf '{"statusLine":{"type":"command","command":"%s"}}\n' "$STATUSLINE_SH" > "$CLAUDE_SETTINGS"
+  print_ok "Created $CLAUDE_SETTINGS with statusLine"
 fi
 
 print_step "Downloading Zellij plugins"
