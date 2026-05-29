@@ -52,6 +52,41 @@ else
   print_ok "Cloned TPM"
 fi
 
+print_step "Installing tmux plugins"
+# Headless plugin clone. install_plugins reads @plugin lines from ~/.tmux.conf
+# but resolves the plugin dir from this env var (else it fatals "not configured").
+export TMUX_PLUGIN_MANAGER_PATH="$HOME/.tmux/plugins"
+if [ -x "$HOME/.tmux/plugins/tpm/bin/install_plugins" ]; then
+  if "$HOME/.tmux/plugins/tpm/bin/install_plugins" >/dev/null 2>&1; then
+    print_ok "tmux plugins installed"
+  else
+    print_warn "tmux plugin install had issues; run prefix+I inside tmux"
+  fi
+else
+  print_warn "TPM install_plugins not found; run prefix+I inside tmux"
+fi
+
+print_step "Installing Claude Code session hooks"
+# A plugin's setup runs only when its entry script is loaded by a tmux server,
+# not when cloned above. Load tmux-assistant-resurrect's entry script directly
+# (mirrors its justfile install-claude-hook recipe) to write the SessionStart/End
+# hooks into ~/.claude/settings.json. Requires jq; the script no-ops without it.
+ASSIST_TMUX="$HOME/.tmux/plugins/tmux-assistant-resurrect/tmux-assistant-resurrect.tmux"
+if [ -f "$ASSIST_TMUX" ]; then
+  started_server=false
+  if ! tmux list-sessions >/dev/null 2>&1; then
+    tmux new-session -d -s __dotfiles_setup 2>/dev/null && started_server=true
+  fi
+  if bash "$ASSIST_TMUX" >/dev/null 2>&1; then
+    print_ok "Claude session hooks installed"
+  else
+    print_warn "assistant-resurrect hook install had issues"
+  fi
+  [ "$started_server" = true ] && tmux kill-session -t __dotfiles_setup 2>/dev/null
+else
+  print_warn "tmux-assistant-resurrect not found; open tmux to install Claude hooks"
+fi
+
 print_step "Configuring Ghostty"
 mkdir -p "$HOME/.config/ghostty"
 GHOSTTY_LOCAL="$HOME/.config/ghostty/local.config"

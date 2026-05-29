@@ -3,7 +3,7 @@
 
 PARU_PACKAGES=(
   1password discord stow eza starship github-cli ttf-meslo-nerd
-  git-delta ghostty zoxide zellij nodejs npm tree-sitter-cli
+  git-delta ghostty zoxide zellij nodejs npm tree-sitter-cli tmux jq
 )
 
 print_step "Installing paru packages"

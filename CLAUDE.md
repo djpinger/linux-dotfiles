@@ -34,7 +34,7 @@ Every top-level directory (except `scripts/`, `ansible/`) is a stow package. Fil
 2. Exports `DOTFILES_DIR` and collected values as env vars
 3. Sources `scripts/lib.sh` (color/print helpers, `cmd_exists`)
 4. Sources `scripts/<os>.sh` — installs packages, sets `HOMEBREW_PREFIX`, exports it
-5. Sources `scripts/common.sh` — runs stow, installs TPM, creates Ghostty local config, downloads Zellij plugins
+5. Sources `scripts/common.sh` — runs stow, installs TPM + tmux plugins (headless) and the Claude Code session hooks, creates Ghostty local config, downloads Zellij plugins
 
 Because scripts are sourced (not executed as subprocesses), `PATH` and exported variables set in the OS script are available in `common.sh`.
 
