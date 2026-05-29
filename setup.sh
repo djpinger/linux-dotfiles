@@ -50,7 +50,6 @@ echo
 echo "Manual steps remaining:"
 echo "  - Configure git user name and email"
 echo "  - Set up SSH keys"
-echo "  - Launch tmux and press prefix+I to install plugins"
 echo "  - Set up cloud provider credentials (AWS, GCP)"
 if [ "$TARGET" = "mac" ]; then
   echo "  - Configure 1Password SSH agent"
