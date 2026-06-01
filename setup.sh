@@ -23,8 +23,11 @@ source "$DOTFILES_DIR/scripts/lib.sh"
 echo -e "${GREEN}linux-dotfiles setup — $TARGET${RESET}"
 echo
 
-read -rp "Ghostty font size [15]: " _input
-export GHOSTTY_FONT_SIZE="${_input:-15}"
+# Ghostty: only prompt if the machine-specific config doesn't exist yet
+if [ ! -f "$HOME/.config/ghostty/local.config" ]; then
+  read -rp "Ghostty font size [15]: " _input
+  export GHOSTTY_FONT_SIZE="${_input:-15}"
+fi
 
 # WSL: prompt for WezTerm font size before anything else runs
 if [ "$TARGET" = "ubuntu" ] && grep -qi microsoft /proc/version 2>/dev/null; then
