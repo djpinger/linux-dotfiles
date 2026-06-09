@@ -83,8 +83,12 @@ alias d='$(git rev-parse --show-toplevel)/ops/deploy'
 
 alias tablet='scrcpy --video-codec=h265 --max-fps=60 --no-audio'
 
-alias zm='zellij -s main'
-alias za='zellij attach'
+# attach --create: resurrect "main" if it exists, else create it; --force-run-commands
+# re-runs serialized commands without the "Press ENTER" banner
+alias zm='zellij attach --create main --force-run-commands'
+# --force-run-commands re-runs serialized commands on resurrect without the
+# "Press ENTER to run" banner (tmux-resurrect/continuum-style auto-resume)
+alias za='zellij attach --force-run-commands'
 alias zf='zellij -l strider'
 alias zd='zellij delete-all-sessions'
 alias zk9s='zellij -s k9s --layout $HOME/.config/zellij/k9s.kdl'

@@ -74,3 +74,16 @@ function gco() {
     git checkout -b "$1" origin/"$1" 2>/dev/null || git checkout "$1"
   fi
 }
+
+# Bare `zellij` (no args) auto-attaches to the "Main" session per config.kdl
+# (session_name "Main" + attach_to_session true). That path can't pass
+# --force-run-commands, so resurrected commands stall behind "Press ENTER to run".
+# This wrapper replicates the auto-attach but forces serialized commands to re-run
+# (tmux-resurrect/continuum-style). Any args (attach, subcommands, flags) pass through.
+function zellij() {
+  if [ "$#" -eq 0 ]; then
+    command zellij attach --create Main --force-run-commands
+  else
+    command zellij "$@"
+  fi
+}
