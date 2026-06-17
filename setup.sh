@@ -10,8 +10,8 @@ RED='\033[0;31m'
 GREEN='\033[0;32m'
 RESET='\033[0m'
 
-if [ -z "$1" ] || [[ ! "$1" =~ ^(mac|ubuntu|arch|fedora)$ ]]; then
-  echo -e "${RED}Usage: ./setup.sh [mac|ubuntu|arch|fedora]${RESET}"
+if [ -z "$1" ] || [[ ! "$1" =~ ^(mac|ubuntu|ubuntu-server|arch|fedora)$ ]]; then
+  echo -e "${RED}Usage: ./setup.sh [mac|ubuntu|ubuntu-server|arch|fedora]${RESET}"
   exit 1
 fi
 
@@ -23,8 +23,8 @@ source "$DOTFILES_DIR/scripts/lib.sh"
 echo -e "${GREEN}linux-dotfiles setup — $TARGET${RESET}"
 echo
 
-# Ghostty: only prompt if the machine-specific config doesn't exist yet
-if [ ! -f "$HOME/.config/ghostty/local.config" ]; then
+# Ghostty: only prompt if the machine-specific config doesn't exist yet (not needed on servers)
+if [[ "$TARGET" != "ubuntu-server" ]] && [ ! -f "$HOME/.config/ghostty/local.config" ]; then
   read -rp "Ghostty font size [15]: " _input
   export GHOSTTY_FONT_SIZE="${_input:-15}"
 fi
@@ -57,6 +57,6 @@ echo "  - Set up cloud provider credentials (AWS, GCP)"
 if [ "$TARGET" = "mac" ]; then
   echo "  - Configure 1Password SSH agent"
 fi
-if [[ "$TARGET" =~ ^(ubuntu|fedora)$ ]]; then
+if [[ "$TARGET" =~ ^(ubuntu|ubuntu-server|fedora)$ ]]; then
   echo "  - Log out and back in for docker group membership to take effect"
 fi

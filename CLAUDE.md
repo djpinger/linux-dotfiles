@@ -4,13 +4,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What This Repo Is
 
-A cross-platform dotfiles and machine setup system for macOS, Ubuntu, Arch, and Fedora. GNU Stow manages symlinks from this repo into `$HOME`. Shell scripts handle package installation per OS.
+A cross-platform dotfiles and machine setup system for macOS, Ubuntu, Ubuntu Server, Arch, and Fedora. GNU Stow manages symlinks from this repo into `$HOME`. Shell scripts handle package installation per OS.
 
 ## Key Commands
 
 ```bash
 # Full machine setup (prompts for font size, then runs unattended)
-./setup.sh [mac|ubuntu|arch|fedora]
+./setup.sh [mac|ubuntu|ubuntu-server|arch|fedora]
 
 # Stow a single dotfile package from the repo root
 stow <package>          # e.g. stow zsh
@@ -30,7 +30,7 @@ Every top-level directory (except `scripts/`, `ansible/`) is a stow package. Fil
 ### Setup Script Flow
 
 `setup.sh` is the single entry point:
-1. Collects all interactive input upfront (Ghostty font size; WezTerm font size if Ubuntu+WSL)
+1. Collects all interactive input upfront (Ghostty font size, skipped for `ubuntu-server`; WezTerm font size if Ubuntu+WSL)
 2. Exports `DOTFILES_DIR` and collected values as env vars
 3. Sources `scripts/lib.sh` (color/print helpers, `cmd_exists`)
 4. Sources `scripts/<os>.sh` — installs packages, sets `HOMEBREW_PREFIX`, exports it
@@ -40,7 +40,7 @@ Because scripts are sourced (not executed as subprocesses), `PATH` and exported 
 
 ### Adding/Changing Packages
 
-- **Packages for an OS**: edit the array (`BREW_PACKAGES`, `DNF_PACKAGES`, etc.) at the top of the relevant `scripts/<os>.sh`
+- **Packages for an OS**: edit the array (`BREW_PACKAGES`, `DNF_PACKAGES`, etc.) at the top of the relevant `scripts/<os>.sh` (e.g. `scripts/ubuntu-server.sh` for headless Ubuntu)
 - **Packages on all platforms**: each OS script has its own `BREW_PACKAGES` array — update each one individually
 - **Dotfiles to stow**: edit `STOW_PACKAGES` in `scripts/common.sh` and ensure the directory exists in the repo root
 - **Zellij plugins**: edit `ZELLIJ_PLUGIN_NAMES` / `ZELLIJ_PLUGIN_URLS` parallel arrays in `scripts/common.sh`

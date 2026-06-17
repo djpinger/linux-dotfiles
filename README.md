@@ -1,6 +1,6 @@
 # Linux Dotfiles
 
-Personal dotfiles and configuration management for macOS, Ubuntu, Arch Linux, and Fedora.
+Personal dotfiles and configuration management for macOS, Ubuntu, Ubuntu Server, Arch Linux, and Fedora.
 
 ## Overview
 
@@ -102,8 +102,10 @@ cd ~/linux-dotfiles
 Run the setup script for your operating system:
 
 ```bash
-./setup.sh [mac|ubuntu|arch|fedora]
+./setup.sh [mac|ubuntu|ubuntu-server|arch|fedora]
 ```
+
+Use `ubuntu-server` for headless machines — it skips all GUI apps (Ghostty, Sublime Text, Nerd Fonts, GTK config, WezTerm).
 
 The script will prompt for any machine-specific settings (e.g. font size) upfront, then run unattended. It performs:
 
@@ -153,7 +155,7 @@ BREW_CASKS=(
 
 ### Ubuntu apt Packages
 
-Edit `scripts/ubuntu.sh`:
+Edit `scripts/ubuntu.sh` (desktop) or `scripts/ubuntu-server.sh` (headless):
 
 ```bash
 APT_PACKAGES=(
@@ -209,6 +211,8 @@ ZELLIJ_PLUGIN_URLS=(...  "https://github.com/user/repo/releases/download/v1.0/pl
 | Brew casks (mac) | `scripts/mac.sh` | `BREW_CASKS` |
 | Brew packages (ubuntu) | `scripts/ubuntu.sh` | `BREW_PACKAGES` |
 | apt packages (ubuntu) | `scripts/ubuntu.sh` | `APT_PACKAGES` |
+| Brew packages (ubuntu-server) | `scripts/ubuntu-server.sh` | `BREW_PACKAGES` |
+| apt packages (ubuntu-server) | `scripts/ubuntu-server.sh` | `APT_PACKAGES` |
 | dnf packages (fedora) | `scripts/fedora.sh` | `DNF_PACKAGES` |
 | Brew packages (fedora) | `scripts/fedora.sh` | `BREW_PACKAGES` |
 | paru packages (arch) | `scripts/arch.sh` | `PARU_PACKAGES` |
@@ -227,6 +231,7 @@ ZELLIJ_PLUGIN_URLS=(...  "https://github.com/user/repo/releases/download/v1.0/pl
 ### Platform-Specific
 - **macOS**: Homebrew, casks, iTerm2 preferences, fzf shell integration, gcloud auth plugin
 - **Ubuntu**: apt packages, Docker, Linuxbrew, Nerd Fonts, GTK window button layout, Ghostty (via Griffo repo), WezTerm config sync (WSL only)
+- **Ubuntu Server**: apt packages, Docker, Linuxbrew — no GUI apps
 - **Fedora**: dnf packages, HashiCorp repo, Linuxbrew (for packages not in dnf), Nerd Fonts
 - **Arch**: paru packages from AUR
 
@@ -329,6 +334,7 @@ linux-dotfiles/
 │   ├── common.sh                 # All platforms: stow, tmux, ghostty, zellij, npm
 │   ├── mac.sh                    # macOS: Homebrew, casks, iTerm2, fzf
 │   ├── ubuntu.sh                 # Ubuntu: apt, Docker, Linuxbrew, fonts, Ghostty, WSL
+│   ├── ubuntu-server.sh          # Ubuntu Server: apt, Docker, Linuxbrew (no GUI)
 │   ├── fedora.sh                 # Fedora: dnf, HashiCorp repo, Linuxbrew, fonts
 │   └── arch.sh                   # Arch: paru packages
 ├── bin/bin/                      # Custom utility scripts (backup, repo management)
@@ -344,7 +350,7 @@ linux-dotfiles/
 ├── wezterm/                      # WezTerm configuration
 ├── zellij/                       # Zellij terminal multiplexer config and layouts
 ├── zsh/                          # Zsh shell configuration
-└── setup.sh                      # Main setup script for mac/ubuntu/arch/fedora
+└── setup.sh                      # Main setup script for mac/ubuntu/ubuntu-server/arch/fedora
 ```
 
 **Dotfiles:** Each dotfile subdirectory contains configurations that will be symlinked to your home directory using GNU Stow. For example, `stow zsh` creates `~/.zshrc` pointing to `~/linux-dotfiles/zsh/.zshrc`.
