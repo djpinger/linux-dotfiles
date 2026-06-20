@@ -90,31 +90,6 @@ EOF
 done
 print_ok "GTK window buttons configured"
 
-# WSL: copy WezTerm config to Windows filesystem
-if grep -qi microsoft /proc/version 2>/dev/null; then
-  print_step "WSL detected — configuring WezTerm"
-  WIN_USER=$(powershell.exe -Command '$env:USERNAME' 2>/dev/null | tr -d '\r')
-  WIN_WEZTERM_DIR="/mnt/c/Users/$WIN_USER/.config/wezterm"
-  mkdir -p "$WIN_WEZTERM_DIR"
-  cp "$DOTFILES_DIR/wezterm/.config/wezterm/wezterm.lua" "$WIN_WEZTERM_DIR/wezterm.lua"
-  print_ok "Copied wezterm.lua to Windows"
-
-  WIN_LOCAL="$WIN_WEZTERM_DIR/local.lua"
-  if [ ! -f "$WIN_LOCAL" ]; then
-    cat > "$WIN_LOCAL" << EOF
--- Machine-specific WezTerm configuration
--- This file is not tracked in git
-
-return {
-  font_size = ${WEZTERM_FONT_SIZE:-11},
-}
-EOF
-    print_ok "Created WezTerm local config (font_size=${WEZTERM_FONT_SIZE:-11})"
-  else
-    print_ok "WezTerm local config already exists"
-  fi
-fi
-
 print_step "Installing Ghostty"
 if cmd_exists ghostty; then
   print_ok "Ghostty already installed"

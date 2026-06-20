@@ -29,16 +29,6 @@ if [[ "$TARGET" != "ubuntu-server" ]] && [ ! -f "$HOME/.config/ghostty/local.con
   export GHOSTTY_FONT_SIZE="${_input:-15}"
 fi
 
-# WSL: prompt for WezTerm font size before anything else runs
-if [ "$TARGET" = "ubuntu" ] && grep -qi microsoft /proc/version 2>/dev/null; then
-  WIN_USER=$(powershell.exe -Command '$env:USERNAME' 2>/dev/null | tr -d '\r')
-  WIN_LOCAL="/mnt/c/Users/$WIN_USER/.config/wezterm/local.lua"
-  if [ ! -f "$WIN_LOCAL" ]; then
-    read -rp "WezTerm font size [11]: " _input
-    export WEZTERM_FONT_SIZE="${_input:-11}"
-  fi
-fi
-
 echo
 
 # OS-specific setup

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Common setup: stow dotfiles, tmux/TPM, ghostty local.config, zellij plugins, npm
 
-STOW_PACKAGES=(asdf zsh git ssh tmux vim nvim starship cli ghostty zellij wezterm claude)
+STOW_PACKAGES=(asdf zsh git ssh tmux vim nvim starship cli ghostty zellij claude)
 
 ZELLIJ_PLUGIN_NAMES=(zellij-newtab-plus zj-status-bar room monocle)
 ZELLIJ_PLUGIN_URLS=(
