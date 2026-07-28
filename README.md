@@ -43,6 +43,13 @@ The shell-based setup script automates the entire installation process, handling
   - Preferences stored in `iterm2/`
   - Auto-configured to use repository preferences
 
+### Window Manager
+
+- **Hyprland + noctalia** - Wayland compositor with the noctalia desktop shell (Fedora/Nobara, installed via the [lionheartp COPR](https://copr.fedorainfracloud.org/coprs/lionheartp/Hyprland))
+  - Config lives in `~/.config/hypr/` (Lua-based `hyprland.lua`) and `~/.config/noctalia/`
+  - Not yet stowed or automated by `setup.sh` - currently configured manually while settings are being dialed in
+  - See [Hyprland Keybindings](#hyprland-keybindings) below for the current bindings
+
 ### Development Tools
 
 #### Version Control
@@ -324,6 +331,34 @@ You can also add other machine-specific settings to this file as needed. The mai
 - `cdp <dir>` - Jump to project directory with tab completion
 - `cdt <dir>` - Jump to temp directory
 - `cdu` - Jump to Git repository root
+
+### Hyprland Keybindings
+Main modifier (`mainMod`) is `SUPER` (the Windows key).
+
+- `SUPER + Enter` - Open terminal
+- `SUPER + Q` - Close window (graceful)
+- `SUPER + Shift + Q` - Kill window (force)
+- `SUPER + E` - Open file manager
+- `SUPER + V` - Toggle floating
+- `SUPER + R` - Toggle launcher (noctalia)
+- `SUPER + Tab` - Open window switcher (noctalia)
+- `SUPER + P` - Pseudotile
+- `SUPER + J` - Toggle split (dwindle layout only)
+- `SUPER + M` - Shutdown/exit
+- `SUPER + ←/→/↑/↓` - Move focus
+- `SUPER + Shift + ←/→/↑/↓` - Resize window
+- `SUPER + [0-9]` - Switch to workspace
+- `SUPER + Shift + [0-9]` - Move window to workspace and follow
+- `SUPER + Ctrl + [0-9]` - Move window to workspace, stay on current
+- `SUPER + Ctrl + F` - Toggle maximize
+- `SUPER + Shift + F` - Toggle fullscreen
+- `SUPER + S` - Toggle special/scratchpad workspace
+- `SUPER + Shift + S` - Move window to special/scratchpad workspace
+- `SUPER + scroll` - Cycle through workspaces
+- `SUPER + drag (LMB)` - Move window
+- `SUPER + drag (RMB)` - Resize window
+- `Print` - Screenshot (fullscreen, with picker)
+- `SUPER + Print` - Screenshot region
 
 ## Directory Structure
 
