@@ -1,0 +1,13 @@
+// Applied via the `Alt v` keybinding (OverrideLayout) to rebalance the active
+// tab's panes into equal-width columns — the equivalent of tmux's
+// `select-layout even-horizontal`. split_direction "vertical" lays children out
+// side by side; omitting sizes makes zellij distribute them evenly.
+// retain_existing_terminal_panes (set on the keybinding) reuses the current panes
+// rather than spawning new shells.
+layout {
+    pane split_direction="vertical" {
+        pane
+        pane
+        pane
+    }
+}

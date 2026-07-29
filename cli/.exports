@@ -113,3 +113,13 @@ export PATH=$PATH:/usr/local/bin/obsidian
 # Opencode
 #
 export PATH=~/.opencode/bin:$PATH
+#
+# GOOGLE CLOUD SDK PYTHON
+# Homebrew python upgrades delete the interpreter gcloud hardcodes, which breaks
+# both gcloud and gke-gcloud-auth-plugin. Pin CLOUDSDK_PYTHON to the first
+# python3 that exists (macOS Homebrew arm/intel, then Linux). Only set if found.
+#
+for _py in /opt/homebrew/bin/python3 /usr/local/bin/python3 /usr/bin/python3; do
+  [ -x "$_py" ] && export CLOUDSDK_PYTHON="$_py" && break
+done
+unset _py

@@ -153,6 +153,15 @@ keybinds clear-defaults=true {
         bind "Alt =" { Resize "Increase"; }
         bind "Alt [" { PreviousSwapLayout; }
         bind "Alt ]" { NextSwapLayout; }
+        // tmux `select-layout even-horizontal` equivalent: rebalance the active
+        // tab's panes into equal-width columns, reusing existing panes.
+        bind "Alt v" {
+            OverrideLayout {
+                layout "even-columns"
+                retain_existing_terminal_panes true
+                apply_only_to_active_tab true
+            }
+        }
         bind "Alt f" { ToggleFloatingPanes; }
         bind "Ctrl g" { SwitchToMode "locked"; }
         bind "Alt h" { MoveFocusOrTab "left"; }
