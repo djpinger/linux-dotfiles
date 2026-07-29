@@ -236,6 +236,7 @@ hl.config({
         kb_layout  = "us",
         kb_variant = "",
         kb_model   = "",
+        -- kb_options = "altwin:swap_alt_win", -- Mac-style Alt/Win swap; disabled, too confusing on a laptop
         kb_options = "",
         kb_rules   = "",
 
@@ -278,8 +279,11 @@ local closeWindowBind = hl.bind(mainMod .. " + Q", hl.dsp.window.close())
 hl.bind(mainMod .. " + SHIFT + Q", hl.dsp.window.kill())
 hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"))
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
-hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
+hl.bind(mainMod .. " + F", hl.dsp.window.float({ action = "toggle" }))
+hl.bind(mainMod .. " + C", hl.dsp.exec_cmd("wtype -M ctrl c -m ctrl"))
+hl.bind(mainMod .. " + V", hl.dsp.exec_cmd("wtype -M ctrl v -m ctrl"))
 hl.bind(mainMod .. " + R", hl.dsp.exec_cmd(ipc .. "panel-toggle launcher"))
+hl.bind(mainMod .. " + TAB", hl.dsp.exec_cmd(ipc .. "window-switcher"))
 hl.bind("ALT + TAB", hl.dsp.exec_cmd(ipc .. "window-switcher"))
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 hl.bind(mainMod .. " + J", hl.dsp.layout("togglesplit"))    -- dwindle only
