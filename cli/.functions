@@ -87,3 +87,14 @@ function zellij() {
     command zellij "$@"
   fi
 }
+
+# Bare `tmux` (no args) attaches to the most recently used session instead of
+# always starting a new unnamed one. Any args (attach, new -s foo, ls, etc.)
+# pass through untouched.
+function tmux() {
+  if [ "$#" -eq 0 ]; then
+    command tmux attach 2>/dev/null || command tmux new-session
+  else
+    command tmux "$@"
+  fi
+}
