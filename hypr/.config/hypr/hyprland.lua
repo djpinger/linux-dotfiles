@@ -87,7 +87,7 @@ hl.env("HYPRCURSOR_SIZE", "24")
 hl.config({
     general = {
         gaps_in  = 5,
-        gaps_out = 20,
+        gaps_out = 8,
 
         border_size = 2,
 
@@ -130,6 +130,10 @@ hl.config({
 
     animations = {
         enabled = true,
+    },
+
+    cursor = {
+        no_warps = true, -- don't move the mouse when focus changes (e.g. keyboard focus switching)
     },
 })
 
@@ -183,6 +187,7 @@ hl.animation({ leaf = "zoomFactor",    enabled = true,  speed = 7,    bezier = "
 hl.config({
     dwindle = {
         preserve_split = true, -- You probably want this
+        force_split = 2, -- always split right/bottom, regardless of mouse position
     },
 })
 
@@ -312,6 +317,8 @@ hl.bind(mainMod .. " + SHIFT + F", hl.dsp.window.fullscreen({ mode = "fullscreen
 hl.bind("PRINT", hl.dsp.exec_cmd(ipc .. "screenshot-fullscreen pick"))
 -- Screenshot a region
 hl.bind(mainMod .. " +  PRINT", hl.dsp.exec_cmd(ipc .. "screenshot-region"))
+-- Screenshot a selected area with flameshot
+hl.bind("ALT + SHIFT + S", hl.dsp.exec_cmd("flameshot gui"))
 
 -- Example special workspace (scratchpad)
 hl.bind(mainMod .. " + S",         hl.dsp.workspace.toggle_special("magic"))
