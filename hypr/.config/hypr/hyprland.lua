@@ -43,7 +43,15 @@ local fileManager = "dolphin"
 -- Autostart necessary processes (like notifications daemons, status bars, etc.)
 -- Or execute your favorite apps at launch like this:
 --
-hl.on("hyprland.start", function () 
+hl.on("hyprland.start", function ()
+   -- Required when launching via the "Hyprland (uwsm-managed)" login-manager entry: tells
+   -- uwsm the compositor is up so it can export WAYLAND_DISPLAY/etc. into the systemd
+   -- activation environment and let graphical-session.target activate. Without this,
+   -- PartOf=graphical-session.target services (xdg-desktop-portal, gvfs, etc.) never start,
+   -- and Flatpak/libadwaita apps (e.g. Bazaar) can't query the host color-scheme and fall
+   -- back to light mode. No-op if uwsm isn't managing the session.
+   hl.exec_cmd("command -v uwsm >/dev/null 2>&1 && uwsm finalize")
+
    hl.exec_cmd("noctalia")
 --   hl.exec_cmd("nm-applet")
 --   hl.exec_cmd("waybar & hyprpaper & firefox")
@@ -283,7 +291,7 @@ hl.bind(mainMod .. " + B", hl.dsp.exec_cmd("google-chrome-stable"))
 hl.bind(mainMod .. " + F", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + C", hl.dsp.exec_cmd("wtype -M ctrl c -m ctrl"))
 hl.bind(mainMod .. " + V", hl.dsp.exec_cmd("wtype -M ctrl v -m ctrl"))
-hl.bind(mainMod .. " + R", hl.dsp.exec_cmd(ipc .. "panel-toggle launcher"))
+hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd(ipc .. "panel-toggle launcher"))
 hl.bind(mainMod .. " + L", hl.dsp.exec_cmd(ipc .. "session lock"))
 hl.bind(mainMod .. " + TAB", hl.dsp.exec_cmd(ipc .. "window-switcher"))
 hl.bind("ALT + TAB", hl.dsp.exec_cmd(ipc .. "window-switcher"))
@@ -407,5 +415,13 @@ hl.window_rule({
     match = { class = "hyprland-run" },
 
     move  = "20 monitor_h-120",
+    float = true,
+})
+
+-- Nobara Updater (DNF App Center) should always be a floating window
+hl.window_rule({
+    name  = "float-dnf-app-center",
+    match = { class = "org.dnf.AppCenter" },
+
     float = true,
 })
