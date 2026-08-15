@@ -1,3 +1,5 @@
 .terraform.lock.hcl
 plan
 .terraform
+
+**/.claude/settings.local.json
