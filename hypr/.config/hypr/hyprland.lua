@@ -43,7 +43,15 @@ local fileManager = "dolphin"
 -- Autostart necessary processes (like notifications daemons, status bars, etc.)
 -- Or execute your favorite apps at launch like this:
 --
-hl.on("hyprland.start", function () 
+hl.on("hyprland.start", function ()
+   -- Required when launching via the "Hyprland (uwsm-managed)" login-manager entry: tells
+   -- uwsm the compositor is up so it can export WAYLAND_DISPLAY/etc. into the systemd
+   -- activation environment and let graphical-session.target activate. Without this,
+   -- PartOf=graphical-session.target services (xdg-desktop-portal, gvfs, etc.) never start,
+   -- and Flatpak/libadwaita apps (e.g. Bazaar) can't query the host color-scheme and fall
+   -- back to light mode. No-op if uwsm isn't managing the session.
+   hl.exec_cmd("command -v uwsm >/dev/null 2>&1 && uwsm finalize")
+
    hl.exec_cmd("noctalia")
 --   hl.exec_cmd("nm-applet")
 --   hl.exec_cmd("waybar & hyprpaper & firefox")
@@ -87,7 +95,7 @@ hl.env("HYPRCURSOR_SIZE", "24")
 hl.config({
     general = {
         gaps_in  = 5,
-        gaps_out = 20,
+        gaps_out = 8,
 
         border_size = 2,
 
@@ -130,6 +138,10 @@ hl.config({
 
     animations = {
         enabled = true,
+    },
+
+    cursor = {
+        no_warps = true, -- don't move the mouse when focus changes (e.g. keyboard focus switching)
     },
 })
 
@@ -183,6 +195,7 @@ hl.animation({ leaf = "zoomFactor",    enabled = true,  speed = 7,    bezier = "
 hl.config({
     dwindle = {
         preserve_split = true, -- You probably want this
+        force_split = 2, -- always split right/bottom, regardless of mouse position
     },
 })
 
@@ -231,6 +244,7 @@ hl.config({
         kb_layout  = "us",
         kb_variant = "",
         kb_model   = "",
+        -- kb_options = "altwin:swap_alt_win", -- Mac-style Alt/Win swap; disabled, too confusing on a laptop
         kb_options = "",
         kb_rules   = "",
 
@@ -273,8 +287,13 @@ local closeWindowBind = hl.bind(mainMod .. " + Q", hl.dsp.window.close())
 hl.bind(mainMod .. " + SHIFT + Q", hl.dsp.window.kill())
 hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"))
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
-hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
-hl.bind(mainMod .. " + R", hl.dsp.exec_cmd(ipc .. "panel-toggle launcher"))
+hl.bind(mainMod .. " + B", hl.dsp.exec_cmd("google-chrome-stable"))
+hl.bind(mainMod .. " + F", hl.dsp.window.float({ action = "toggle" }))
+hl.bind(mainMod .. " + C", hl.dsp.exec_cmd("wtype -M ctrl c -m ctrl"))
+hl.bind(mainMod .. " + V", hl.dsp.exec_cmd("wtype -M ctrl v -m ctrl"))
+hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd(ipc .. "panel-toggle launcher"))
+hl.bind(mainMod .. " + L", hl.dsp.exec_cmd(ipc .. "session lock"))
+hl.bind(mainMod .. " + TAB", hl.dsp.exec_cmd(ipc .. "window-switcher"))
 hl.bind("ALT + TAB", hl.dsp.exec_cmd(ipc .. "window-switcher"))
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 hl.bind(mainMod .. " + J", hl.dsp.layout("togglesplit"))    -- dwindle only
@@ -312,6 +331,8 @@ hl.bind(mainMod .. " + SHIFT + F", hl.dsp.window.fullscreen({ mode = "fullscreen
 hl.bind("PRINT", hl.dsp.exec_cmd(ipc .. "screenshot-fullscreen pick"))
 -- Screenshot a region
 hl.bind(mainMod .. " +  PRINT", hl.dsp.exec_cmd(ipc .. "screenshot-region"))
+-- Screenshot a selected area with flameshot
+hl.bind("ALT + SHIFT + S", hl.dsp.exec_cmd("flameshot gui"))
 
 -- Example special workspace (scratchpad)
 hl.bind(mainMod .. " + S",         hl.dsp.workspace.toggle_special("magic"))
@@ -320,6 +341,13 @@ hl.bind(mainMod .. " + SHIFT + S", hl.dsp.window.move({ workspace = "special:mag
 -- Scroll through existing workspaces with mainMod + scroll
 hl.bind(mainMod .. " + mouse_down", hl.dsp.focus({ workspace = "e+1" }))
 hl.bind(mainMod .. " + mouse_up",   hl.dsp.focus({ workspace = "e-1" }))
+
+-- Step through existing workspaces with CTRL + ALT + left/right
+hl.bind("CTRL + ALT + right", hl.dsp.focus({ workspace = "e+1" }))
+hl.bind("CTRL + ALT + left",  hl.dsp.focus({ workspace = "e-1" }))
+
+-- Jump to (or create) a new empty workspace with CTRL + ALT + N
+hl.bind("CTRL + ALT + N", hl.dsp.focus({ workspace = "empty" }))
 
 -- Move/resize windows with mainMod + LMB/RMB and dragging
 hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(),   { mouse = true })
@@ -387,5 +415,13 @@ hl.window_rule({
     match = { class = "hyprland-run" },
 
     move  = "20 monitor_h-120",
+    float = true,
+})
+
+-- Nobara Updater (DNF App Center) should always be a floating window
+hl.window_rule({
+    name  = "float-dnf-app-center",
+    match = { class = "org.dnf.AppCenter" },
+
     float = true,
 })

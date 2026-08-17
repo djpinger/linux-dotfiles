@@ -333,32 +333,7 @@ You can also add other machine-specific settings to this file as needed. The mai
 - `cdu` - Jump to Git repository root
 
 ### Hyprland Keybindings
-Main modifier (`mainMod`) is `SUPER` (the Windows key).
-
-- `SUPER + Enter` - Open terminal
-- `SUPER + Q` - Close window (graceful)
-- `SUPER + Shift + Q` - Kill window (force)
-- `SUPER + E` - Open file manager
-- `SUPER + V` - Toggle floating
-- `SUPER + R` - Toggle launcher (noctalia)
-- `SUPER + Tab` - Open window switcher (noctalia)
-- `SUPER + P` - Pseudotile
-- `SUPER + J` - Toggle split (dwindle layout only)
-- `SUPER + M` - Shutdown/exit
-- `SUPER + ←/→/↑/↓` - Move focus
-- `SUPER + Shift + ←/→/↑/↓` - Resize window
-- `SUPER + [0-9]` - Switch to workspace
-- `SUPER + Shift + [0-9]` - Move window to workspace and follow
-- `SUPER + Ctrl + [0-9]` - Move window to workspace, stay on current
-- `SUPER + Ctrl + F` - Toggle maximize
-- `SUPER + Shift + F` - Toggle fullscreen
-- `SUPER + S` - Toggle special/scratchpad workspace
-- `SUPER + Shift + S` - Move window to special/scratchpad workspace
-- `SUPER + scroll` - Cycle through workspaces
-- `SUPER + drag (LMB)` - Move window
-- `SUPER + drag (RMB)` - Resize window
-- `Print` - Screenshot (fullscreen, with picker)
-- `SUPER + Print` - Screenshot region
+Main modifier (`mainMod`) is `SUPER` (the Windows key). Full, up-to-date list lives in [`hypr/KEYBINDINGS.md`](hypr/KEYBINDINGS.md).
 
 ## Directory Structure
 

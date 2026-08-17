@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Common setup: stow dotfiles, tmux/TPM, ghostty local.config, zellij plugins, npm
 
-STOW_PACKAGES=(asdf zsh git ssh tmux vim nvim starship cli ghostty zellij claude herdr)
+STOW_PACKAGES=(asdf zsh git ssh tmux vim nvim starship cli ghostty zellij claude hypr noctalia herdr)
 
 ZELLIJ_PLUGIN_NAMES=(zellij-newtab-plus zj-status-bar room monocle)
 ZELLIJ_PLUGIN_URLS=(
@@ -27,7 +27,7 @@ print_step "Stowing dotfiles"
 cd "$DOTFILES_DIR"
 for pkg in "${STOW_PACKAGES[@]}"; do
   # Back up conflicting real files before stowing
-  stow --simulate "$pkg" 2>&1 | awk '/existing target/{print $NF}' | tr -d ':' | while read -r f; do
+  stow --simulate "$pkg" 2>&1 | awk -F'existing target ' '/existing target/{split($2,a," since"); print a[1]}' | while read -r f; do
     t="$HOME/$f"
     if [ -e "$t" ] && [ ! -L "$t" ]; then
       print_warn "Backing up $t -> ${t}_original"
