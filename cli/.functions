@@ -98,3 +98,30 @@ function tmux() {
     command tmux "$@"
   fi
 }
+
+# Ring the terminal bell after any foreground command (shell command, ssh
+# session, etc.) that runs longer than BELL_THRESHOLD seconds. Ghostty's
+# bell-features (attention,system) turns that into a dash badge + desktop
+# notification, so backgrounded/inactive panes surface when they finish.
+# A few full-screen interactive commands are excluded since exiting them
+# isn't "done working" (ssh is intentionally NOT excluded).
+zmodload zsh/datetime
+BELL_THRESHOLD=10
+BELL_EXCLUDE=(vim nvim nano man less more top htop)
+_bell_cmd_start=0
+_bell_cmd_name=""
+_bell_preexec() {
+  _bell_cmd_start=$EPOCHSECONDS
+  _bell_cmd_name="${1%% *}"
+  _bell_cmd_name="${_bell_cmd_name##*/}"
+}
+_bell_precmd() {
+  if (( _bell_cmd_start > 0 )) && (( EPOCHSECONDS - _bell_cmd_start >= BELL_THRESHOLD )) \
+     && (( ! ${BELL_EXCLUDE[(Ie)$_bell_cmd_name]} )); then
+    print -n '\a'
+  fi
+  _bell_cmd_start=0
+}
+autoload -Uz add-zsh-hook
+add-zsh-hook preexec _bell_preexec
+add-zsh-hook precmd _bell_precmd

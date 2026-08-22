@@ -13,3 +13,6 @@ ghostty/.config/ghostty/local.config
 zed/.config/zed/prompts/
 zed/.config/zed/conversations/
 /.claude/
+herdr/.config/herdr/*.log
+herdr/.config/herdr/.plugins.lock
+herdr/.config/herdr/session.json

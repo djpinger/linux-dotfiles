@@ -10,6 +10,18 @@ theme = catppuccin-mocha
 quit-after-last-window-closed = true
 window-decoration = auto
 
+# Kitty-style cursor_trail lookalike (MIT, github.com/sahaj-b/ghostty-cursor-shaders).
+# `always` (not just while focused) avoids the shader freezing mid-animation
+# when the window loses focus while the shell has a line cursor at the prompt.
+custom-shader = shaders/cursor_tail.glsl
+custom-shader-animation = always
+
+# Bell: dash "needs attention" hint only. Not `system` — that fires a real
+# desktop notification that must be manually dismissed, or its unread count
+# gets stuck on the dash icon even after Ghostty quits (GNOME's per-app
+# notification badge is independent of the process).
+bell-features = attention
+
 # Enable mouse reporting for tmux
 mouse-hide-while-typing = false
 click-repeat-interval = 0
