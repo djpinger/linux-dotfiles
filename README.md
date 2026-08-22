@@ -88,12 +88,11 @@ The shell-based setup script automates the entire installation process, handling
 ### Package Management
 - **Homebrew** - Multi-platform package management
   - Cross-platform tools installed on Mac and Ubuntu/Fedora via Linuxbrew
-  - Arch Linux uses paru instead
+  - Arch Linux uses pacman instead (CachyOS repos cover most packages without needing the AUR)
 
 ## Prerequisites
 
 - **All platforms**: Git, curl
-- **Arch Linux**: `paru` must be installed before running setup
 
 ## Installation
 
@@ -182,12 +181,12 @@ DNF_PACKAGES=(
 )
 ```
 
-### Arch paru Packages
+### Arch pacman Packages
 
 Edit `scripts/arch.sh`:
 
 ```bash
-PARU_PACKAGES=(
+PACMAN_PACKAGES=(
   existing-package
   new-package        # Add here
 )
@@ -222,7 +221,7 @@ ZELLIJ_PLUGIN_URLS=(...  "https://github.com/user/repo/releases/download/v1.0/pl
 | apt packages (ubuntu-server) | `scripts/ubuntu-server.sh` | `APT_PACKAGES` |
 | dnf packages (fedora) | `scripts/fedora.sh` | `DNF_PACKAGES` |
 | Brew packages (fedora) | `scripts/fedora.sh` | `BREW_PACKAGES` |
-| paru packages (arch) | `scripts/arch.sh` | `PARU_PACKAGES` |
+| pacman packages (arch) | `scripts/arch.sh` | `PACMAN_PACKAGES` |
 | Dotfiles to stow | `scripts/common.sh` | `STOW_PACKAGES` |
 | Zellij plugins | `scripts/common.sh` | `ZELLIJ_PLUGIN_NAMES` / `ZELLIJ_PLUGIN_URLS` |
 
@@ -240,7 +239,7 @@ ZELLIJ_PLUGIN_URLS=(...  "https://github.com/user/repo/releases/download/v1.0/pl
 - **Ubuntu**: apt packages, Docker, Linuxbrew, Nerd Fonts, GTK window button layout, Ghostty (via Griffo repo), WezTerm config sync (WSL only)
 - **Ubuntu Server**: apt packages, Docker, Linuxbrew — no GUI apps
 - **Fedora**: dnf packages, HashiCorp repo, Linuxbrew (for packages not in dnf), Nerd Fonts
-- **Arch**: paru packages from AUR
+- **Arch**: pacman packages (CachyOS repos)
 
 ### Manual Steps
 - Configure Git user name and email
@@ -346,7 +345,7 @@ linux-dotfiles/
 │   ├── ubuntu.sh                 # Ubuntu: apt, Docker, Linuxbrew, fonts, Ghostty, WSL
 │   ├── ubuntu-server.sh          # Ubuntu Server: apt, Docker, Linuxbrew (no GUI)
 │   ├── fedora.sh                 # Fedora: dnf, HashiCorp repo, Linuxbrew, fonts
-│   └── arch.sh                   # Arch: paru packages
+│   └── arch.sh                   # Arch: pacman packages
 ├── bin/bin/                      # Custom utility scripts (backup, repo management)
 ├── cli/                          # Shared CLI configuration (.aliases, .exports, .functions)
 ├── ghostty/                      # Ghostty terminal emulator config
