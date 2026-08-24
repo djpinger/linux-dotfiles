@@ -13,6 +13,9 @@ ghostty/.config/ghostty/local.config
 zed/.config/zed/prompts/
 zed/.config/zed/conversations/
 /.claude/
+claude/.claude/*
+!claude/.claude/mcp.json
+!claude/.claude/statusline/
 herdr/.config/herdr/*.log
 herdr/.config/herdr/.plugins.lock
 herdr/.config/herdr/session.json
