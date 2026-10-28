@@ -5,7 +5,7 @@ export HOMEBREW_PREFIX="/opt/homebrew"
 
 BREW_PACKAGES=(
   bat btop eza fzf node gh git-delta helm jid k9s kind
-  kubectx starship terraform terragrunt tig kubecolor neovim zoxide zellij
+  kubectx starship hashicorp/tap/terraform terragrunt tig kubecolor neovim zoxide zellij
   git jq stow tmux tree-sitter-cli
 )
 
@@ -32,13 +32,18 @@ print_step "Installing brew packages"
 brew install "${BREW_PACKAGES[@]}"
 print_ok "brew packages installed"
 
-print_step "Tapping manaflow-ai/cmux"
-brew tap manaflow-ai/cmux
+print_step "Tapping hashicorp/tap"
+brew tap hashicorp/tap
 print_ok "Tap added"
 
 print_step "Installing brew casks"
 brew install --cask "${BREW_CASKS[@]}"
 print_ok "Casks installed"
+
+print_step "Linking 1Password SSH agent socket"
+mkdir -p "$HOME/.1password"
+ln -sf "$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock" "$HOME/.1password/agent.sock"
+print_ok "Agent socket linked"
 
 print_step "Installing gcloud auth plugin"
 if cmd_exists gcloud; then
