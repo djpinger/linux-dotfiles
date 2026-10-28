@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # Ubuntu Server setup: apt, Docker, Linuxbrew, brew packages
+# Defines os_select (menus) and os_run (installs); setup.sh calls them.
 
 export HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew"
 
@@ -14,35 +15,52 @@ BREW_PACKAGES=(
   tree-sitter-cli
 )
 
-print_step "Installing apt packages"
-sudo apt-get update -qq
-sudo apt-get install -y "${APT_PACKAGES[@]}"
-print_ok "apt packages installed"
+register_section apt_packages "apt packages"
+register_section docker "Docker + docker group"
+register_section brew_packages "Linuxbrew + brew packages"
 
-print_step "Installing Docker"
-if cmd_exists docker; then
-  print_ok "Docker already installed"
-else
-  curl -fsSL https://get.docker.com | sudo sh
-  print_ok "Docker installed"
-fi
+os_select() {
+  if section_on apt_packages; then
+    select_packages APT_PACKAGES "apt packages to install"
+  fi
+  if section_on brew_packages; then
+    select_packages BREW_PACKAGES "brew packages to install"
+  fi
+}
 
-print_step "Adding user to docker group"
-sudo usermod -aG docker "$USER"
-print_ok "User added to docker group (re-login to take effect)"
+os_run() {
+  export PATH="$HOMEBREW_PREFIX/bin:$PATH"
 
-print_step "Installing Linuxbrew"
-if [ -f "$HOMEBREW_PREFIX/bin/brew" ]; then
-  print_ok "Linuxbrew already installed"
-else
-  sudo mkdir -p "$HOMEBREW_PREFIX"
-  sudo chown -R "$USER:$USER" "$HOMEBREW_PREFIX"
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-  print_ok "Linuxbrew installed"
-fi
+  if section_on apt_packages; then
+    print_step "Installing apt packages"
+    sudo apt-get update -qq
+    if [ "${#APT_PACKAGES[@]}" -gt 0 ]; then
+      sudo apt-get install -y "${APT_PACKAGES[@]}"
+    fi
+    print_ok "apt packages installed"
+  fi
 
-export PATH="$HOMEBREW_PREFIX/bin:$PATH"
+  if section_on docker; then
+    print_step "Installing Docker"
+    if cmd_exists docker; then
+      print_ok "Docker already installed"
+    else
+      curl -fsSL https://get.docker.com | sudo sh
+      print_ok "Docker installed"
+    fi
 
-print_step "Installing brew packages"
-brew install "${BREW_PACKAGES[@]}"
-print_ok "brew packages installed"
+    print_step "Adding user to docker group"
+    sudo usermod -aG docker "$USER"
+    print_ok "User added to docker group (re-login to take effect)"
+  fi
+
+  if section_on brew_packages; then
+    ensure_homebrew
+
+    print_step "Installing brew packages"
+    if [ "${#BREW_PACKAGES[@]}" -gt 0 ]; then
+      brew install "${BREW_PACKAGES[@]}"
+    fi
+    print_ok "brew packages installed"
+  fi
+}

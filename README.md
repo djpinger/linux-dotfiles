@@ -108,12 +108,15 @@ cd ~/linux-dotfiles
 Run the setup script for your operating system:
 
 ```bash
-./setup.sh [mac|ubuntu|ubuntu-server|arch|fedora]
+./setup.sh [mac|ubuntu|ubuntu-server|arch|fedora]      # interactive menus
+./setup.sh -d [mac|ubuntu|ubuntu-server|arch|fedora]   # skip the menus, use defaults
 ```
+
+By default the script shows [gum](https://github.com/charmbracelet/gum) menus (installed automatically if missing): first a checklist of sections to run, then a checklist of packages for each package section (brew, apt, pacman, dnf, stow packages, ...). Everything starts ticked, so pressing enter through the menus equals `-d`. Without a terminal it falls back to defaults.
 
 Use `ubuntu-server` for headless machines — it skips all GUI apps (Ghostty, Sublime Text, Nerd Fonts, GTK config, WezTerm).
 
-The script will prompt for any machine-specific settings (e.g. font size) upfront, then run unattended. It performs:
+Machine-specific settings (e.g. font size) are collected upfront, then the script runs unattended. It performs:
 
 - Package installation (OS-specific and cross-platform)
 - GNU Stow symlink creation for all dotfiles

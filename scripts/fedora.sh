@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # Fedora setup: dnf packages, nerd fonts, Linuxbrew + brew packages
+# Defines os_select (menus) and os_run (installs); setup.sh calls them.
 
 export HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew"
 
@@ -14,31 +15,48 @@ DNF_PACKAGES=(
 # kind is here instead of DNF because Nobara's kind package conflicts with docker-ce-cli
 BREW_PACKAGES=(eza kubectx terragrunt kubecolor zellij tree-sitter-cli kind)
 
-print_step "Adding HashiCorp repo"
-if [ ! -f /etc/yum.repos.d/hashicorp.repo ]; then
-  sudo curl -fsSL -o /etc/yum.repos.d/hashicorp.repo \
-    https://rpm.releases.hashicorp.com/fedora/hashicorp.repo
-  print_ok "HashiCorp repo added"
-else
-  print_ok "HashiCorp repo already present"
-fi
+register_section dnf_packages "dnf packages"
+register_section brew_packages "Linuxbrew + brew packages"
 
-print_step "Installing dnf packages"
-sudo dnf install -y "${DNF_PACKAGES[@]}"
-print_ok "dnf packages installed"
+os_select() {
+  if section_on dnf_packages; then
+    select_packages DNF_PACKAGES "dnf packages to install"
+  fi
+  if section_on brew_packages; then
+    select_packages BREW_PACKAGES "brew packages to install"
+  fi
+}
 
-print_step "Installing Linuxbrew"
-if [ -f "$HOMEBREW_PREFIX/bin/brew" ]; then
-  print_ok "Linuxbrew already installed"
-else
-  sudo mkdir -p "$HOMEBREW_PREFIX"
-  sudo chown -R "$USER:$USER" "$HOMEBREW_PREFIX"
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-  print_ok "Linuxbrew installed"
-fi
+os_run() {
+  export PATH="$HOMEBREW_PREFIX/bin:$PATH"
 
-export PATH="$HOMEBREW_PREFIX/bin:$PATH"
+  if section_on dnf_packages; then
+    # The terraform package comes from the HashiCorp repo, so only add it if terraform is selected
+    if [[ " ${DNF_PACKAGES[*]} " == *" terraform "* ]]; then
+      print_step "Adding HashiCorp repo"
+      if [ ! -f /etc/yum.repos.d/hashicorp.repo ]; then
+        sudo curl -fsSL -o /etc/yum.repos.d/hashicorp.repo \
+          https://rpm.releases.hashicorp.com/fedora/hashicorp.repo
+        print_ok "HashiCorp repo added"
+      else
+        print_ok "HashiCorp repo already present"
+      fi
+    fi
 
-print_step "Installing brew packages"
-brew install "${BREW_PACKAGES[@]}"
-print_ok "brew packages installed"
+    print_step "Installing dnf packages"
+    if [ "${#DNF_PACKAGES[@]}" -gt 0 ]; then
+      sudo dnf install -y "${DNF_PACKAGES[@]}"
+    fi
+    print_ok "dnf packages installed"
+  fi
+
+  if section_on brew_packages; then
+    ensure_homebrew
+
+    print_step "Installing brew packages"
+    if [ "${#BREW_PACKAGES[@]}" -gt 0 ]; then
+      brew install "${BREW_PACKAGES[@]}"
+    fi
+    print_ok "brew packages installed"
+  fi
+}

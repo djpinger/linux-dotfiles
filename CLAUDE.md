@@ -9,8 +9,11 @@ A cross-platform dotfiles and machine setup system for macOS, Ubuntu, Ubuntu Ser
 ## Key Commands
 
 ```bash
-# Full machine setup (prompts for font size, then runs unattended)
+# Full machine setup: gum menus pick sections and packages, then it runs
 ./setup.sh [mac|ubuntu|ubuntu-server|arch|fedora]
+
+# Same, but skip the menus and use the defaults (unattended; font size 15)
+./setup.sh -d [mac|ubuntu|ubuntu-server|arch|fedora]
 
 # Stow a single dotfile package from the repo root
 stow <package>          # e.g. stow zsh
@@ -29,20 +32,24 @@ Every top-level directory (except `scripts/`, `ansible/`) is a stow package. Fil
 
 ### Setup Script Flow
 
-`setup.sh` is the single entry point:
-1. Collects all interactive input upfront (Ghostty font size, skipped for `ubuntu-server`; WezTerm font size if Ubuntu+WSL)
-2. Exports `DOTFILES_DIR` and collected values as env vars
-3. Sources `scripts/lib.sh` (color/print helpers, `cmd_exists`)
-4. Sources `scripts/<os>.sh` — installs packages, sets `HOMEBREW_PREFIX`, exports it
-5. Sources `scripts/common.sh` — runs stow, installs TPM + tmux plugins (headless) and the Claude Code session hooks, creates Ghostty local config, downloads Zellij plugins
+`setup.sh` is the single entry point (`-d` skips the menus):
+1. Sources `scripts/lib.sh` (color/print helpers, `cmd_exists`, and the gum helpers `register_section`, `section_on`, `choose_sections`, `select_packages`, `ensure_homebrew`, `ensure_gum`)
+2. Sources `scripts/<os>.sh`, `scripts/common.sh` and (mac only) `scripts/mac-defaults.sh`. At load time these only declare package arrays and call `register_section <key> "<label>"`; nothing installs yet
+3. If interactive, installs gum if missing, then shows a section checklist and a package checklist per enabled package section (`os_select`, `common_select`), then asks for confirmation. Falls back to defaults when there is no terminal
+4. Prompts for the Ghostty font size (`gum input`, or 15 with `-d`; skipped for `ubuntu-server`)
+5. Runs `os_run`, `common_run` and (mac) `mac_defaults_run`. Each step in them is wrapped in `if section_on <key>; then ... fi`, and install lines use the (possibly pruned) arrays
 
 Because scripts are sourced (not executed as subprocesses), `PATH` and exported variables set in the OS script are available in `common.sh`.
+
+Under `set -e`, never end a function with `section_on x && ...`; use `if` so a disabled section does not return non-zero.
 
 ### Adding/Changing Packages
 
 - **Packages for an OS**: edit the array (`BREW_PACKAGES`, `DNF_PACKAGES`, etc.) at the top of the relevant `scripts/<os>.sh` (e.g. `scripts/ubuntu-server.sh` for headless Ubuntu)
 - **Packages on all platforms**: each OS script has its own `BREW_PACKAGES` array — update each one individually
 - **Dotfiles to stow**: edit `STOW_PACKAGES` in `scripts/common.sh` and ensure the directory exists in the repo root
+- **New setup step**: add a `register_section` line at the top of the script and wrap the step in `if section_on <key>; then ... fi` inside its `*_run` function; add a `select_packages ARRAY "header"` call in `os_select`/`common_select` if it has a package list
+- **AUR packages (Arch)**: add names to `AUR_PACKAGES` in `scripts/arch.sh`; they install via `paru` or `yay` if one is present
 - **Zellij plugins**: edit `ZELLIJ_PLUGIN_NAMES` / `ZELLIJ_PLUGIN_URLS` parallel arrays in `scripts/common.sh`
 
 ### Zsh Config Loading Order
