@@ -79,3 +79,7 @@ The `nvim/` stow package contains a customized [kickstart.nvim](https://github.c
 ### Version Management
 
 The `asdf/` stow package places `.tool-versions` at `~/.tool-versions`. asdf is initialized via several conditional `[ -f ... ] && source` checks in `.exports` to handle different install locations across platforms.
+
+## TODO
+
+- Add automated testing of `setup.sh` for the Linux targets using Docker (preferred) or distrobox (with `--home` to isolate `$HOME`). Needs a non-root user with passwordless `sudo`, `curl` and `git` in each image. Until then, changes to the setup scripts are only verified with `bash -n` and manual runs.

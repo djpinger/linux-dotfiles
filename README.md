@@ -138,7 +138,7 @@ stow tmux     # Install tmux configuration
 
 ## Adding Packages
 
-Edit the appropriate array in the relevant script and re-run `./setup.sh`.
+Edit the appropriate array in the relevant script and re-run `./setup.sh`. Each array is both the default install list (`-d`) and the set of choices in the interactive package checklists, so a new entry shows up ticked in the menu.
 
 ### Homebrew Packages (Mac + Ubuntu/Fedora)
 
@@ -195,6 +195,14 @@ PACMAN_PACKAGES=(
 )
 ```
 
+### Arch AUR Packages (paru/yay)
+
+`AUR_PACKAGES` in `scripts/arch.sh` is empty by default. Add names to it and an "AUR packages" section and checklist appear in the menus. They install with `paru` or `yay` if one is already installed (neither is installed for you):
+
+```bash
+AUR_PACKAGES=(some-aur-package)
+```
+
 ### Dotfiles to Stow
 
 Edit the `STOW_PACKAGES` array in `scripts/common.sh`:
@@ -225,31 +233,37 @@ ZELLIJ_PLUGIN_URLS=(...  "https://github.com/user/repo/releases/download/v1.0/pl
 | dnf packages (fedora) | `scripts/fedora.sh` | `DNF_PACKAGES` |
 | Brew packages (fedora) | `scripts/fedora.sh` | `BREW_PACKAGES` |
 | pacman packages (arch) | `scripts/arch.sh` | `PACMAN_PACKAGES` |
+| AUR packages (arch) | `scripts/arch.sh` | `AUR_PACKAGES` |
+| Dock apps (mac) | `scripts/mac-defaults.sh` | `DOCK_APPS` |
 | Dotfiles to stow | `scripts/common.sh` | `STOW_PACKAGES` |
 | Zellij plugins | `scripts/common.sh` | `ZELLIJ_PLUGIN_NAMES` / `ZELLIJ_PLUGIN_URLS` |
+
+### Adding a Setup Step
+
+Steps are grouped into sections that show up in the first menu. To add one, put `register_section <key> "<label>"` at the top of the script, wrap the step in `if section_on <key>; then ... fi` inside the script's `os_run` / `common_run` / `mac_defaults_run` function, and (if it has a package list) call `select_packages ARRAY "header"` from `os_select` / `common_select`.
 
 ## What Gets Automatically Configured
 
 ### All Platforms
-- **Dotfile Symlinking** - GNU Stow for: asdf, zsh, git, ssh, tmux, vim, nvim, starship, cli, ghostty, zellij, wezterm
+- **Dotfile Symlinking** - GNU Stow for the packages in `STOW_PACKAGES` (asdf, zsh, git, ssh, tmux, vim, nvim, starship, cli, ghostty, zellij, claude, hypr, noctalia, herdr, fish, kitty); pick a subset in the menu
 - **npm** - Configures global prefix to `~/.npm-global`
 - **tmux** - Clones TPM to `~/.tmux/plugins/tpm`
 - **Ghostty** - Creates machine-specific `~/.config/ghostty/local.config` with font size
 - **Zellij** - Downloads plugins to platform-appropriate plugin directory
 
 ### Platform-Specific
-- **macOS**: Homebrew, casks, iTerm2 preferences, fzf shell integration, gcloud auth plugin
+- **macOS**: Homebrew, casks, iTerm2 preferences, fzf shell integration, gcloud auth plugin, 1Password SSH agent socket link (`~/.1password/agent.sock`), and Dock / trackpad / menu bar battery settings (`scripts/mac-defaults.sh`, needs `dockutil` for the Dock app list)
 - **Ubuntu**: apt packages, Docker, Linuxbrew, Nerd Fonts, GTK window button layout, Ghostty (via Griffo repo), WezTerm config sync (WSL only)
 - **Ubuntu Server**: apt packages, Docker, Linuxbrew — no GUI apps
 - **Fedora**: dnf packages, HashiCorp repo, Linuxbrew (for packages not in dnf), Nerd Fonts
-- **Arch**: pacman packages (CachyOS repos)
+- **Arch**: pacman packages (CachyOS repos), plus optional AUR packages via paru/yay
 
 ### Manual Steps
 - Configure Git user name and email
 - Set up SSH keys
 - Install tmux plugins (launch tmux and press `prefix + I`)
 - Set up cloud provider credentials (AWS, GCP)
-- Configure 1Password SSH agent on macOS
+- Enable the SSH agent in the 1Password app (macOS links the socket for you; the SSH config uses `~/.1password/agent.sock` on every platform)
 - Log out and back in for docker group membership (Ubuntu/Fedora)
 
 ## Machine-Specific Configuration
@@ -278,7 +292,7 @@ Ghostty uses a machine-specific configuration file for settings that vary betwee
 
 **Automatic Setup:**
 
-When you run `./setup.sh`, it will prompt you for a font size before any installation begins, then create `~/.config/ghostty/local.config` automatically if it doesn't exist.
+When you run `./setup.sh`, it will prompt you for a font size before any installation begins (with `-d` it skips the prompt and uses 15), then create `~/.config/ghostty/local.config` automatically if it doesn't exist.
 
 **Manual Setup:**
 
@@ -342,13 +356,14 @@ Main modifier (`mainMod`) is `SUPER` (the Windows key). Full, up-to-date list li
 ```
 linux-dotfiles/
 ├── scripts/                      # Setup scripts
-│   ├── lib.sh                    # Shared helpers (colors, print functions)
+│   ├── lib.sh                    # Shared helpers (colors, print functions, gum menus, ensure_homebrew)
 │   ├── common.sh                 # All platforms: stow, tmux, ghostty, zellij, npm
-│   ├── mac.sh                    # macOS: Homebrew, casks, iTerm2, fzf
+│   ├── mac.sh                    # macOS: Homebrew, casks, 1Password socket, iTerm2, fzf
+│   ├── mac-defaults.sh           # macOS: Dock, trackpad, menu bar battery
 │   ├── ubuntu.sh                 # Ubuntu: apt, Docker, Linuxbrew, fonts, Ghostty, WSL
 │   ├── ubuntu-server.sh          # Ubuntu Server: apt, Docker, Linuxbrew (no GUI)
 │   ├── fedora.sh                 # Fedora: dnf, HashiCorp repo, Linuxbrew, fonts
-│   └── arch.sh                   # Arch: pacman packages
+│   └── arch.sh                   # Arch: pacman packages, optional AUR (paru/yay)
 ├── bin/bin/                      # Custom utility scripts (backup, repo management)
 ├── cli/                          # Shared CLI configuration (.aliases, .exports, .functions)
 ├── ghostty/                      # Ghostty terminal emulator config
@@ -366,6 +381,10 @@ linux-dotfiles/
 ```
 
 **Dotfiles:** Each dotfile subdirectory contains configurations that will be symlinked to your home directory using GNU Stow. For example, `stow zsh` creates `~/.zshrc` pointing to `~/linux-dotfiles/zsh/.zshrc`.
+
+## TODO
+
+- Add automated testing of `setup.sh` for the Linux targets (ubuntu, ubuntu-server, fedora, arch) using plain Docker containers (preferred: clean, throwaway, CI-friendly) or distrobox (use `--home` to isolate it from the real `$HOME`). Each image needs a non-root user with passwordless `sudo`, plus `curl` and `git`. Cover both `-d` and the interactive menus. macOS still needs a VM or a spare Mac.
 
 ## License
 
