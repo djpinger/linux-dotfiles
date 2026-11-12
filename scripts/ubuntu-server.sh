@@ -11,7 +11,7 @@ APT_PACKAGES=(
 BREW_PACKAGES=(
   bat btop eza fzf node gh git-delta helm jid k9s kind
   kubectx starship terraform terragrunt tig kubecolor neovim zoxide zellij
-  tree-sitter-cli
+  tree-sitter-cli go
 )
 
 print_step "Installing apt packages"

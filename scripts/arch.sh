@@ -3,7 +3,7 @@
 
 PACMAN_PACKAGES=(
   discord stow eza starship github-cli ttf-meslo-nerd
-  git-delta ghostty zoxide zellij nodejs npm tree-sitter-cli tmux jq
+  git-delta ghostty zoxide zellij nodejs npm tree-sitter-cli tmux jq go
 )
 
 print_step "Installing pacman packages"

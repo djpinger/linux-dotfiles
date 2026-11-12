@@ -36,6 +36,8 @@ The script should do this: \(ai.prompt)</string>
 	<true/>
 	<key>AutoHideTmuxClientSession</key>
 	<true/>
+	<key>ClaudeCodeWorkgroupUpsellSuppressed</key>
+	<true/>
 	<key>CopySelection</key>
 	<false/>
 	<key>Custom Color Presets</key>

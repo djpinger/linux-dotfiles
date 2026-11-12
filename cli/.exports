@@ -5,9 +5,36 @@ unset AWS_PROFILE
 [ -d /usr/local/Cellar ] && export PATH=$PATH:/usr/local/Cellar
 export PATH=/var/lib/snapd/snap/bin:/usr/local/bin:/usr/local/sbin:$PATH
 #eval $(keychain --eval --agents ssh --inherit any id_ed25519 id_ed25519_work)
-eval $(ssh-agent -s)
-[ -f ~/.ssh/id_ed25519_work ] && ssh-add ~/.ssh/id_ed25519_work
-[ -f ~/.ssh/id_ed25519_personal ] && ssh-add ~/.ssh/id_ed25519_personal
+# One long-lived ssh-agent of our own, at a FIXED socket path, on every OS.
+#
+# The previous version started no agent on macOS and inherited whatever launchd
+# handed over. That socket path is regenerated when the agent is replaced, so an
+# exported SSH_AUTH_SOCK outlived the agent it named: `ssh-add -l` returned 2,
+# `ssh-add` printed "Error connecting to agent: No such file or directory", and
+# anything needing a signature failed.
+#
+# A fixed path fixes it by construction: a replacement agent binds the same address,
+# so no shell can be left holding a dead one. `ssh-add -l` exits 2 when it cannot
+# connect, 0 or 1 when it can (1 just means the agent is empty), so 2 is the only
+# case where a new agent is needed. The socket file is removed first because
+# `ssh-agent -a` refuses to bind over an existing path, and we only reach that line
+# when nothing is answering on it.
+export SSH_AUTH_SOCK="$HOME/.ssh/agent.sock"
+ssh-add -l &>/dev/null
+if (( $? == 2 )); then
+  rm -f "$SSH_AUTH_SOCK"
+  eval "$(ssh-agent -a "$SSH_AUTH_SOCK" -s)" >/dev/null
+fi
+# Add every ~/.ssh/id_* private key the agent is not already holding, so a passphrase
+# is asked for once per agent rather than once per shell. `ssh-add -l` prints each
+# key's comment, not its path, so "already holding" is decided by fingerprint.
+_ssh_loaded=$(ssh-add -l 2>/dev/null)
+for _ssh_key in ~/.ssh/id_*(N); do
+  [[ $_ssh_key == *.pub ]] && continue
+  _ssh_fp=$(ssh-keygen -lf "$_ssh_key.pub" 2>/dev/null | awk '{print $2}')
+  [[ -n $_ssh_fp && $_ssh_loaded == *"$_ssh_fp"* ]] || ssh-add -q "$_ssh_key"
+done
+unset _ssh_key _ssh_fp _ssh_loaded
 [ -f /usr/share/fzf/completion.zsh ] && source /usr/share/fzf/completion.zsh
 [ -f /usr/share/fzf/key-bindings.zsh ] && source /usr/share/fzf/key-bindings.zsh
 if [ -x /usr/bin/dircolors ]; then
@@ -33,6 +60,12 @@ export PKG_CONFIG_PATH="/home/linuxbrew/.linuxbrew/opt/openssl@3/lib/pkgconfig"
 # gcloud stuff
 [ -f /opt/homebrew/share/zsh/site-functions/_google_cloud_sdk ] && source "/opt/homebrew/share/zsh/site-functions/_google_cloud_sdk"
 export PATH=$PATH:/opt/homebrew/share/google-cloud-sdk/bin
+# `deploy_local` builds with `docker build --secret id=GOOGLE_APPLICATION_CREDENTIALS,
+# src=$GOOGLE_APPLICATION_CREDENTIALS`, which fails on an empty src rather than falling
+# back to ADC. Point it at the ADC file gcloud already writes. Only set when it exists,
+# so a machine without `gcloud auth application-default login` doesn't export a dead path.
+[ -f "$HOME/.config/gcloud/application_default_credentials.json" ] && \
+  export GOOGLE_APPLICATION_CREDENTIALS="$HOME/.config/gcloud/application_default_credentials.json"
 #if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
 #    source /etc/profile.d/vte.sh
 #fi
@@ -48,7 +81,6 @@ export CLICOLOR=1
 export LSCOLORS=ExFxBxDxCxegedabagacad
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin
-export GOROOT=$(ls -d ~/.asdf/installs/golang/*/go 2>/dev/null | tail -1)
 export COLORTERM=truecolor
 export TERM=xterm-256color
 export USE_GKE_GCLOUD_AUTH_PLUGIN=True

@@ -12,7 +12,7 @@ DNF_PACKAGES=(
 
 # Packages not in DNF — installed via Linuxbrew
 # kind is here instead of DNF because Nobara's kind package conflicts with docker-ce-cli
-BREW_PACKAGES=(eza kubectx terragrunt kubecolor zellij tree-sitter-cli kind)
+BREW_PACKAGES=(eza kubectx terragrunt kubecolor zellij tree-sitter-cli kind go)
 
 print_step "Adding HashiCorp repo"
 if [ ! -f /etc/yum.repos.d/hashicorp.repo ]; then

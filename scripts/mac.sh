@@ -6,7 +6,7 @@ export HOMEBREW_PREFIX="/opt/homebrew"
 BREW_PACKAGES=(
   bat btop eza fzf node gh git-delta helm jid k9s kind
   kubectx starship hashicorp/tap/terraform terragrunt tig kubecolor neovim zoxide zellij
-  git jq stow tmux tree-sitter-cli
+  git go jq stow tmux tree-sitter-cli
 )
 
 BREW_CASKS=(
