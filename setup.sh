@@ -44,9 +44,6 @@ echo "Manual steps remaining:"
 echo "  - Configure git user name and email"
 echo "  - Set up SSH keys"
 echo "  - Set up cloud provider credentials (AWS, GCP)"
-if [ "$TARGET" = "mac" ]; then
-  echo "  - Configure 1Password SSH agent"
-fi
 if [[ "$TARGET" =~ ^(ubuntu|ubuntu-server|fedora)$ ]]; then
   echo "  - Log out and back in for docker group membership to take effect"
 fi

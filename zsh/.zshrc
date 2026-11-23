@@ -84,3 +84,10 @@ source ~/.exports
 source ~/.functions
 source ~/.aliases
 [ -f ~/.work ] && source ~/.work
+
+# Added by iris setup — defines the `iris` command (uv run --frozen).
+source ~/.iris/iris.zsh
+
+# >>> agterm agent-status >>>
+source '/Users/paul/.config/agterm/agent-status/shell/integration.sh'
+# <<< agterm agent-status <<<

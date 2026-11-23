@@ -5,9 +5,11 @@
 # cp pre-commit.sh ~/.git_hooks/pre-commit
 # git config --global core.hooksPath ~/.git_hooks
 
-BRANCH=`git rev-parse --abbrev-ref HEAD`
+# symbolic-ref works before the first commit, where `rev-parse HEAD` errors. A repo's
+# first commit (e.g. a scaffolder's) is allowed onto main/master.
+BRANCH=`git symbolic-ref --short -q HEAD`
 
-if [[ "$BRANCH" == "master" || "$BRANCH" == "main" ]]; then
+if [[ "$BRANCH" == "master" || "$BRANCH" == "main" ]] && git rev-parse --verify -q HEAD >/dev/null; then
   echo "You are on branch $BRANCH. Are you sure you want to commit to this branch?"
   echo "If so, commit with -n to bypass this pre-commit hook."
   exit 1

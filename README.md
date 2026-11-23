@@ -246,7 +246,6 @@ ZELLIJ_PLUGIN_URLS=(...  "https://github.com/user/repo/releases/download/v1.0/pl
 - Set up SSH keys
 - Install tmux plugins (launch tmux and press `prefix + I`)
 - Set up cloud provider credentials (AWS, GCP)
-- Configure 1Password SSH agent on macOS
 - Log out and back in for docker group membership (Ubuntu/Fedora)
 
 ## Machine-Specific Configuration

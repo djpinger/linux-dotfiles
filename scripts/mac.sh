@@ -40,11 +40,6 @@ print_step "Installing brew casks"
 brew install --cask "${BREW_CASKS[@]}"
 print_ok "Casks installed"
 
-print_step "Linking 1Password SSH agent socket"
-mkdir -p "$HOME/.1password"
-ln -sf "$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock" "$HOME/.1password/agent.sock"
-print_ok "Agent socket linked"
-
 print_step "Installing gcloud auth plugin"
 if cmd_exists gcloud; then
   gcloud components install gke-gcloud-auth-plugin --quiet || true
